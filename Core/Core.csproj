@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Cap.Core</PackageId>
+    <Authors>Jan Ruhlaender</Authors>
+    <Product>Core Libary</Product>
+    <Description>Intended to be used in every project to reuse as much code as possible for daily coding tasks.</Description>
+    <Copyright>©2019 Jan Ruhlaender</Copyright>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseUrl>https://github.com/capjan/CoreLib/blob/master/LICENSE</PackageLicenseUrl>
+  </PropertyGroup>
+
+</Project>
