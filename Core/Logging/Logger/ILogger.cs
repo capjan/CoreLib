@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace Core.Logging
+namespace Core.Logging.Logger
 {
     public interface ILogger
     {

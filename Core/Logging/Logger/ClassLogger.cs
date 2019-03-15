@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 
 // ReSharper disable ExplicitCallerInfoArgument
-namespace Core.Logging
+namespace Core.Logging.Logger
 {
     public class ClassLogger<T> : ILogger where T : class
     {

@@ -1,5 +1,6 @@
 using System;
 using Core.Logging;
+using Core.Logging.Logger;
 using Xunit;
 
 namespace Core.Test.LoggingRelated
