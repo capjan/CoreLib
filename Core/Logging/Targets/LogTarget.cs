@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Linq;
+using Core.Text.Formatter;
 
 namespace Core.Logging.Targets
 {
     public abstract class LogTarget : IDisposable
     {
-
+        public LogTarget()
+        {
+            LogLevelMaxCharLength = nameof(LogLevel.Warning).Length;;
+        }
         /// <inheritdoc />
         public void Dispose()
         {
@@ -26,6 +31,8 @@ namespace Core.Logging.Targets
 
         public LogLevel LogMask { get; set; } = LogLevel.AllMask;
 
+        public IDateTimeFormatter DateTimeFormatter { get; set; } = new DateTimeFormatter();
+
         private void AttachLogEvent()
         {
             Log.OnLog += FilterLog;
@@ -38,12 +45,13 @@ namespace Core.Logging.Targets
 
         private void FilterLog(LogEventArgs itm)
         {
-            if ((itm.Level & LogMask) == 0) return;
+            if ((itm.Level & LogMask) == 0) return;            
             OnLog(itm);
         }
 
         protected abstract void OnLog(LogEventArgs itm);
 
         private bool _isConnected;
+        protected readonly int LogLevelMaxCharLength;
     }
 }
