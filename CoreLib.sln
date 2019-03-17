@@ -9,10 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Test", "Core.Test\Core
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{07A6316D-CF63-4CD3-854B-03DE98841A8D}"
 	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
 		readme.md = readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandBox", "SandBox\SandBox.csproj", "{4232BDAC-1677-4665-A97A-7D9D35540574}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SandBox", "SandBox\SandBox.csproj", "{4232BDAC-1677-4665-A97A-7D9D35540574}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
