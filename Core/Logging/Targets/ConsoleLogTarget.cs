@@ -12,7 +12,7 @@ namespace Core.Logging.Targets
         protected override void OnLog(LogEventArgs itm)
         {
             var createdAt = DateTimeFormatter.Format(itm.CreatedAtUtc);
-            var level = itm.Level.ToString().PadLeft(LogLevelMaxCharLength);
+            var level = LogLevelFormatter.Format(itm.Level);
 
             Console.WriteLine($"{createdAt} {level}: {itm.Message}");
         }        

@@ -1,19 +1,23 @@
 ﻿using System;
-using System.Linq;
+using Core.Logging.Formatter;
 using Core.Text.Formatter;
 
 namespace Core.Logging.Targets
 {
     public abstract class LogTarget : IDisposable
     {
-        public LogTarget()
+        protected LogTarget()
         {
-            LogLevelMaxCharLength = nameof(LogLevel.Warning).Length;;
+            
         }
+
         /// <inheritdoc />
         public void Dispose()
         {
             Connected = false;
+            if (_isDisposed) return;
+            OnDispose();
+            _isDisposed = true;
         }
 
         public bool Connected
@@ -32,6 +36,12 @@ namespace Core.Logging.Targets
         public LogLevel LogMask { get; set; } = LogLevel.AllMask;
 
         public IDateTimeFormatter DateTimeFormatter { get; set; } = new DateTimeFormatter();
+        public ITextFormatter<LogLevel> LogLevelFormatter { get; set; } = new LogLevelFormatter();
+
+        protected virtual void OnDispose()
+        {
+
+        }
 
         private void AttachLogEvent()
         {
@@ -52,6 +62,7 @@ namespace Core.Logging.Targets
         protected abstract void OnLog(LogEventArgs itm);
 
         private bool _isConnected;
-        protected readonly int LogLevelMaxCharLength;
+        private bool _isDisposed;
+        
     }
 }

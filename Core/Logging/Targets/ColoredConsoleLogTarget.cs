@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core.Text.Formatter;
 
 namespace Core.Logging.Targets
 {
@@ -14,7 +11,7 @@ namespace Core.Logging.Targets
         protected override void OnLog(LogEventArgs itm)
         {
             var createdAt = DateTimeFormatter.Format(itm.CreatedAtUtc);
-            var level     = itm.Level.ToString().PadLeft(LogLevelMaxCharLength);
+            var level = LogLevelFormatter.Format(itm.Level);
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write(createdAt);
