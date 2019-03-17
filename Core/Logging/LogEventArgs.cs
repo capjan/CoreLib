@@ -4,11 +4,11 @@ namespace Core.Logging
 {
     public class LogEventArgs
     {
-        public LogEventArgs(LogLevel level, string message, string callerClassName, string callerFilePath, string callerMemberName, int callerLineNumber, Exception exception = null)
+        public LogEventArgs(LogLevel level, string message, string callerClassFullName, string callerFilePath, string callerMemberName, int callerLineNumber, Exception exception = null)
         {
             Level = level;
             Message = message;
-            CallerClassName = callerClassName;
+            CallerClassFullName = callerClassFullName;
             CallerFilePath = callerFilePath;
             CallerMemberName = callerMemberName;
             CallerLineNumber = callerLineNumber;
@@ -19,7 +19,7 @@ namespace Core.Logging
         public DateTime CreatedAtUtc { get; }
         public LogLevel Level { get; }
         public string Message { get; }
-        public string CallerClassName { get; }
+        public string CallerClassFullName { get; }
         public string CallerFilePath { get; }
         public string CallerMemberName { get; }
         public int CallerLineNumber { get; }

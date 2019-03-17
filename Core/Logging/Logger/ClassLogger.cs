@@ -9,7 +9,7 @@ namespace Core.Logging.Logger
         public ClassLogger()
         {
             var type = typeof(T);
-            _className = type.Name;
+            _className = type.FullName;
         }
 
         public void Trace(   
