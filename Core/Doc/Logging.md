@@ -39,7 +39,7 @@ Log target can be found at namespace *Core.Logging.Targets*
  * Custom Log Targets by creating a class inherited from LogTarget
 
 # Best Practices
-But in real life code the log should be a class field
+Spend for every class its own logger
 ```csharp
 public class YourClass
 {
