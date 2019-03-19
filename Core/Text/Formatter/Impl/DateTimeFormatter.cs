@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core.Text.Formatter
+namespace Core.Text.Formatter.Impl
 {
     public class DateTimeFormatter : IDateTimeFormatter
     {

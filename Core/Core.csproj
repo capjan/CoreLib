@@ -23,4 +23,8 @@
     <NoWarn>1701;1702;</NoWarn>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Mathematics\Impl\" />
+  </ItemGroup>
+
 </Project>
