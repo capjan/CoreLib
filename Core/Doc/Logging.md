@@ -8,12 +8,14 @@ Logging should ...
 * be filterable (conditional logging)
 * add no external dependencies - expect itself for sure :)
 
-# Other Libraries
+# Popular log libraries?
 
-I prefer to keep it simple stupid, but if you want to use one of the other great logging solutions
-like NLog, log4net, ASP.NET Log due to it's feature set or simply if you are forced to - you can!
+I prefer to keep things as simple as possible and avoid external dependencies. 
 
-Simply add a custom log target to feed the 3rd party library and you're done. You don't have to rewrite or change your code!
+But if you require any feature offered by one of the popular (and great) logging libraries 
+out there (NLog, log4Net, etc) - don't change your code!
+Simply implement a custom target to forward all of your log messages to the chosen library.
+
 Be open for extensions, but not for modifications.
 
 
