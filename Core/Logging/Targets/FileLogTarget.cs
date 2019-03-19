@@ -5,6 +5,8 @@ namespace Core.Logging.Targets
 {
     public class FileLogTarget : LogTarget
     {
+        private static object SyncLock = new object();
+
         public FileLogTarget(string filePath)
         {                      
             _outputStream = new StreamWriter(filePath, true, Encoding.UTF8);
@@ -18,22 +20,31 @@ namespace Core.Logging.Targets
 
         public void Flush()
         {
-            _outputStream.Flush();
+            lock (SyncLock)
+            {
+                _outputStream.Flush();
+            }
         }
 
         protected override void OnLog(LogEventArgs itm)
         {
-            var createdAt = DateTimeFormatter.Format(itm.CreatedAtUtc);
-            var level = LogLevelFormatter.Format(itm.Level);
-            _outputStream.WriteLine($"{createdAt} {level} {itm.Message}");
+            lock (SyncLock)
+            {
+                var createdAt = DateTimeFormatter.Format(itm.CreatedAtUtc);
+                var level     = LogLevelFormatter.Format(itm.Level);
+                _outputStream.WriteLine($"{createdAt} {level} {itm.Message}");    
+            }            
         }
 
         protected override void OnDispose()
         {
-            _outputStream.Flush();
+            lock (SyncLock)
+            {
+                _outputStream.Flush();
 
-            _outputStream.Close();
-            _outputStream.Dispose();            
+                _outputStream.Close();
+                _outputStream.Dispose();            
+            }            
             base.OnDispose();
         }
 
