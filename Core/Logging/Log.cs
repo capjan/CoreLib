@@ -5,6 +5,8 @@ namespace Core.Logging
 {
     internal static class Log
     {
+        public static object SyncLock = new object();
+
         public static event Action<LogEventArgs> OnLog;
 
         internal static void Trace(   
@@ -14,7 +16,10 @@ namespace Core.Logging
             [CallerMemberName] string callerMemberName = "",
             [CallerLineNumber] int callerLineNumber = 0)
         {
-            OnLog?.Invoke(new LogEventArgs(LogLevel.Trace, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber));
+            lock (SyncLock)
+            {
+                OnLog?.Invoke(new LogEventArgs(LogLevel.Trace, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber));    
+            }            
         }
 
         internal static void Debug(
@@ -24,7 +29,10 @@ namespace Core.Logging
             [CallerMemberName] string callerMemberName = "",
             [CallerLineNumber] int callerLineNumber = 0)
         {
-            OnLog?.Invoke(new LogEventArgs(LogLevel.Debug, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber));
+            lock (SyncLock)
+            {
+                OnLog?.Invoke(new LogEventArgs(LogLevel.Debug, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber));    
+            }            
         }
 
         internal static void Info(
@@ -34,7 +42,11 @@ namespace Core.Logging
             [CallerMemberName] string callerMemberName = "",
             [CallerLineNumber] int callerLineNumber = 0)
         {
-            OnLog?.Invoke(new LogEventArgs(LogLevel.Info, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber));
+            lock (SyncLock)
+            {
+                OnLog?.Invoke(new LogEventArgs(LogLevel.Info, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber));    
+            }
+            
         }
 
         internal static void Warning(
@@ -44,7 +56,10 @@ namespace Core.Logging
             [CallerMemberName] string callerMemberName = "",
             [CallerLineNumber] int callerLineNumber = 0)
         {
-            OnLog?.Invoke(new LogEventArgs(LogLevel.Warning, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber));
+            lock (SyncLock)
+            {
+                OnLog?.Invoke(new LogEventArgs(LogLevel.Warning, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber));    
+            }            
         }
 
         internal static void Error(
@@ -55,7 +70,10 @@ namespace Core.Logging
             [CallerMemberName] string callerMemberName = "",
             [CallerLineNumber] int callerLineNumber = 0)
         {
-            OnLog?.Invoke(new LogEventArgs(LogLevel.Error, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber, exception));
+            lock (SyncLock)
+            {
+                OnLog?.Invoke(new LogEventArgs(LogLevel.Error, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber, exception));    
+            }            
         }
 
     }
