@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Core.IO.Temp
+namespace Core.IO
 {
     /// <summary>
     /// Makes it easy to use temporary files and folders
     /// </summary>
-    public interface ITempProvider
+    public interface ITempUtil
     {        
         string CreateDir(string parentDirectory = default);
         string CreateFile(string parentDirectory = default);

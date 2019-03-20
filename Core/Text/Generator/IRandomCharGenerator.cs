@@ -1,4 +1,4 @@
-﻿namespace Core.Text
+﻿namespace Core.Text.Generator
 {
     public interface IRandomCharGenerator
     {

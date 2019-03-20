@@ -1,4 +1,4 @@
-﻿namespace Core.Text.Impl
+﻿namespace Core.Text.Generator.Impl
 {
     public class DefaultAlphabet : IAlphabet
     {

@@ -1,7 +1,7 @@
-﻿using Batronix.Core.Mathematics.Impl;
-using Core.Mathematics;
+﻿using Core.Mathematics;
+using Core.Mathematics.Impl;
 
-namespace Core.Text.Impl
+namespace Core.Text.Generator.Impl
 {
     public class RandomCharGenerator : IRandomCharGenerator
     {

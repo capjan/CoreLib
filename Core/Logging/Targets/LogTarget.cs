@@ -36,7 +36,7 @@ namespace Core.Logging.Targets
 
         public LogLevel LogMask { get; set; } = LogLevel.AllMask;
 
-        public IDateTimeFormatter DateTimeFormatter { get; set; } = new DateTimeFormatter();
+        public IDateTimeFormatter DateTimeFormatter { get; set; } = new DefaultDateTimeFormatter();
         public ITextFormatter<LogLevel> LogLevelFormatter { get; set; } = new LogLevelFormatter();
 
         protected virtual void OnDispose()

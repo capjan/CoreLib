@@ -1,11 +1,18 @@
 ﻿using System;
-using Core.Mathematics;
 
-namespace Batronix.Core.Mathematics.Impl
+namespace Core.Mathematics.Impl
 {
     public class DefaultRandom : IRandom
     {
-        private readonly Random _random = new Random();
+        public DefaultRandom()
+        {
+            _random = new Random();    
+        }
+
+        public DefaultRandom(int seed)
+        {
+            _random = new Random(seed);    
+        }
 
         public int Next()
         {
@@ -21,5 +28,7 @@ namespace Batronix.Core.Mathematics.Impl
         {
             return _random.Next(minValue, maxValue);
         }
+
+        private readonly Random _random;
     }
 }

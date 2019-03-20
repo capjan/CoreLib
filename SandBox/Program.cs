@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
+using Core.IO.Impl;
 using Core.Logging.Targets;
 using Core.Logging.Logger;
 
@@ -37,8 +39,6 @@ namespace SandBox
 
                 if (key.Key == ConsoleKey.Z)
                     Shutdown = true;
-
-
             }
         }
 
@@ -48,33 +48,41 @@ namespace SandBox
             var threadB = new Thread(LogThreadB);
             //var threadC = new Thread(LogThreadC);
 
-            using (var consoleTarget = new ColoredConsoleLogTarget
+            var temp = new DefaultTempUtil();
+            temp.UseFile(tempFileName =>
             {
-                Connected         = true,
-                DateTimeFormatter = {LocalTime = true}
-            })
-            {
-                Console.WriteLine("Started Program (Press Z to exit)");
-                threadA.Start();
-                threadB.Start();
-                // threadC.Start();
-
-                var done = false;
-                while (!done)
+                using (var fileTarget = new FileLogTarget(tempFileName)
                 {
-                    if (Console.KeyAvailable)
+                    Connected         = true,
+                    DateTimeFormatter = {LocalTime = true}
+                })
+                {
+                    Console.WriteLine("Started Program (Press Z to exit)");
+                    threadA.Start();
+                    threadB.Start();
+                    // threadC.Start();
+
+                    var done = false;
+                    while (!done)
                     {
-                        var key = Console.ReadKey(true);
+                        if (Console.KeyAvailable)
                         {
-                            if (key.Key == ConsoleKey.Z)
+                            var key = Console.ReadKey(true);
                             {
-                                done = true;
+                                if (key.Key == ConsoleKey.Z)
+                                {
+                                    done = true;
+                                }
                             }
                         }
-                    }
 
+                    }
+                    fileTarget.Flush();
+                    Process.Start("notepad.exe", tempFileName);
                 }
-            }
+                
+            });
+            
 
             
 

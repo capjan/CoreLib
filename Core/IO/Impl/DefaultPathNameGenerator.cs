@@ -1,27 +1,27 @@
 ﻿using System.IO;
-using Core.Text;
-using Core.Text.Impl;
+using Core.Text.Generator;
+using Core.Text.Generator.Impl;
 
-namespace Core.IO.Temp.Impl
+namespace Core.IO.Impl
 {
-    public class TempFileNameGenerator : IFileNameGenerator
+    public class DefaultPathNameGenerator : IPathNameGenerator
     {
         private readonly string _prefix;
         private readonly string _postfix;
         private readonly int    _randomLength;
         private readonly IRandomStringGenerator _nameGenerator;
 
-        public TempFileNameGenerator(string prefix           = "", 
-                                     string postfix          = "", 
-                                     int    randomLength     = 5,
-                                     IRandomStringGenerator nameGenerator = default)
+        public DefaultPathNameGenerator(
+            string prefix           = "", 
+            string postfix          = "", 
+            int    randomLength     = 5,
+            IRandomStringGenerator nameGenerator = default)
         {
             _nameGenerator = nameGenerator ?? new RandomStringGenerator();
             _prefix = prefix;
             _postfix = postfix;
             _randomLength = randomLength;
         }
-
         
         public string Generate(string rootDir)
         {

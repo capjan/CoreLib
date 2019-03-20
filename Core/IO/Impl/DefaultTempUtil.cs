@@ -1,30 +1,31 @@
 ﻿using System;
 using System.IO;
-using Core.IO.Impl;
 using Core.Logging.Logger;
 
-namespace Core.IO.Temp.Impl
+namespace Core.IO.Impl
 {
-    public class DefaultTempProvider : ITempProvider
+    public class DefaultTempUtil : ITempUtil
     {
-        private readonly ILogger _log = new ClassLogger<DefaultTempProvider>();
+        private readonly ILogger _log = new ClassLogger<DefaultTempUtil>();
 
-        private readonly string _rootPath = Path.GetTempPath();
-        private readonly IFileNameGenerator _dirNameGen;
-        private readonly IFileNameGenerator _fileNameGen;
+        private readonly string _rootPath;
+        private readonly IPathNameGenerator _dirNameGen;
+        private readonly IPathNameGenerator _pathNameGen;
         private readonly IFileUtil _fileUtil;
         private readonly IDirectoryUtil _directoryUtil;
 
-        public DefaultTempProvider(            
-            IFileNameGenerator dirNameGen = default, 
-            IFileNameGenerator fileNameGen = default,
+        public DefaultTempUtil(
+            string defaultRootPath = default,
+            IPathNameGenerator dirNameGen = default, 
+            IPathNameGenerator fileNameGen = default,
             IFileUtil fileUtil = default,
             IDirectoryUtil directoryUtil = default)
         {
+            _rootPath = defaultRootPath ?? Path.GetTempPath();
             _directoryUtil = directoryUtil;
-            var defaultNameGen = dirNameGen == null || fileNameGen == null ? new TempFileNameGenerator() : null;
+            var defaultNameGen = dirNameGen == null || fileNameGen == null ? new DefaultPathNameGenerator() : null;
             _dirNameGen = dirNameGen ?? defaultNameGen;
-            _fileNameGen = fileNameGen ?? defaultNameGen;
+            _pathNameGen = fileNameGen ?? defaultNameGen;
             _fileUtil = fileUtil ?? new DefaultFileUtil();
             _directoryUtil = directoryUtil ?? new DefaultDirectoryUtil();
         }
@@ -40,7 +41,7 @@ namespace Core.IO.Temp.Impl
         public string CreateFile(string parentDirectory = default)
         {
             parentDirectory = parentDirectory ?? _rootPath;
-            var tempFileName = _fileNameGen.Generate(parentDirectory);
+            var tempFileName = _pathNameGen.Generate(parentDirectory);
             _fileUtil.Touch(tempFileName);
             return tempFileName;
         }
@@ -85,7 +86,7 @@ namespace Core.IO.Temp.Impl
             }
             finally
             {
-                _fileUtil.DeleteFile(tempFileName);
+                _fileUtil.Delete(tempFileName);
             } 
         }
 
