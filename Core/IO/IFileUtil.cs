@@ -2,7 +2,9 @@
 {
     public interface IFileUtil
     {
-        void Touch(string filePath);
-        void DeleteFile(string filePath);
+        void Delete(string filePath);
+        bool IsValidFilePath(string filePath);
+        bool IsWritable(string filePath);
+        void Touch(string filePath);        
     }
 }

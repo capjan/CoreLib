@@ -9,7 +9,7 @@ namespace Core.IO.Impl
         public DefaultFileUtil(
             IFileWritableChecker isWritableChecker = default)
         {
-            _isWritable = isWritableChecker ?? new FileWritableChecker();
+            _isWritableChecker = isWritableChecker ?? new FileWritableChecker();
         }
 
         public void Touch(string filePath)
@@ -23,38 +23,36 @@ namespace Core.IO.Impl
             File.SetLastWriteTime(filePath, DateTime.Now);
         }
 
-        public void DeleteFile(string filePath)
+        public void Delete(string filePath)
         {
             File.Delete(filePath);            
         }
 
         public bool IsWritable(string filePath)
         {
-            return _isWritable.Check(filePath);
+            return _isWritableChecker.Check(filePath);
         }
 
-        public static bool IsValidFilePath(string aFilePath)
+        public bool IsValidFilePath(string filePath)
         {
-
             var isValid = false;
-            if (!string.IsNullOrEmpty(aFilePath))
+            if (!string.IsNullOrEmpty(filePath))
             {
-                aFilePath = aFilePath.Trim();
-                if (aFilePath.Length > 0 && aFilePath.Length < 248)
+                filePath = filePath.Trim();
+                if (filePath.Length > 0 && filePath.Length < 248)
                 {
                     var invalidChars = Path.GetInvalidPathChars();
                     var pattern      = $"[{Regex.Escape(new string(invalidChars))}]";
-                    if (!Regex.IsMatch(aFilePath, pattern))
+                    if (!Regex.IsMatch(filePath, pattern))
                     {
                         isValid = true;
                     }
                 }
             }
-
             return isValid;
         }
 
-        private IFileWritableChecker _isWritable;
+        private readonly IFileWritableChecker _isWritableChecker;
 
     }
 }
