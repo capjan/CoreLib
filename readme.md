@@ -5,4 +5,5 @@ CoreLib is a .NET Standard library that provides tested solutions for everyday p
 ## Features
 * [IO](./Core/Doc/IO.md) - File System Input/Output
 * [Logging](./Core/Doc/Logging.md) - Logging
+* [Mathematics](./Core/Doc/Mathematics.md) - Mathematics
 * [Text](./Core/Doc/Text.md) - Formatting and generating Text
