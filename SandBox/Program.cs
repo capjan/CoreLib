@@ -79,12 +79,8 @@ namespace SandBox
                     }
                     fileTarget.Flush();
                     Process.Start("notepad.exe", tempFileName);
-                }
-                
+                }                
             });
-            
-
-            
 
             Shutdown = true;
 
