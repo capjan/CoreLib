@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Folder Include="Mathematics\Impl\" />
+    <Folder Include="Security\Cryptography\" />
   </ItemGroup>
 
 </Project>

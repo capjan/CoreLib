@@ -1,4 +1,5 @@
-﻿using Core.Text.Formatter;
+﻿using System.IO;
+using Core.Text.Formatter;
 
 namespace Core.Logging.Formatter
 {
@@ -8,9 +9,10 @@ namespace Core.Logging.Formatter
         {
             _logLevelMaxCharLength = nameof(LogLevel.Warning).Length; 
         }
-        public string Format(LogLevel value)
+
+        public void WriteFormatted(LogLevel value, TextWriter writer)
         {
-            return value.ToString().PadLeft(_logLevelMaxCharLength);
+            writer.Write(value.ToString().PadLeft(_logLevelMaxCharLength));            
         }
 
         private readonly int _logLevelMaxCharLength;

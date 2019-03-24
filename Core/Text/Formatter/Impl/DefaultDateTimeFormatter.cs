@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Core.Text.Formatter.Impl
 {
@@ -7,12 +8,12 @@ namespace Core.Text.Formatter.Impl
         public string DateTimeFormat { get; set; } = "dd.MM.yyyy HH:mm:ss.fff";
         public bool LocalTime { get; set; } = false;
 
-        public string Format(DateTime value)
+        public void WriteFormatted(DateTime value, TextWriter writer)
         {
             if (LocalTime)
                 value = value.ToLocalTime();
 
-            return value.ToString(DateTimeFormat);
+            writer.Write(value.ToString(DateTimeFormat));
         }
     }
 }

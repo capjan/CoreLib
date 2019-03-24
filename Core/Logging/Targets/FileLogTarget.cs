@@ -1,5 +1,7 @@
 ﻿using System.IO;
 using System.Text;
+using Core.Extensions.TextRelated;
+using Core.IO;
 
 namespace Core.Logging.Targets
 {
@@ -29,9 +31,9 @@ namespace Core.Logging.Targets
         protected override void OnLog(LogEventArgs itm)
         {
             lock (SyncLock)
-            {
-                var createdAt = DateTimeFormatter.Format(itm.CreatedAtUtc);
-                var level     = LogLevelFormatter.Format(itm.Level);
+            {                
+                var createdAt = DateTimeFormatter.FormatToString(itm.CreatedAtUtc);
+                var level     = LogLevelFormatter.FormatToString(itm.Level);
                 _outputStream.WriteLine($"{createdAt} {level} {itm.Message}");    
             }            
         }

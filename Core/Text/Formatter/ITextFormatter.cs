@@ -1,7 +1,9 @@
-﻿namespace Core.Text.Formatter
+﻿using System.IO;
+
+namespace Core.Text.Formatter
 {
     public interface ITextFormatter<in T>
     {
-        string Format(T value);
+        void WriteFormatted(T value, TextWriter writer);
     }
 }

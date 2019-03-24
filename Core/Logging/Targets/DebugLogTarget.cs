@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Core.Extensions.TextRelated;
 
 namespace Core.Logging.Targets
 {
@@ -6,8 +7,8 @@ namespace Core.Logging.Targets
     {
         protected override void OnLog(LogEventArgs itm)
         {
-            var createdAt = DateTimeFormatter.Format(itm.CreatedAtUtc);
-            var level = LogLevelFormatter.Format(itm.Level);
+            var createdAt = DateTimeFormatter.FormatToString(itm.CreatedAtUtc);
+            var level = LogLevelFormatter.FormatToString(itm.Level);
             Debug.WriteLine($"{createdAt} {level}: {itm.Message}");
         }
     }
