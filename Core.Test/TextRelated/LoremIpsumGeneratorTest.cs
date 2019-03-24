@@ -10,11 +10,6 @@ namespace Core.Test.TextRelated
 {
     public class LoremIpsumGeneratorTest
     {
-        public class Generic<T> where T : typeof(int)
-        {
-
-        }
-
         [Fact]
         public void BasicLoremIpsumGeneratorTest()
         {
