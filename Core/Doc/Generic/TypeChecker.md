@@ -14,7 +14,7 @@ public class Generic<T> where T : typeof(T) in (byte, short, int, long)
 }
 ``` 
 
-So our first and simple workarount could be this
+So our workarount could look like this:
 ```csharp
 public class Generic<T> where T
 {
@@ -30,7 +30,7 @@ public class Generic<T> where T
 }
 ```
 
-Now we add the dictionary based generic type checker class to make the list of valid types configureable.
+I think it's not a bad idea to make the list of allowed types configurable. So now the TypeChecker class comes in:
 ```csharp
 public class Generic<T> where T
 {
@@ -43,7 +43,8 @@ public class Generic<T> where T
 }
 ```
 
-Because we now can preconfigure common type sets we can add static factory methods to make developers life easier.
+Great, but this code looks not cleaner than the first attempt. But when we add some factory methods for the most common
+type sets we make developers life easier.
 ```csharp
 public class Generic<T> where T
 {
