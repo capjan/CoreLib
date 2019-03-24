@@ -9,6 +9,7 @@ namespace Core.Logging.Targets
         {
             DateTimeFormatter.DateTimeFormat = "HH:mm:ss.ffff";
         }
+
         protected override void OnLog(LogEventArgs itm)
         {
             var createdAt = DateTimeFormatter.FormatToString(itm.CreatedAtUtc);

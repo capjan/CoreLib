@@ -1,5 +1,15 @@
-﻿# Date Time Formatter
+﻿# Formatters
 
+All Formatters shared this common interface
+
+```csharp
+public interface ITextFormatter<in T>
+{
+    string Format(T value);
+}
+```
+
+## IDateTimeFormatter
 Formats DateTime objects to a string representation. 
 
 ```csharp
