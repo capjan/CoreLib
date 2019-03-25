@@ -1,15 +1,7 @@
-﻿# Date Time Formatter
+﻿# Formatters
 
-Formats DateTime objects to a string representation. 
+Contains classes to make it easy to format a given value to a formatted string representation.
 
-```csharp
-public interface IDateTimeFormatter : ITextFormatter<DateTime>
-{
-    string DateTimeFormat { get; set; }    
-    bool   LocalTime      { get; set; }
-}
-```
-With:
-* `DateTimeFormat` - Format String of the dateTime. Defaults to "dd.MM.yyyy HH:mm:ss.fff"
-* `LocalTime` - value should be formatted in local time. value is assumed to be always UTC
+* [IDateTimeFormatter](./Formatters/DateTimeFormatter.md) - makes it easy to format datetime values
+* [ISeparatorFormatter](./Formatters/SeparatorFormatter.md) - makes it easy to format lists/arrays/etc to comma separated strings
 
