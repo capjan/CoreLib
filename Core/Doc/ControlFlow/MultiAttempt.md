@@ -1,6 +1,6 @@
 ﻿# Multi Attempt Action/Func
 
-MultiAttempt Action/Func reduces the boiler plate code necessary to allow multiple 
+Reduces the necessary boiler plate code to allow multiple 
 attempts for an **Action** or **Func\<T>** to one line.
 
 ## use case
