@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Text;
 using Core.Extensions.TextRelated;
-using Core.IO;
 
 namespace Core.Logging.Targets
 {
@@ -16,8 +15,20 @@ namespace Core.Logging.Targets
 
         public bool AutoFlush
         {
-            get => _outputStream.AutoFlush;
-            set => _outputStream.AutoFlush = value;
+            get
+            {
+                lock (SyncLock)
+                {
+                    return _outputStream.AutoFlush;
+                }
+            } 
+            set
+            {
+                lock (SyncLock)
+                {
+                    _outputStream.AutoFlush = value;
+                }
+            } 
         }
 
         public void Flush()
