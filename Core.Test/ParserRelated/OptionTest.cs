@@ -84,7 +84,7 @@ namespace Core.Test.ParserRelated
                 // extra contains the remaining 'non option' arguments
                 var extra = options.Parse(new[] {"-v", "--output", "C:\\temp"});
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Console.Error.WriteLine("parse error.");
                 options.WriteOptionDescriptions(Console.Out);
