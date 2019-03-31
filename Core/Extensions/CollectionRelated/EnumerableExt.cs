@@ -12,7 +12,7 @@ namespace Core.Extensions.CollectionRelated
             string separator = ", ",
             int groupLength = 1,
             Func<T, string> toStringFunc = default,
-            string nullPlaceholder = default)
+            string nullPlaceholder = "")
         {
             var formatter = new DefaultSeparatorFormatter<T>(
                 separator,
