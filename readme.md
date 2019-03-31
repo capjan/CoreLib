@@ -1,6 +1,8 @@
 # CoreLib
 
-CoreLib is a .NET Standard library that provides tested solutions for everyday problems without any 3rd party dependencies. It's intended to be used in every project to reuse as much code as possible to accomplish common tasks.
+CoreLib is a .NET Standard library that provides field-proven code solutions to everyday problems 
+without adding 3rd-party dependencies.
+It's intended be used in every project to reuse as much code as possible.
 
 ## Namespaces
 * [ControlFlow](./Core/Doc/ControlFlow.md) - contains control flow utility classes
