@@ -6,7 +6,7 @@ namespace Core.Logging.Targets
 {
     public class FileLogTarget : LogTarget
     {
-        private static object SyncLock = new object();
+        private static readonly object SyncLock = new object();
 
         public FileLogTarget(string filePath)
         {                      
