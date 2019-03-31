@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using Core.Extensions.CollectionRelated;
+using Core.Extensions.TextRelated;
 using Core.Security.Cryptography.Security;
 using Xunit;
 
