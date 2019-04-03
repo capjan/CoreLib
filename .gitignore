@@ -6,6 +6,9 @@
 *.user
 *.sln.docstates
 
+# Sandbox code
+SandBox/
+
 # Build results
 
 [Dd]ebug/
