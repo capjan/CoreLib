@@ -27,11 +27,11 @@ namespace Core.Test.TextRelated
                 toStringFunc: v => v.ToString(),
                 nullPlaceholder: "");
 
-            formatter.WriteFormatted(intArray, Console.Out);
-            var formatted = formatter.FormatToString(intArray);
+            formatter.Write(intArray, Console.Out);
+            var formatted = formatter.WriteToString(intArray);
 
             // or use the extension method on any IEnumerable<T>
-            var formattedString = formatter.FormatToString(intArray);
+            var formattedString = formatter.WriteToString(intArray);
 
             var formattedViaExtension = intArray.ToSeparatedString();
 

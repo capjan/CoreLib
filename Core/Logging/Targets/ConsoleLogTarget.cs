@@ -7,13 +7,13 @@ namespace Core.Logging.Targets
     {
         public ConsoleLogTarget()
         {
-            DateTimeFormatter.DateTimeFormat = "HH:mm:ss.ffff";
+            DateTimeFormatter.Format = "HH:mm:ss.ffff";
         }
 
         protected override void OnLog(LogEventArgs itm)
         {
-            var createdAt = DateTimeFormatter.FormatToString(itm.CreatedAtUtc);
-            var level = LogLevelFormatter.FormatToString(itm.Level);
+            var createdAt = DateTimeFormatter.WriteToString(itm.CreatedAtUtc);
+            var level = LogLevelFormatter.WriteToString(itm.Level);
 
             Console.WriteLine($"{createdAt} {level}: {itm.Message}");
         }        

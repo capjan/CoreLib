@@ -43,8 +43,8 @@ namespace Core.Logging.Targets
         {
             lock (SyncLock)
             {                
-                var createdAt = DateTimeFormatter.FormatToString(itm.CreatedAtUtc);
-                var level     = LogLevelFormatter.FormatToString(itm.Level);
+                var createdAt = DateTimeFormatter.WriteToString(itm.CreatedAtUtc);
+                var level     = LogLevelFormatter.WriteToString(itm.Level);
                 _outputStream.WriteLine($"{createdAt} {level} {itm.Message}");    
             }            
         }

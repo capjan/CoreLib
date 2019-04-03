@@ -15,7 +15,7 @@ namespace Core.Extensions.TextRelated
         {
             var singleByteFormatter = new DefaultByteHexFormatter(upperCase);
             var formatter           = new DefaultByteListHexFormatter(singleByteFormatter);
-            return formatter.FormatToString(data);
+            return formatter.WriteToString(data);
         }
 
         public static string ToHexString(this char value, bool upperCase = true)

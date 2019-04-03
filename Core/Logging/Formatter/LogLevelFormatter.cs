@@ -10,7 +10,7 @@ namespace Core.Logging.Formatter
             _logLevelMaxCharLength = nameof(LogLevel.Warning).Length; 
         }
 
-        public void WriteFormatted(LogLevel value, TextWriter writer)
+        public void Write(LogLevel value, TextWriter writer)
         {
             writer.Write(value.ToString().PadLeft(_logLevelMaxCharLength));            
         }

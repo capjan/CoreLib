@@ -5,19 +5,19 @@ using Core.Generic;
 
 namespace Core.Text.Formatter.Impl
 {
-    public class DefaultNumberFormatter<T> : INumberFormatter<T>
+    public class DefaultNumberFormatter<T> : IFormattableTextFormatter<T>
     {
         public DefaultNumberFormatter()
         {
             var typeChecker = TypeChecker<T>.Numeric();
             if (!typeChecker.IsValid())
                 throw new ArgumentException("the given generic type is not a number type");
-        }            
+        }
       
-        public string FormatString { get; set; } = "g";
+        public string Format { get; set; } = "g";
         public IFormatProvider FormatProvider { get; set; }
 
-        public void WriteFormatted(T value, TextWriter writer)
+        public void Write(T value, TextWriter writer)
         {
             writer.Write(FormatValue(value));
         }
@@ -25,18 +25,18 @@ namespace Core.Text.Formatter.Impl
         private string FormatValue(T value)
         {
             switch (value) {
-                case byte byteValue: return byteValue.ToString(FormatString, FormatProvider);
-                case sbyte sbyteValue: return sbyteValue.ToString(FormatString, FormatProvider);
-                case short shortValue: return shortValue.ToString(FormatString, FormatProvider);
-                case ushort ushortValue: return ushortValue.ToString(FormatString, FormatProvider);
-                case int intValue: return intValue.ToString(FormatString, FormatProvider);
-                case uint uintValue: return uintValue.ToString(FormatString, FormatProvider);
-                case long longValue: return longValue.ToString(FormatString, FormatProvider);                                
-                case ulong ulongValue: return ulongValue.ToString(FormatString, FormatProvider);
-                case float floatValue: return floatValue.ToString(FormatString, FormatProvider);
-                case double doubleValue: return doubleValue.ToString(FormatString, FormatProvider);
-                case decimal decimalValue: return decimalValue.ToString(FormatString, FormatProvider);
-                case BigInteger bigIntValue: return bigIntValue.ToString(FormatString, FormatProvider);
+                case byte byteValue: return byteValue.ToString(Format, FormatProvider);
+                case sbyte sbyteValue: return sbyteValue.ToString(Format, FormatProvider);
+                case short shortValue: return shortValue.ToString(Format, FormatProvider);
+                case ushort ushortValue: return ushortValue.ToString(Format, FormatProvider);
+                case int intValue: return intValue.ToString(Format, FormatProvider);
+                case uint uintValue: return uintValue.ToString(Format, FormatProvider);
+                case long longValue: return longValue.ToString(Format, FormatProvider);
+                case ulong ulongValue: return ulongValue.ToString(Format, FormatProvider);
+                case float floatValue: return floatValue.ToString(Format, FormatProvider);
+                case double doubleValue: return doubleValue.ToString(Format, FormatProvider);
+                case decimal decimalValue: return decimalValue.ToString(Format, FormatProvider);
+                case BigInteger bigIntValue: return bigIntValue.ToString(Format, FormatProvider);
                 default: throw new ArgumentException($"type {typeof(T).Name} is not a supported number type.");
             }
         }

@@ -11,14 +11,14 @@ namespace Core.Text.Formatter.Impl
             _singleByteFormatter = singleByteFormatter ?? new DefaultByteHexFormatter();
         }
 
-        public void WriteFormatted(IEnumerable<byte> value, TextWriter writer)
+        public void Write(IEnumerable<byte> value, TextWriter writer)
         {
             foreach (var b in value)
             {
-                _singleByteFormatter.WriteFormatted(b, writer);
-            }            
+                _singleByteFormatter.Write(b, writer);
+            }
         }
 
-        private readonly IByteHexFormatter _singleByteFormatter;        
+        private readonly IByteHexFormatter _singleByteFormatter;
     }
 }

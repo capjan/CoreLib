@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace Core.Text.Formatter {
-
-    public interface IDateTimeFormatter : ITextFormatter<DateTime>
+namespace Core.Text.Formatter
+{
+    public interface IDateTimeFormatter : IFormattableTextFormatter<DateTime>
     {
-        string DateTimeFormat { get; set; }
+        bool LocalTime { get; set; }
     }
-
 }

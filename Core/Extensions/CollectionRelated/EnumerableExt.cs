@@ -20,7 +20,7 @@ namespace Core.Extensions.CollectionRelated
                 toStringFunc,
                 nullPlaceholder
             );
-            return formatter.FormatToString(value);
+            return formatter.WriteToString(value);
         }
     }
 }

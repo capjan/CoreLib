@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Core.Text.Formatter.Impl
 {
-    public class DefaultSeparatorFormatter<T> : ISeparatorFormatter<T>
+    public class DefaultSeparatorFormatter<T> : ITextFormatter<IEnumerable<T>>
     {
         public DefaultSeparatorFormatter(
             string          separator       = ", ",
@@ -19,7 +19,7 @@ namespace Core.Text.Formatter.Impl
             _nullPlaceholder = nullPlaceholder ?? "";
         }
 
-        public void WriteFormatted(IEnumerable<T> value, TextWriter writer)
+        public void Write(IEnumerable<T> value, TextWriter writer)
         {
             if (value == null) throw new ArgumentNullException(nameof(value));
 

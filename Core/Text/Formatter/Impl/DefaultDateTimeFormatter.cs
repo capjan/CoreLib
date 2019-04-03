@@ -11,24 +11,24 @@ namespace Core.Text.Formatter.Impl
             bool localTime = true, 
             IFormatProvider formatProvider = default)
         {
-            DateTimeFormat = format;
-            _localTime = localTime;
-            _formatProvider = formatProvider ?? Thread.CurrentThread.CurrentCulture;
+            Format = format;
+            LocalTime = localTime;
+            FormatProvider = formatProvider ?? Thread.CurrentThread.CurrentCulture;
         }
 
-        public void WriteFormatted(DateTime value, TextWriter writer)
+        public void Write(DateTime value, TextWriter writer)
         {
             if (value.Kind != DateTimeKind.Utc)
                 throw new ArgumentException($"{nameof(value)} is not of kind UTC");
 
-            if (_localTime)
-                value = value.ToLocalTime();            
+            if (LocalTime)
+                value = value.ToLocalTime();
 
-            writer.Write(value.ToString(DateTimeFormat, _formatProvider));
+            writer.Write(value.ToString(Format, FormatProvider));
         }
     
-        private readonly IFormatProvider _formatProvider;
-        private readonly bool _localTime;
-        public string DateTimeFormat { get; set; }
+        public IFormatProvider FormatProvider { get; set; }
+        public bool LocalTime { get; set; }
+        public string Format { get; set; }
     }
 }

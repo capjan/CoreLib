@@ -14,11 +14,11 @@ namespace Core.Text.Formatter.Impl
             }
         }
         
-        public void WriteFormatted(byte value, TextWriter writer)
+        public void Write(byte value, TextWriter writer)
         {
             writer.Write(_lookup[value]);
         }
 
-        private readonly string[] _lookup;        
+        private readonly string[] _lookup;
     }
 }

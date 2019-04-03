@@ -1,21 +1,19 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 namespace Core.Text.Formatter.Impl
 {
-    public class DefaultHexFormatter<T> : IHexFormatter<T>    
+    public class DefaultHexFormatter<T> : IHexFormatter<T>
     {
-        public DefaultHexFormatter(IFormatProvider formatProvider = default)
+        public DefaultHexFormatter()
         {
-            if (formatProvider != null)
-                _formatter.FormatProvider = formatProvider;
+            _formatter = new DefaultNumberFormatter<T>();
             UpdateFormat();
         }
 
-        public void WriteFormatted(T value, TextWriter writer)
+        public void Write(T value, TextWriter writer)
         {
-            _formatter.WriteFormatted(value, writer);            
-        }        
+            _formatter.Write(value, writer);
+        }
 
         public bool UpperCase
         {
@@ -39,19 +37,21 @@ namespace Core.Text.Formatter.Impl
             }
         }
 
+        #region Private
+
+        private          bool                _upperCase = true;
+        private          int?                _precision;
+        private readonly IFormattableTextFormatter<T> _formatter;
+
         private void UpdateFormat()
         {   
             var format = UpperCase ? "X" : "x";
             if (Precision.HasValue)
                 format += Precision.Value;
-            _formatter.FormatString = format;
-        }        
+            _formatter.Format = format;
+        }
 
-        private bool _upperCase = true;
-        private int? _precision;
-
-        private readonly INumberFormatter<T> _formatter = new DefaultNumberFormatter<T>();
-
+        #endregion
 
     }
 }
