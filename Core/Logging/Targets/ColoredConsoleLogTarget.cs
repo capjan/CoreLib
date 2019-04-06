@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Enums;
 using Core.Extensions.TextRelated;
 
 namespace Core.Logging.Targets

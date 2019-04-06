@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Enums;
 
 namespace Core.Logging
 {

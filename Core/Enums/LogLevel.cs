@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core.Logging
+namespace Core.Enums
 {
     [Flags]
     public enum LogLevel

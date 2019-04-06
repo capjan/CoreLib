@@ -1,5 +1,5 @@
 using System;
-using Core.Logging;
+using Core.Enums;
 using Core.Logging.Logger;
 using Xunit;
 

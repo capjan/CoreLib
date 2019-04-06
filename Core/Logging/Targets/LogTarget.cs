@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Enums;
 using Core.Logging.Formatter;
 using Core.Text.Formatter;
 using Core.Text.Formatter.Impl;
