@@ -26,9 +26,21 @@ namespace Core.Extensions.TextRelated
             return sb.ToString();
         }
 
+        public static void WriteLine<T>(this ITextFormatter<T> formatter, T value, TextWriter writer)
+        {
+            formatter.Write(value, writer);
+            writer.WriteLine();
+        }
+
         public static void Write(this IDateTimeFormatter formatter, TextWriter writer)
         {
             formatter.Write(DateTime.UtcNow, writer);
+        }
+
+        public static void WriteLine(this IDateTimeFormatter formatter, TextWriter writer)
+        {
+            formatter.Write(DateTime.UtcNow, writer);
+            writer.WriteLine();
         }
 
         /// <summary>
@@ -47,7 +59,7 @@ namespace Core.Extensions.TextRelated
             bool compact = false,
             string separator = ", ")
         {
-            return new HumanReadableTimeSpanFormatter(
+            return new DefaultTimeSpanFormatter(
                 localization: TimeLocalization.Create(twoLetterLanguageCode), 
                 precision: precision, 
                 compact: compact,
