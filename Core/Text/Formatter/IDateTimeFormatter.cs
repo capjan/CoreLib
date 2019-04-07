@@ -4,6 +4,6 @@ namespace Core.Text.Formatter
 {
     public interface IDateTimeFormatter : IFormattableTextFormatter<DateTime>
     {
-        bool LocalTime { get; set; }
+        bool UniversalTime { get; set; }
     }
 }

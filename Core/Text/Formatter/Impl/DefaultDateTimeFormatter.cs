@@ -8,11 +8,11 @@ namespace Core.Text.Formatter.Impl
     {
         public DefaultDateTimeFormatter(
             string format = "dd.MM.yyyy HH:mm:ss.fff", 
-            bool localTime = true, 
+            bool universalTime = false, 
             IFormatProvider formatProvider = default)
         {
             Format = format;
-            LocalTime = localTime;
+            UniversalTime = universalTime;
             FormatProvider = formatProvider ?? Thread.CurrentThread.CurrentCulture;
         }
 
@@ -21,14 +21,14 @@ namespace Core.Text.Formatter.Impl
             if (value.Kind != DateTimeKind.Utc)
                 throw new ArgumentException($"{nameof(value)} is not of kind UTC");
 
-            if (LocalTime)
+            if (!UniversalTime)
                 value = value.ToLocalTime();
 
             writer.Write(value.ToString(Format, FormatProvider));
         }
     
         public IFormatProvider FormatProvider { get; set; }
-        public bool LocalTime { get; set; }
+        public bool UniversalTime { get; set; }
         public string Format { get; set; }
     }
 }
