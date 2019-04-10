@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.ControlFlow
 {
     public class Tryify<T>
     {
-        public bool TryInvoke(Func<T> callback, out T result)
+        public bool TryInvoke(Func<T> callback, out T result, T fallback = default)
         {
             try
             {
@@ -17,7 +13,7 @@ namespace Core.ControlFlow
             }
             catch (Exception)
             {
-                result = default;
+                result = fallback;
                 return false;
             }
         }
