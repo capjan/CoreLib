@@ -10,6 +10,7 @@ It's intended be used in every project to reuse as much code as possible.
 * [IO](./Core/Doc/IO.md) - File System Input/Output
 * [Logging](./Core/Doc/Logging.md) - Logging
 * [Mathematics](./Core/Doc/Mathematics.md) - Mathematics
+* [Net](./Core/Doc/Net.md) - Internet and Web
 * [Parser](./Core/Doc/Parser.md) - Common Parser
 * [Reflection](./Core/Doc/Reflection.md) - Reflection utility classes
 * [Text](./Core/Doc/Text.md) - Formatting and generating Text
