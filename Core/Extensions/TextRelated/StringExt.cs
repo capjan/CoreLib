@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.AccessControl;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using Core.Enums;
 using Core.Security.Cryptography.Security;
 
@@ -39,6 +40,18 @@ namespace Core.Extensions.TextRelated
         public static string Left(this string value, int length)
         {
             return value.Substring(0, Math.Min(value.Length, length));
+        }
+
+        /// <summary>
+        /// Indicates whether the specified regular expression finds a match in the string
+        /// </summary>
+        /// <param name="value">input string</param>
+        /// <param name="regexPattern">regular expression</param>
+        /// <param name="options">options for the regex engine</param>
+        /// <returns></returns>
+        public static bool IsMatch(this string value, string regexPattern, RegexOptions options = RegexOptions.None)
+        {
+            return Regex.IsMatch(value, regexPattern, options);
         }
         
 
