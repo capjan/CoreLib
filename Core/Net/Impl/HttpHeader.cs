@@ -69,35 +69,26 @@ namespace Core.Net.Impl
                 Status = statusValue;
         }
 
-        
         public bool AcceptRanges { get; }
 
-        
         public string Connection { get; }
-            
-        
+
         public string ContentType { get; }
         
         public string Status { get; }
         
         public long? ContentLength { get; }
-            
-        
+
         public DateTime? CreatedAtUtc { get; }
-            
-        
+
         public string Server { get; }
 
-
         public string SetCookie { get; }
-            
-        
+
         public string EntityTag { get; }
 
-        
         public DateTime? LastModifiedUtc { get; }
 
-        
         public string Location { get; }
 
         public IReadOnlyDictionary<string,string> RawDictionary { get; }
