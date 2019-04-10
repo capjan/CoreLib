@@ -35,5 +35,14 @@ namespace Core.Test.TextRelated
 
             Assert.Equal("one, two, three", new []{"one", "two", "three"}.ToSeparatedString());
         }
+
+        [Fact]
+        public void TestCollectionSeparator()
+        {
+            Assert.Equal("T, e, s, t", 
+                         "Test".ToCharArray()
+                               .ToSeparatedString());
+
+        }
     }
 }
