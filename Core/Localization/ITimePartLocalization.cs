@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Enums;
-using Core.Text.Formatter;
+﻿using Core.Enums;
 
 namespace Core.Localization
 {

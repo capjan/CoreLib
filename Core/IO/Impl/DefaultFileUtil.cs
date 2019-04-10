@@ -14,10 +14,10 @@ namespace Core.IO.Impl
 
         public void Touch(string filePath)
         {
-            if (File.Exists(filePath) && !IsWritable(filePath))            
-                throw new NotSupportedException("it's not possible to touch a not writable file.");             
+            if (File.Exists(filePath) && !IsWritable(filePath))
+                throw new NotSupportedException("it's not possible to touch a not writable file.");
             
-            using (var fs = File.Create(filePath))            
+            using (var fs = File.Create(filePath))
                 fs.Close();
 
             File.SetLastWriteTime(filePath, DateTime.Now);
@@ -25,7 +25,7 @@ namespace Core.IO.Impl
 
         public void Delete(string filePath)
         {
-            File.Delete(filePath);            
+            File.Delete(filePath);
         }
 
         public bool IsWritable(string filePath)

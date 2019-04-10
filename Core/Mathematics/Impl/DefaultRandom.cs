@@ -6,12 +6,12 @@ namespace Core.Mathematics.Impl
     {
         public DefaultRandom()
         {
-            _random = new Random();    
+            _random = new Random();
         }
 
         public DefaultRandom(int seed)
         {
-            _random = new Random(seed);    
+            _random = new Random(seed);
         }
 
         public int Next()

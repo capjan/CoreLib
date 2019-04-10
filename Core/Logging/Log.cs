@@ -19,8 +19,8 @@ namespace Core.Logging
         {
             lock (SyncLock)
             {
-                OnLog?.Invoke(new LogEventArgs(LogLevel.Trace, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber));    
-            }            
+                OnLog?.Invoke(new LogEventArgs(LogLevel.Trace, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber));
+            }
         }
 
         internal static void Debug(
@@ -33,7 +33,7 @@ namespace Core.Logging
             lock (SyncLock)
             {
                 OnLog?.Invoke(new LogEventArgs(LogLevel.Debug, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber));    
-            }            
+            }
         }
 
         internal static void Info(
@@ -45,7 +45,7 @@ namespace Core.Logging
         {
             lock (SyncLock)
             {
-                OnLog?.Invoke(new LogEventArgs(LogLevel.Info, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber));    
+                OnLog?.Invoke(new LogEventArgs(LogLevel.Info, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber));
             }
             
         }
@@ -59,8 +59,8 @@ namespace Core.Logging
         {
             lock (SyncLock)
             {
-                OnLog?.Invoke(new LogEventArgs(LogLevel.Warning, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber));    
-            }            
+                OnLog?.Invoke(new LogEventArgs(LogLevel.Warning, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber));
+            }
         }
 
         internal static void Error(
@@ -73,8 +73,8 @@ namespace Core.Logging
         {
             lock (SyncLock)
             {
-                OnLog?.Invoke(new LogEventArgs(LogLevel.Error, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber, exception));    
-            }            
+                OnLog?.Invoke(new LogEventArgs(LogLevel.Error, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber, exception));
+            }
         }
 
     }

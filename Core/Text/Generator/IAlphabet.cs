@@ -8,6 +8,6 @@
         int    IndexFirstLowerCaseLetter { get; }
         int    IndexLastLowerCaseLetter  { get; }
         int    IndexFirstDigit           { get; }
-        int    IndexLastDigit            { get; }        
+        int    IndexLastDigit            { get; }
     }
 }

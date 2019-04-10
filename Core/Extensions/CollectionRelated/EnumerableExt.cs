@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Core.Extensions.TextRelated;
 using Core.Text.Formatter.Impl;
+// ReSharper disable UnusedMember.Global
 
 namespace Core.Extensions.CollectionRelated
 {

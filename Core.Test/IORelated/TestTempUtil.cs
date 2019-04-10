@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Threading;
 using Core.IO.Impl;
 using Xunit;
 

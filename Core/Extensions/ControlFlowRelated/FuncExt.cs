@@ -1,5 +1,6 @@
 ﻿using System;
 using Core.ControlFlow;
+// ReSharper disable UnusedMember.Global
 
 namespace Core.Extensions.ControlFlowRelated
 {

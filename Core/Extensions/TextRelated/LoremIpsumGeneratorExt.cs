@@ -9,7 +9,7 @@ namespace Core.Extensions.TextRelated
         public static string CreateText(this ILoremIpsumGenerator generator, int wordCount)
         {
             var stringBuilder = new StringBuilder();
-            using (var writer = new StringWriter(stringBuilder))            
+            using (var writer = new StringWriter(stringBuilder))
                 generator.WriteText(wordCount, writer);
             return stringBuilder.ToString();
         }

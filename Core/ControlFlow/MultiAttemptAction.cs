@@ -7,7 +7,7 @@ namespace Core.ControlFlow
     {
         public const int MaxAttempts = 5;
 
-        public MultiAttemptActionCallback(            
+        public MultiAttemptActionCallback(
             int maxAttempts = MaxAttempts, 
             TimeSpan attemptDelay = default)
         {            
@@ -31,14 +31,14 @@ namespace Core.ControlFlow
                 catch (Exception)
                 {
                     if (AttemptCount > _maxAttempts)
-                        throw;                    
+                        throw;
                     Thread.Sleep(_attemptDelay);
                 }
             }
         }
         
         private readonly TimeSpan _attemptDelay;
-        private readonly int      _maxAttempts;        
+        private readonly int      _maxAttempts;
     }
 
     public class AbstractMultiAttemptAction

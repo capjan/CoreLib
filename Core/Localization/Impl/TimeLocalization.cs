@@ -1,9 +1,6 @@
-﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Dynamic;
 using Core.Enums;
-using Core.Text.Formatter;
 
 namespace Core.Localization.Impl
 {

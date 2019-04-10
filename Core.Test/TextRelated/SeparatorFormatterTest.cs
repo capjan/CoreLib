@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Core.Extensions.CollectionRelated;
 using Core.Extensions.TextRelated;
 using Core.Text.Formatter.Impl;

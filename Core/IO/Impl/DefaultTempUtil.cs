@@ -56,7 +56,7 @@ namespace Core.IO.Impl
             var tempDirPath = CreateDir(parentDirectory);
             try
             {
-                action(tempDirPath);                
+                action(tempDirPath);
             }
             catch (Exception e)
             {
@@ -78,7 +78,7 @@ namespace Core.IO.Impl
             var tempFileName = CreateFile(parentDirectory);
             try
             {
-                action(tempFileName);                
+                action(tempFileName);
             }
             catch (Exception e)
             {

@@ -4,7 +4,7 @@
     {
         /// <summary>
         /// Generates a fullPath name and ensures that it's unique (that no name collusion with an existing folder or file name exists)
-        /// </summary>        
+        /// </summary>
         string Generate(string rootDir);
     }
 }

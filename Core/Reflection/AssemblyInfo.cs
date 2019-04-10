@@ -18,7 +18,6 @@ namespace Core.Reflection
             _lazyCopyright = assembly.GetAttributeResultLazy<AssemblyCopyrightAttribute>(a => a.Copyright);
             _lazyTrademark = assembly.GetAttributeResultLazy<AssemblyTrademarkAttribute>(a => a.Trademark);
             _lazyInformationalVersion = assembly.GetAttributeResultLazy<AssemblyInformationalVersionAttribute>(a => a.InformationalVersion);
-            var all = assembly.GetCustomAttributes();
         }
 
         public string Title => _lazyTitle.Value;

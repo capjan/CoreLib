@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using Core.Enums;
-using Core.Security.Cryptography.Security;
 
 namespace Core.Extensions.TextRelated
 {
@@ -24,9 +18,12 @@ namespace Core.Extensions.TextRelated
             return new StringReader(value);
         }
 
-        // <summary>
+        /// <summary>
         /// Returns a string containing a specified number of characters from the right side of a string.
         /// </summary>
+        /// <param name="value">input string</param>
+        /// <param name="length">max chars to extract</param>
+        /// <returns></returns>
         public static string Right(this string value, int length)
         {
             var maxLength = Math.Min(value.Length, length);
@@ -34,9 +31,12 @@ namespace Core.Extensions.TextRelated
             return value.Substring(startOffset, maxLength);
         }
 
-        // <summary>
+        /// <summary>
         /// Returns a string containing a specified number of characters from the left side of a string.
         /// </summary>
+        /// <param name="value">input string</param>
+        /// <param name="length">max chars to extract</param>
+        /// <returns></returns>
         public static string Left(this string value, int length)
         {
             return value.Substring(0, Math.Min(value.Length, length));

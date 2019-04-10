@@ -127,7 +127,7 @@ namespace Core.Parser.Impl
                 offset = info.OffsetAfterRead;
             }
 
-            var done = false;
+            bool done;
             char readChar;
             do
             {

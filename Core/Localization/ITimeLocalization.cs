@@ -1,5 +1,4 @@
 ﻿using Core.Enums;
-using Core.Text.Formatter;
 
 namespace Core.Localization
 {

@@ -13,7 +13,7 @@ namespace Core.Generic
 
         /// <summary>
         /// Creates a type checker to check if the generic type is a number
-        /// </summary>        
+        /// </summary>
         public static TypeChecker<T> Numeric()
         {
             return new TypeChecker<T>(
