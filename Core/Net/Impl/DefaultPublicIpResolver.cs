@@ -1,12 +1,13 @@
 ﻿using System;
+using Core.Extensions.NetRelated;
 using Core.Extensions.TextRelated;
 using Core.Text;
 
 namespace Core.Net.Impl
 {
-    public class PublicIpResolver : IPublicIpResolver
+    public class DefaultPublicIpResolver : IPublicIpResolver
     {
-        public PublicIpResolver(
+        public DefaultPublicIpResolver(
             IDownloader downloader = default,
             string[] serviceUrls = default)
         {
@@ -20,7 +21,8 @@ namespace Core.Net.Impl
             foreach (var url in _serviceUrls)
             {
                 result = ResolveViaWebService(url);
-                if (result.IsMatch(RegExLib.IpV4Address)) break;
+                if (result.IsMatch(RegExLib.IpV4Address))
+                    break;
             }
             if (string.IsNullOrEmpty(result))
                 throw new InvalidOperationException("failed to resolve a public ip address");
@@ -28,32 +30,12 @@ namespace Core.Net.Impl
             return result;
         }
 
-        public bool TryResolve(out string ipAddress)
-        {
-            try
-            {
-                ipAddress = Resolve();
-                return true;
-            }
-            catch (Exception)
-            {
-                ipAddress = null;
-                return false;
-            }
-        }
-
+        // exposed public for testing purposes, not intended for direct usage 
         public string ResolveViaWebService(string url)
         {
-            try
-            {
-                return (_downloader.DownloadString(url) ?? "")
-                    .Replace("\n", "").Trim();
-            }
-            catch
-            {
-                // ignore all download problems
-                return "";
-            }
+            return _downloader.TryDownloadToString(url, out var result, "") 
+                ? result.Replace("\n", "").Trim() 
+                : result;
         }
 
         private readonly IDownloader _downloader;
