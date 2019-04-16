@@ -4,27 +4,20 @@ Logging should ...
 
 * be easy to use
 * be easy to extend
-* be thread safe
 * be filterable (conditional logging)
 * add no external dependencies - expect itself for sure :)
 
-# Popular log libraries?
+# NLog, log4Net, ...
 
-I prefer to keep things as simple as possible and avoid external dependencies. 
+As already mentioned, this approach is easy to extend. Following the SOLID Open Closed principe we're open for extensions, but not for modifications.
 
-But if you require any feature offered by one of the popular (and great) logging libraries 
-out there (NLog, log4Net, etc) - don't change your code!
-Simply implement a custom target to forward all of your log messages to the chosen library.
-
-Be open for extensions, but not for modifications.
-
+So, If we require any feature offered by one of the popular (and great) logging libraries 
+out there we add them **without changing our existing code**! If required we implement you custom LogTarget and forward your logging messages to the chosen library.
 
 # Architecture
- * the core of logging is implemented in a single static class *Log*
- * this static log class exposes for every log entry an action event *OnLog*
- * the action exposes all required information to implement a log targets 
- * targets can attach or detach to this event at every time
- 
+ * the core of this logging implementatin is the static internal class *Log*
+ * *Log* exposes static methods for logging and an global event to notify targets
+ * targets are implemented by inheriting from the abstract class LogTarget. 
 
 # How to Log
 
@@ -37,7 +30,7 @@ public class Program
         using (var consoleLogger = new ColoredConsoleLogTarget())
         {
             // create your logger
-            var log = new ClassLogger<Program>();
+            var log = Logger.Create<Program>();
 
             // start logging
             log.Info("This is my first log message");
@@ -59,13 +52,13 @@ Log target can be found at namespace *Core.Logging.Targets*
 # Best Practices
 Spend for every class its own logger
 ```csharp
-public class YourClass
+public class ExampleClass
 {
-    private ILogger _log = new ClassLogger<YourClass>();
+    private ILogger _log = Logger.Create<ExampleClass>();
 
     public YourClass()
     {
-        _log.Trace($"Instance of {nameof(YourClass)} created");
+        _log.Trace($"Instance of {nameof(ExampleClass)} created");
     }
 }
 ```

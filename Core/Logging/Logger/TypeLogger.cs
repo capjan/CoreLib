@@ -4,21 +4,20 @@ using System.Runtime.CompilerServices;
 // ReSharper disable ExplicitCallerInfoArgument
 namespace Core.Logging.Logger
 {
-    public class ClassLogger<T> : ILogger where T : class
+    internal class TypeLogger : ILogger 
     {
-        public ClassLogger()
+        public TypeLogger(string typeFullName)
         {
-            var type = typeof(T);
-            _className = type.FullName;
+            _typeFullName = typeFullName;
         }
 
-        public void Trace(   
+        public void Trace(
             string message,
             [CallerFilePath] string callerFilePath = "",
             [CallerMemberName] string callerMemberName = "",
             [CallerLineNumber] int callerLineNumber = 0)
         {
-            Log.Trace(message, _className, callerFilePath, callerMemberName, callerLineNumber);
+            Log.Trace(message, _typeFullName, callerFilePath, callerMemberName, callerLineNumber);
         }
 
         public void Debug(
@@ -27,7 +26,7 @@ namespace Core.Logging.Logger
             [CallerMemberName] string callerMemberName = "",
             [CallerLineNumber] int callerLineNumber = 0)
         {
-            Log.Debug(message, _className, callerFilePath, callerMemberName, callerLineNumber);   
+            Log.Debug(message, _typeFullName, callerFilePath, callerMemberName, callerLineNumber);
         }
 
         public void Info(
@@ -36,7 +35,7 @@ namespace Core.Logging.Logger
             [CallerMemberName] string callerMemberName = "",
             [CallerLineNumber] int callerLineNumber = 0)
         {
-            Log.Info(message, _className, callerFilePath, callerMemberName, callerLineNumber);
+            Log.Info(message, _typeFullName, callerFilePath, callerMemberName, callerLineNumber);
         }
 
         public void Warning(
@@ -45,7 +44,7 @@ namespace Core.Logging.Logger
             [CallerMemberName] string callerMemberName = "",
             [CallerLineNumber] int callerLineNumber = 0)
         {
-            Log.Warning(message, _className, callerFilePath, callerMemberName, callerLineNumber);
+            Log.Warning(message, _typeFullName, callerFilePath, callerMemberName, callerLineNumber);
         }
 
         public void Error(
@@ -55,9 +54,19 @@ namespace Core.Logging.Logger
             [CallerMemberName] string callerMemberName = "",
             [CallerLineNumber] int callerLineNumber = 0)
         {
-            Log.Error(message, exception, _className, callerFilePath, callerMemberName, callerLineNumber);
+            Log.Error(message, exception, _typeFullName, callerFilePath, callerMemberName, callerLineNumber);
         }
-        private readonly string _className;
+
+        public void Error(
+            Exception                 exception        = null,
+            [CallerFilePath]   string callerFilePath   = "",
+            [CallerMemberName] string callerMemberName = "",
+            [CallerLineNumber] int    callerLineNumber = 0)
+        {
+            Log.Error("an exception occurred", exception, _typeFullName, callerFilePath, callerMemberName, callerLineNumber);
+        }
+
+        private readonly string _typeFullName;
     }
 }
 // ReSharper restore ExplicitCallerInfoArgument

@@ -12,7 +12,7 @@ namespace Core.Test.LoggingRelated
         {
             using (var dumper = new DumpLogTarget {Connected = true})
             {
-                var log = new ClassLogger<TestLog>();
+                var log = Logger.Create<TestLog>();
                 log.Trace("Hello Trace");
                 log.Debug("Hello Debug");
                 log.Info("Hello Info");
@@ -28,7 +28,7 @@ namespace Core.Test.LoggingRelated
         {
             using (var dumper = new DumpLogTarget {Connected = true, LogMask = LogLevel.ProductionMask})
             {
-                var log = new ClassLogger<TestLog>();
+                var log = Logger.Create<TestLog>();
                 log.Trace("Hello Trace");
                 log.Debug("Hello Debug");
                 log.Info("Hello Info");

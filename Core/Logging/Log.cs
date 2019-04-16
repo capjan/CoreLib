@@ -10,7 +10,7 @@ namespace Core.Logging
 
         public static event Action<LogEventArgs> OnLog;
 
-        internal static void Trace(   
+        internal static void Trace(
             string message,
             string callerClassFullName = "",
             [CallerFilePath] string callerFilePath = "",
@@ -32,7 +32,7 @@ namespace Core.Logging
         {
             lock (SyncLock)
             {
-                OnLog?.Invoke(new LogEventArgs(LogLevel.Debug, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber));    
+                OnLog?.Invoke(new LogEventArgs(LogLevel.Debug, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber));
             }
         }
 

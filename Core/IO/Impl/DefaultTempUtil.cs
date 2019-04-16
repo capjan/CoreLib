@@ -6,7 +6,7 @@ namespace Core.IO.Impl
 {
     public class DefaultTempUtil : ITempUtil
     {
-        private readonly ILogger _log = new ClassLogger<DefaultTempUtil>();
+        private readonly ILogger _log = Logger.Create<DefaultTempUtil>();
 
         private readonly string _rootPath;
         private readonly IPathNameGenerator _dirNameGen;

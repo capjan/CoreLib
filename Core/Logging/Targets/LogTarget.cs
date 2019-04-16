@@ -57,7 +57,7 @@ namespace Core.Logging.Targets
 
         private void FilterLog(LogEventArgs itm)
         {
-            if ((itm.Level & LogMask) == 0) return;            
+            if ((itm.Level & LogMask) == 0) return;
             OnLog(itm);
         }
 
