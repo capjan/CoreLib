@@ -10,7 +10,7 @@ namespace Core.Test.NetRelated
         {
             var url = new DefaultUrlBuilder("https://www.test.com")
                       .AddParam("name", "John Doe")
-                      .AddParameter("mail", "john.doe@domain.com")
+                      .AddParam("mail", "john.doe@domain.com")
                       .Build();
 
             Assert.Equal("https://www.test.com?name=John+Doe&mail=john.doe%40domain.com", url);
