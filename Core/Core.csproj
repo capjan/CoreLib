@@ -13,7 +13,7 @@
 	<NullableContextOptions>enable</NullableContextOptions>
     <Version>1.1.0</Version>
     <PackageProjectUrl></PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/capjan/CoreLib/blob/master/LICENSE</PackageLicenseUrl>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
     <AssemblyVersion>1.1.0.0</AssemblyVersion>
     <AssemblyName>CoreLib</AssemblyName>
     <FileVersion>1.1.0.0</FileVersion>
