@@ -33,5 +33,11 @@
     <Folder Include="Mathematics\Impl\" />
     <Folder Include="Security\Cryptography\" />
   </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  
+  
 
 </Project>
