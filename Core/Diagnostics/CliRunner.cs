@@ -14,7 +14,13 @@ namespace Core.Diagnostics
                 RedirectStandardOutput = true,
                 RedirectStandardError  = true,
                 CreateNoWindow         = false
-            };            
+            };
+        }
+
+        public string Arguments
+        {
+            get => _psi.Arguments;
+            set => _psi.Arguments = value;
         }
 
         public string ReadToEnd()

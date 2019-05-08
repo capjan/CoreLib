@@ -9,6 +9,7 @@ program with a set of arguments and want to process the output.
 ```csharp
 public interface ICliRunner
 {
+    string Arguments { get; set; }
     string ReadToEnd();
     void   ReadLines(Action<string> callback);
 }
