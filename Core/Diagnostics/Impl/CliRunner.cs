@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Core.Diagnostics
+namespace Core.Diagnostics.Impl
 {
     public class CliRunner : ICliRunner
     {
-        public CliRunner(string filePath, string arguments)
+        public CliRunner(string filePath, string arguments = null)
         {
             _psi = new ProcessStartInfo(filePath)
             {
-                Arguments              = arguments,
                 UseShellExecute        = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError  = true,
                 CreateNoWindow         = false
             };
+            if (arguments != null)
+                Arguments = arguments;
         }
 
         public string Arguments
