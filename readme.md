@@ -6,6 +6,7 @@ It's intended be used in every project to reuse as much code as possible.
 
 ## Namespaces
 * [ControlFlow](./Core/Doc/ControlFlow.md) - contains control flow utility classes
+* [Diagnostics](./Core/Doc/Diagnostics.md) - contains CliRunner
 * [Generic](./Core/Doc/Generic.md) - Contains utility classes for generic type implementations
 * [IO](./Core/Doc/IO.md) - File System Input/Output
 * [Logging](./Core/Doc/Logging.md) - Logging
