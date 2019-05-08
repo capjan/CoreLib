@@ -3,11 +3,10 @@ using System.Diagnostics;
 
 namespace Core.Diagnostics
 {
-    public class CliRunner
+    public class CliRunner : ICliRunner
     {
         public CliRunner(string filePath, string arguments)
         {
-            
             _psi = new ProcessStartInfo(filePath)
             {
                 Arguments              = arguments,

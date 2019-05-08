@@ -1,5 +1,19 @@
 ﻿# CliRunner
 
+CliRunner simplifies the creation of wrappers for console programs. 
+
+The CLIRunner saves code in cases where you want to call a console 
+program with a set of arguments and want to process the output.
+
+## Interface
+```csharp
+public interface ICliRunner
+{
+    string ReadToEnd();
+    void   ReadLines(Action<string> callback);
+}
+```
+
 ## Example
 
 ### Classic Approach
