@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core.ControlFlow;
+using System.IO;
 using Core.Extensions.ReflectionRelated;
+using Core.Reflection;
 
 namespace Core.Parser.Arguments
 {
@@ -18,8 +19,10 @@ namespace Core.Parser.Arguments
         }
     }
 
-    public abstract class CliOptions
+    public class CliOptions
     {
+        [Option("v|version", "Print version information and exits")]
+        public bool ShowVersion { get; set; }
 
         [Option("h|help", "Shows this help")]
         public bool ShowHelp { get; set; }
@@ -29,13 +32,21 @@ namespace Core.Parser.Arguments
 
     public class OptionParser<T> where T : CliOptions, new()
     {
-        
+
+        private readonly TextWriter _out;
+        private readonly TextWriter _err;
+        private readonly IAssemblyInfo _assemblyInfo;
+
+        public OptionParser(IAssemblyInfo assemblyInfo = null, TextWriter stdOut = null, TextWriter stdErr = null)
+        {
+            _assemblyInfo = assemblyInfo ?? new AssemblyInfo();
+            _out = stdOut ?? Console.Out;
+            _err = stdErr ?? Console.Error;
+        }
+
         public bool TryParse(IEnumerable<string> args, out T options)
         {
-
-            
-
-                var result        = new T();
+            var result        = new T();
                 var type          = result.GetType();
                 var allProperties = type.GetProperties();
 
@@ -86,6 +97,7 @@ namespace Core.Parser.Arguments
                 }
                 catch (Exception ex)
                 {
+                    _err.WriteLine(ex.Message);
                     WriteHelp(optionSet);
                     return false;
                 }
@@ -95,17 +107,24 @@ namespace Core.Parser.Arguments
                     WriteHelp(optionSet);
                     return false;
                 }
+                if (result.ShowVersion)
+                {
+                    _out.WriteLine($"Version: {_assemblyInfo.GetVersionSummary()}");
+                    return false;
+                }
 
                 options = result;
                 return true;
         }
 
-        
-
-    private void WriteHelp(OptionSet optionSet)
-    {
-    throw new NotImplementedException();
-    }
-
+        private void WriteHelp(OptionSet optionSet)
+        {
+            _out.WriteLine();
+            _out.WriteLine("Usage:");
+            _out.WriteLine($" {_assemblyInfo.Title} [options]");
+            _out.WriteLine();
+            _out.WriteLine("Options:");
+            optionSet.WriteOptionDescriptions(_out);
+        }
     }
 }
