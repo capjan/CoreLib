@@ -4,6 +4,8 @@ NDesk Options makes it easy to parse command line arguments.
 
 Take a look at [http://www.ndesk.org/Options](http://www.ndesk.org/Options) for further documentation.
 
+Please note: CoreLib provides a [attribute based fronted](./AttributeBasedOptions.md) for NDesk.
+
 ## Example
 
 ```csharp
