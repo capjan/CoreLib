@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection.Metadata;
 using System.Text;
 using Core.Extensions.ParserRelated;
-using Core.Parser;
 using Core.Parser.Arguments;
 using Xunit;
 
@@ -50,7 +48,7 @@ namespace Core.Test.ParserRelated
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);                
+                Console.WriteLine(e);
             }
 
             Assert.True(showVersion);
@@ -96,5 +94,23 @@ namespace Core.Test.ParserRelated
             Assert.Equal("C:\\temp", outputFolder);
         }
 
+        public class TestOptions : CliOptions
+        {
+            [Option("h|help", "Shows this help")]
+            public bool ShowHelp { get; set; }
+
+            [Option("m|max=", "Sets the maximum for the value")]
+            public int MaxValue { get; set; } = 10;
+        }
+
+        [Fact]
+        public void BasicAttributesFrontendTest()
+        {
+            var args = new string[] {"--help", "--max", "1234"};
+            Assert.True(new OptionParser<TestOptions>().TryParse(args, out var result));
+            Assert.True(result.ShowHelp);
+            Assert.Equal(1234, result.MaxValue);
+            
+        }
     }
 }
