@@ -172,8 +172,8 @@ namespace Core.Parser.Arguments
                     $"Cannot provide maxValueCount of {maxValueCount} for OptionValueType.None.",
                     nameof(maxValueCount));
             if (Array.IndexOf(Names, "<>") >= 0 &&
-                ((Names.Length == 1 && OptionValueType != OptionValueType.None) ||
-                 (Names.Length > 1 && MaxValueCount > 1)))
+                (Names.Length == 1 && OptionValueType != OptionValueType.None ||
+                 Names.Length > 1 && MaxValueCount > 1))
                 throw new ArgumentException(
                     "The default option handler '<>' cannot require values.",
                     nameof(prototype));
@@ -933,7 +933,7 @@ namespace Core.Parser.Arguments
                 if (end < description.Length)
                 {
                     var c = description[end];
-                    if (c == '-' || (char.IsWhiteSpace(c) && c != '\n'))
+                    if (c == '-' || char.IsWhiteSpace(c) && c != '\n')
                         ++end;
                     else if (c != '\n')
                     {

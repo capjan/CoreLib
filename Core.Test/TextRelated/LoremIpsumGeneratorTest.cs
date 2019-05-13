@@ -3,7 +3,6 @@ using Core.Extensions.TextRelated;
 using Core.IO.Impl;
 using Core.Mathematics.Impl;
 using Core.Text.Generator.Impl;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.ObjectModel;
 using Xunit;
 
 namespace Core.Test.TextRelated

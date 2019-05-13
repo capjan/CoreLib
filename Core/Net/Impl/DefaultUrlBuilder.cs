@@ -18,7 +18,6 @@ namespace Core.Net.Impl
         private string _username;
         private string _password;
 
-
         public DefaultUrlBuilder(string baseUrl, IUrlEncoder urlEncoder = default)
         {
             var uri = new Uri(baseUrl);
