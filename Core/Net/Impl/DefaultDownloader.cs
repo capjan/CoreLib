@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Net;
+using System.Net.Http;
 using System.Text;
 using Core.Extensions.NetRelated;
 
@@ -10,6 +11,22 @@ namespace Core.Net.Impl
         public string DownloadToString(string url)
         {
             using (var client = new HttpClient())
+                return client.GetStringAsync(url).Result;
+        }
+    }
+
+    public class DownloaderWithCredentials : IDownloader
+    {
+        private readonly ICredentials _credentials;
+        public DownloaderWithCredentials(ICredentials credentials)
+        {
+            _credentials = credentials;
+        }
+
+        public string DownloadToString(string url)
+        {
+            using (var handler = new HttpClientHandler { Credentials = _credentials })
+            using (var client = new HttpClient(handler))
                 return client.GetStringAsync(url).Result;
         }
     }
