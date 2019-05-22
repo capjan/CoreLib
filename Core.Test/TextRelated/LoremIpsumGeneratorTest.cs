@@ -17,7 +17,7 @@ namespace Core.Test.TextRelated
             var text = gen.CreateText(1);
             Assert.Equal("lorem", text);
             text = gen.CreateText(10);
-            Assert.Equal("lorem ipsum dolor sit amet stet kasd gubergren tempor ipsum", text);
+            Assert.Equal("lorem ipsum dolor sit amet stet kasd gubergren tempor dolor", text);
         }
 
         [Fact]
