@@ -109,7 +109,7 @@ namespace Core.Parser.Arguments
                 }
                 if (result.ShowVersion)
                 {
-                    _out.WriteLine($"Version: {_assemblyInfo.GetVersionSummary()}");
+                    _out.WriteLine(_assemblyInfo.GetVersionSummary());
                     return false;
                 }
 
