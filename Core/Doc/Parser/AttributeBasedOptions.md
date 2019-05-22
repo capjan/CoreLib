@@ -1,4 +1,4 @@
-﻿# CLI Options with Attributes (as Fronted for the NDesk)
+﻿# CLI Options with Attributes
 
 Inspired by other attribute based command line argument parsers I added a attribute based frontend to the
 already included [NDesk Options](./NDeskOptions.md) command line parser.
