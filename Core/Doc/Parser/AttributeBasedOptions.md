@@ -36,7 +36,19 @@ class Program
             return;
 
         // done. options are parsed and valid. 
-        // additionally --help and --version is also already handled.
+        // --help and --version is also already handled. :)
+
+       
+       try
+       {
+           // do your critical task here
+       }
+       catch (Exception ex)
+       {
+           // the parser instance provides a possibility to 
+           // write the usage at a later program stage if needed
+           parser.WriteUsage()
+       }
     }
 }
 ```
