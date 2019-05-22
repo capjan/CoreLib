@@ -58,13 +58,13 @@ namespace Core.Parser.Arguments
             catch (Exception ex)
             {
                 _err.WriteLine(ex.Message);
-                WriteHelp();
+                WriteUsage();
                 return false;
             }
 
             if (result.ShowHelp)
             {
-                WriteHelp();
+                WriteUsage();
                 return false;
             }
 
@@ -122,10 +122,10 @@ namespace Core.Parser.Arguments
             }
         }
 
-        public void WriteHelp()
+        public void WriteUsage()
         {
             if (_optionSet == null)
-                throw new InvalidOperationException($"{nameof(WriteHelp)}() must be called after {nameof(TryParse)}()");
+                throw new InvalidOperationException($"{nameof(WriteUsage)}() must be called after {nameof(TryParse)}()");
             _out.WriteLine();
             _out.WriteLine("Usage:");
             _out.WriteLine($" {_assemblyInfo.Title} [options]");
