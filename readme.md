@@ -1,10 +1,14 @@
 # CoreLib
 
-CoreLib is a .NET Standard library that provides field-proven code solutions to everyday problems 
-without adding 3rd-party dependencies.
+CoreLib provides field-proven code solutions to everyday problems without adding 3rd-party dependencies.
 It's intended be used in every project to reuse as much code as possible.
 
-## Namespaces
+# Getting started
+
+Install CoreLib via [NuGet](https://www.nuget.org/packages/Cap.Core/) (Package **Cap.Core**) and take a look
+at the provided solutions below.
+
+# Solutions
 * [ControlFlow](./Core/Doc/ControlFlow.md) - contains control flow utility classes
 * [Diagnostics](./Core/Doc/Diagnostics.md) - contains CliRunner
 * [Generic](./Core/Doc/Generic.md) - Contains utility classes for generic type implementations
