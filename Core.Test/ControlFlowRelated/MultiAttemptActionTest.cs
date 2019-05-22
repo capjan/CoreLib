@@ -14,7 +14,7 @@ namespace Core.Test.ControlFlowRelated
             {
                 attemptCount++;
                 if (attemptCount <= 3)
-                    throw new InvalidOperationException();         
+                    throw new InvalidOperationException();
             };
             var multiAction = action.WithMultipleAttempts();
             multiAction.Invoke();

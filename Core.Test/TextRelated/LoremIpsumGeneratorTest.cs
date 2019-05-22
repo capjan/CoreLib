@@ -33,8 +33,7 @@ namespace Core.Test.TextRelated
                     gen.WriteText(10, writer);
                 var fileContents = File.ReadAllText(tempFile);
                 Assert.Equal("lorem ipsum dolor sit amet stet kasd gubergren tempor ipsum", fileContents);
-
-            });                       
+            });
         }
     }
 }

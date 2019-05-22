@@ -37,7 +37,5 @@ namespace Core.Test.NetRelated
             var resolver    = new DefaultPublicIpResolver(serviceUrls: serviceUrls);
             var ip          = resolver.Resolve();
         }
-
-        
     }
 }

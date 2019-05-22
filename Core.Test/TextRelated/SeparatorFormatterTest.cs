@@ -42,7 +42,6 @@ namespace Core.Test.TextRelated
             Assert.Equal("T, e, s, t", 
                          "Test".ToCharArray()
                                .ToSeparatedString());
-
         }
     }
 }
