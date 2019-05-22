@@ -1,7 +1,7 @@
-﻿# Attribute Based Option Fronted for the NDesk Options Parser
+﻿# CLI Options with Attributes (as Fronted for the NDesk)
 
-Inspired by attribute based command line argument parsers I added a attribute based frontend to the
-included [NDesk Options](http://www.ndesk.org/Options) command line parser.
+Inspired by other attribute based command line argument parsers I added a attribute based frontend to the
+already included [NDesk Options](http://www.ndesk.org/Options) command line parser.
 
 ## Why?
 
@@ -13,7 +13,7 @@ Additionally the parser has already handled the --help and --version option with
 
 ## Example
 
-1. Define a POCO Class for the Options
+1. Define a POCO class for the options
 ```csharp
 public class Options : CliOptions
 {
