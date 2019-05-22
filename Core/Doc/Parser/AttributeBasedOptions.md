@@ -20,7 +20,7 @@ public class Options : CliOptions
     [Option("r|recursive", "remove directories and their contents recursively")]
     public bool Recursive { get; set; }
 
-    // please h|help and v|version is added by inheriting from CliOptions
+    // The options h|help and v|version are inherited from CliOptions
 }
 ```
 
