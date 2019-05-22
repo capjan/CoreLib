@@ -19,6 +19,6 @@ namespace Core.Test.ControlFlowRelated
             var multiAction = action.WithMultipleAttempts();
             multiAction.Invoke();
             Assert.Equal(4, multiAction.AttemptCount);
-        }        
+        }
     }
 }
