@@ -106,7 +106,7 @@ namespace Core.Parser.Arguments
                 else if (pType == typeof(string))
                     _optionSet.Add(
                         attribute.Prototype, attribute.Description,
-                        v => propertyInfo.SetValue(result, long.Parse(v)));
+                        v => propertyInfo.SetValue(result, v));
                 else if (pType == typeof(float))
                     _optionSet.Add(
                         attribute.Prototype, attribute.Description,
