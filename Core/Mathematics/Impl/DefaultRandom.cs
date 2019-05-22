@@ -21,12 +21,14 @@ namespace Core.Mathematics.Impl
 
         public int Next(int maxValue)
         {
-            return _random.Next(maxValue);
+            if (maxValue == int.MaxValue) maxValue -= 1;
+            return _random.Next(maxValue + 1);
         }
 
         public int Next(int minValue, int maxValue)
         {
-            return _random.Next(minValue, maxValue);
+            if (maxValue == int.MaxValue) maxValue -= 1;
+            return _random.Next(minValue, maxValue + 1);
         }
 
         private readonly Random _random;

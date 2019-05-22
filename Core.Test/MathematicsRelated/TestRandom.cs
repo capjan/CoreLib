@@ -38,5 +38,19 @@ namespace Core.Test.MathematicsRelated
                 Assert.InRange(next, 10,20);
             }            
         }
+
+        [Fact]
+        public void RandomMinMaxValueTest2()
+        {
+            var random = new DefaultRandom();
+            var hitCount = new int[4];
+            for (var i = 0; i < 1000; i++)
+            {
+                var next = random.Next(0, 3);
+                hitCount[next]++;
+            }
+            Assert.True(hitCount[0] > 0);
+            Assert.True(hitCount[3] > 0);
+        }
     }
 }
