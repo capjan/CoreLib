@@ -1,7 +1,7 @@
 ﻿# CLI Options with Attributes (as Fronted for the NDesk)
 
 Inspired by other attribute based command line argument parsers I added a attribute based frontend to the
-already included [NDesk Options](http://www.ndesk.org/Options) command line parser.
+already included [NDesk Options](./NDeskOptions.md) command line parser.
 
 ## Why?
 
