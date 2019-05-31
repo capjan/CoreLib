@@ -1,12 +1,21 @@
-﻿# Linq Expression as Property Info Extractor
+﻿# MemberInfo via Linq Expression
 
-With Linq Expressions you can do many cool things.
+With Linq Expressions you can do many cool things. Here I would like to point
+out a use case for which I find them incredibly useful.
 
-I would like to point out a use case for which I like to use them. 
-Namely for function parameters where you would normally need a magic string.
+If you write an API that should apply something to the properties of a certain
+type. And if the property is to be determined by developers in the code, then
+this method is incredibly convenient.
 
-I saw the usage of this method for the first time in the fantastic 
-library FluentValidation.
+Especially because the selection of properties is directly limited to the 
+given type and this method allows the auto-completion of Intellisense.
+
+## Advantages
+* No magic strings
+* No nameof instruction
+* Code assistant (Intellisense) provides optimal support during input.
+
+
 
 ## Example
 
@@ -23,6 +32,10 @@ public class PropertyDumper<T>
     public string Dump<TProperty>(Expression<Func<T, TProperty>> expression)
     {
         var memberInfo = expression.GetMember();
+        
+        // Here you can additional check the Type Property of memberInfo 
+        // to cast it to a more specific info class like PropertyInfo, etc.
+
         var name       = memberInfo.Name;
         var type       = typeof(TProperty);
 
