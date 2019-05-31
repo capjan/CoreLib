@@ -9,6 +9,7 @@ Install CoreLib via [NuGet](https://www.nuget.org/packages/Cap.Core/) (Package *
 at the provided solutions below.
 
 # Solutions
+* [Collections](./Core/Doc/Collections.md) - additional collection classes
 * [ControlFlow](./Core/Doc/ControlFlow.md) - contains control flow utility classes
 * [Diagnostics](./Core/Doc/Diagnostics.md) - contains CliRunner
 * [Generic](./Core/Doc/Generic.md) - Contains utility classes for generic type implementations
