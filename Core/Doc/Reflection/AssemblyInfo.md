@@ -1,6 +1,6 @@
 ﻿# AssemblyInfo
 
-AssemblyInfo is intendet to make it easy to access the given assembly attributes in code.
+AssemblyInfo is intended to make it easy to access the given assembly attributes in code.
 
 ## Exposed Properties
 * Title
