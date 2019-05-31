@@ -1,12 +1,23 @@
 # CoreLib
 
-CoreLib provides field-proven code solutions to everyday problems without adding 3rd-party dependencies.
-It's intended be used in every project to reuse as much code as possible.
+Consider this library as a quick start into a productivity boost
+to achieve your stated development goal faster.
+
+This library privides field-proven code solutions to everyday problems
+without adding additional 3rd-party dependencies. It's **open source** and 
+**completely free**. So you can use it (or parts of it) in your projects, 
+whether they are open source or not.
+
+A core library unfolds its maximum effectiveness for you, if you are 
+occupied with the offered solutions and use them again and again.
+So, ideally, you should use this core library in all projects to with the
+goal to **reuse as much code as possible**!
 
 # Getting started
 
-Install CoreLib via [NuGet](https://www.nuget.org/packages/Cap.Core/) (Package **Cap.Core**) and take a look
-at the provided solutions below.
+1. Install CoreLib via [NuGet](https://www.nuget.org/packages/Cap.Core/) 
+(Package **Cap.Core**) 
+2. Read the documentation to learn how to use the provided solutions
 
 # Solutions
 * [Collections](./Core/Doc/Collections.md) - additional collection classes

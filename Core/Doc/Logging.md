@@ -5,19 +5,12 @@ Logging should ...
 * be easy to use
 * be easy to extend
 * be filterable (conditional logging)
-* add no external dependencies - expect itself for sure :)
-
-# NLog, log4Net, ...
-
-As already mentioned, this approach is easy to extend. Following the SOLID Open Closed principe we're open for extensions, but not for modifications.
-
-So, If we require any feature offered by one of the popular (and great) logging libraries 
-out there we add them **without changing our existing code**! If required we implement you custom LogTarget and forward your logging messages to the chosen library.
+* add no external dependencies (expect itself)
 
 # Architecture
- * the core of this logging implementatin is the static internal class *Log*
- * *Log* exposes static methods for logging and an global event to notify targets
- * targets are implemented by inheriting from the abstract class LogTarget. 
+ * Core of this logging implementatin is the static internal class *Log*
+ * *Log* exposes static methods for logging and a global event to notify targets
+ * Targets are implemented by inheriting from the abstract class LogTarget. 
 
 # How to Log
 
@@ -62,3 +55,15 @@ public class ExampleClass
     }
 }
 ```
+
+# NLog, log4Net, ...
+
+As already mentioned, this core logging approach is easy to extend. 
+Following the SOLID Open Closed principe CoreLib is open for extensions, 
+but not for modifications.
+
+So, if we require any feature from the popular (and great) logging libraries 
+out there you can add them **without changing our existing code**! 
+
+All you have to do is to implement you custom LogTarget and forward your 
+logging messages to the chosen logging library.
