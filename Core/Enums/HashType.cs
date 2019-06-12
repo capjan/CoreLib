@@ -1,4 +1,5 @@
-﻿namespace Core.Enums
+﻿// ReSharper disable InconsistentNaming
+namespace Core.Enums
 {
     public enum HashType
     {
