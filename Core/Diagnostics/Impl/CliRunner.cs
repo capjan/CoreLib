@@ -26,11 +26,12 @@ namespace Core.Diagnostics.Impl
 
         public string ReadToEnd()
         {
-            var result = "";
+            string result;
             using (var p = Process.Start(_psi))
-            {                                
+            {
+                if (p == null) throw new InvalidOperationException($"CliRunner failed to create process for \"{_psi.FileName}\"");
                 result = p.StandardOutput.ReadToEnd();
-                p.WaitForExit();                                
+                p.WaitForExit();
             }
             return result;
         }
