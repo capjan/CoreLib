@@ -29,10 +29,12 @@ namespace Core.Diagnostics.Impl
             string result;
             using (var p = Process.Start(_psi))
             {
-                if (p == null) throw new InvalidOperationException($"CliRunner failed to create process for \"{_psi.FileName}\"");
+                if (p == null)
+                    throw new InvalidOperationException($"CliRunner failed to create process for \"{_psi.FileName}\"");
                 result = p.StandardOutput.ReadToEnd();
                 p.WaitForExit();
             }
+
             return result;
         }
 
@@ -40,22 +42,22 @@ namespace Core.Diagnostics.Impl
         {
             _readDataCallback = callback;
             using (var p = new Process())
-            {                
+            {
                 p.OutputDataReceived += DataReceived;
                 p.ErrorDataReceived  += DataReceived;
                 p.StartInfo          =  _psi;
                 p.Start();
                 p.BeginOutputReadLine();
                 p.BeginErrorReadLine();
-                p.WaitForExit();                
+                p.WaitForExit();
                 p.OutputDataReceived -= DataReceived;
                 p.ErrorDataReceived  -= DataReceived;
-            }            
+            }
         }
 
         private void DataReceived(object sender, DataReceivedEventArgs e)
         {
-            _readDataCallback(e.Data);       
+            _readDataCallback(e.Data);
         }
 
         private          Action<string>   _readDataCallback;
