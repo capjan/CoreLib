@@ -19,19 +19,15 @@ namespace Core.Test.TextRelated
         {
             var intArray = new[] {1, 2, 3, 4, 5};
 
-            var formatter = new DefaultSeparatorFormatter<int>(
-                separator: ", ",
-                groupLength: 1,
-                toStringFunc: v => v.ToString(),
-                nullPlaceholder: "");
+            var formatter = new DefaultSeparatorFormatter<int>();
 
             formatter.Write(intArray, Console.Out);
             var formatted = formatter.WriteToString(intArray);
+            Assert.Equal("1, 2, 3, 4, 5", formatted);
 
             // or use the extension method on any IEnumerable<T>
-            var formattedString = formatter.WriteToString(intArray);
-
             var formattedViaExtension = intArray.ToSeparatedString();
+            Assert.Equal(formatted, formattedViaExtension);
 
             Assert.Equal("one, two, three", new []{"one", "two", "three"}.ToSeparatedString());
         }

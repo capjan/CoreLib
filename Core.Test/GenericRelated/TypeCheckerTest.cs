@@ -8,6 +8,7 @@ namespace Core.Test.GenericRelated
         [Fact]
         public void BasicTest()
         {
+            // ReSharper disable once UnusedParameter.Local
             bool IsStringOrInt<T>(T value)
             {
                 var typeChecker = new TypeChecker<T>(typeof(string), typeof(int));

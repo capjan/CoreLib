@@ -10,7 +10,6 @@ namespace Core.Test.NetRelated
         public void ResolveTest()
         {
             var ipResolver = new DefaultPublicIpResolver();
-            var ipViaOwnService = new DefaultPublicIpResolver(serviceUrls: new []{"https://customIpServcie.com"});
             Assert.Matches(RegExLib.IpV4Address, ipResolver.Resolve());
         }
 
@@ -36,6 +35,7 @@ namespace Core.Test.NetRelated
             var serviceUrls = new [] {"https://api.ipify.org"};
             var resolver    = new DefaultPublicIpResolver(serviceUrls: serviceUrls);
             var ip          = resolver.Resolve();
+            Assert.NotNull(ip);
         }
     }
 }

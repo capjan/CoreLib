@@ -5,11 +5,19 @@ using System.Text;
 using Core.Extensions.ParserRelated;
 using Core.Parser.Arguments;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Core.Test.ParserRelated
 {
     public class OptionTest
     {
+        private readonly ITestOutputHelper _testOutputHelper;
+
+        public OptionTest(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+        }
+
         [Fact]
         public void BasicArgumentParserTest()
         {
@@ -39,6 +47,7 @@ namespace Core.Test.ParserRelated
                 options.WriteOptionDescriptions(sw);
 
             var desc = sb.ToString();
+            Assert.NotNull(desc);
 
             try
             {
@@ -48,7 +57,7 @@ namespace Core.Test.ParserRelated
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _testOutputHelper.WriteLine(e.ToString());
             }
 
             Assert.True(showVersion);
@@ -73,6 +82,7 @@ namespace Core.Test.ParserRelated
 
             // get formatted description as string
             var description = options.GetOptionDescriptions();
+            Assert.NotNull(description);
 
             // write description directly to std out
             options.WriteOptionDescriptions(Console.Out);
@@ -80,7 +90,7 @@ namespace Core.Test.ParserRelated
             try
             {
                 // extra contains the remaining 'non option' arguments
-                var extra = options.Parse(new[] {"-v", "--output", "C:\\temp"});
+                options.Parse(new[] {"-v", "--output", "C:\\temp"});
             }
             catch (Exception)
             {
@@ -96,9 +106,6 @@ namespace Core.Test.ParserRelated
 
         public class TestOptions : CliOptions
         {
-            [Option("h|help", "Shows this help")]
-            public bool ShowHelp { get; set; }
-
             [Option("m|max=", "Sets the maximum for the value")]
             public int MaxValue { get; set; } = 10;
         }
@@ -106,11 +113,20 @@ namespace Core.Test.ParserRelated
         [Fact]
         public void BasicAttributesFrontendTest()
         {
-            var args = new string[] {"--help", "--max", "1234"};
+            var args = new[] {"--max", "1234"};
             Assert.True(new OptionParser<TestOptions>().TryParse(args, out var result));
-            Assert.True(result.ShowHelp);
+            Assert.False(result.ShowHelp);
             Assert.Equal(1234, result.MaxValue);
-            
+        }
+        
+        [Fact]
+        public void BasicShowHelpTest()
+        {
+            var args = new[] {"--help", "--max", "1234"};
+            // if the help option is set the TryParse returns false to indicate that the program should not continue
+            // and exit
+            Assert.False(new OptionParser<TestOptions>().TryParse(args, out var result));
+            Assert.Null(result);
         }
     }
 }

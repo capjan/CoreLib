@@ -8,11 +8,6 @@ namespace Core.Logging.Targets
 {
     public abstract class LogTarget : IDisposable
     {
-        protected LogTarget()
-        {
-            
-        }
-
         /// <inheritdoc />
         public void Dispose()
         {

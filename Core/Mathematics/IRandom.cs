@@ -1,6 +1,4 @@
-﻿using System.CodeDom;
-
-namespace Core.Mathematics
+﻿namespace Core.Mathematics
 {
     public interface IRandom
     {
@@ -8,7 +6,7 @@ namespace Core.Mathematics
         /// Returns a random number in the range of all possible integer values
         /// </summary>
         int Next();
-        
+
         /// <summary>
         /// Returns a random number from 0 to inclusive maxValue.
         /// </summary>

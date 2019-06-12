@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
 using Core.Extensions.LinqRelated;
 using Xunit;
 
@@ -10,10 +7,12 @@ namespace Core.Test.LinqRelated
 {
     public class PropertyNameExtractionTest
     {
-        public class Person
+        private class Person
         {
+            // ReSharper disable UnusedAutoPropertyAccessor.Local
             public string Name { get; set; }
             public int Age { get; set; }
+            // ReSharper restore UnusedAutoPropertyAccessor.Local
         }
 
         public class PropertyDumper<T>
@@ -21,11 +20,6 @@ namespace Core.Test.LinqRelated
             public string Dump<TProperty>(Expression<Func<T, TProperty>> expression)
             {
                 var memberInfo = expression.GetMember();
-
-                if (memberInfo.MemberType == MemberTypes.Property)
-                {
-                    var pi = (PropertyInfo) memberInfo;
-                }
                 var name = memberInfo.Name;
                 var type = typeof(TProperty);
 
@@ -36,11 +30,6 @@ namespace Core.Test.LinqRelated
         [Fact]
         public void TestMapper()
         {
-            var person = new Person
-            {
-                Name = "John Doe",
-                Age  = 21
-            };
 
             var dumper = new PropertyDumper<Person>();
             var dump1 = dumper.Dump(p=>p.Name);
