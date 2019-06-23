@@ -3,8 +3,8 @@ namespace Core.Mathematics.Impl
     internal class DefaultGeoLocation : IGeoLocation
     {
         public DefaultGeoLocation(
-            decimal latitude, 
-            decimal longitude,
+            double latitude, 
+            double longitude,
             IGeoCoordinate latitudeDMS,
             IGeoCoordinate longitudeDMS)
         {
@@ -14,8 +14,8 @@ namespace Core.Mathematics.Impl
             LongitudeDMS = longitudeDMS;
         }
 
-        public decimal Longitude { get; }
-        public decimal Latitude { get; }
+        public double Longitude { get; }
+        public double Latitude { get; }
         public IGeoCoordinate LongitudeDMS { get; }
         public IGeoCoordinate LatitudeDMS { get; }
     }

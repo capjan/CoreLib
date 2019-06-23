@@ -5,19 +5,14 @@ namespace Core.Mathematics.Impl
 {
     public class DefaultGeoCoordinateMath : IGeoCoordinateMath
     {
-        public IGeoCoordinate DoubleToGeoCoordinate(GeoCoordinateType coordinateType, double value)
-        {
-            return DecimalToGeoCoordinate( coordinateType, Convert.ToDecimal(value));
-        }
-
-        public IGeoCoordinate DecimalToGeoCoordinate(GeoCoordinateType coordinateType, decimal angleInDegrees)
+        public IGeoCoordinate DoubleToGeoCoordinate(GeoCoordinateType coordinateType, double angleInDegrees)
         {
             //ensure the value will fall within the primary range [-180.0..+180.0]
-            while (angleInDegrees < -180.0M)
-                angleInDegrees += 360.0M;
+            while (angleInDegrees < -180.0)
+                angleInDegrees += 360.0;
 
-            while (angleInDegrees > 180.0M)
-                angleInDegrees -= 360.0M;
+            while (angleInDegrees > 180.0)
+                angleInDegrees -= 360.0;
 
             var isNegative = angleInDegrees < 0;
 
@@ -29,15 +24,11 @@ namespace Core.Mathematics.Impl
             var delta   = angleInDegrees - degrees;
 
             //gets minutes and seconds
-            var secondsFloor = (int) Math.Floor(3600.0M * delta);
-            var seconds      = secondsFloor % 60;
-            var minutes      = (int) Math.Floor(secondsFloor / 60.0);
-            delta = delta * 3600.0M - secondsFloor;
-
-            //gets fractions
-            var milliseconds = (int) (1000.0M * delta);
-
-            return new DefaultGeoCoordinate(coordinateType, isNegative, degrees, minutes, seconds, milliseconds);
+            var secondsTotal     = delta * 3600.0;
+            var minutes          = (int) Math.Floor(secondsTotal / 60.0);
+            var secondsRemainder = secondsTotal - (minutes * 60);
+            
+            return new DefaultGeoCoordinate(coordinateType, isNegative, degrees, minutes, secondsRemainder);
         }
     }
 }

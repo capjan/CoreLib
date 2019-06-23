@@ -11,10 +11,10 @@ namespace Core.Mathematics.Impl
             _coordinateMath = coordinateMath ?? new DefaultGeoCoordinateMath();
         }
 
-        public IGeoLocation Create(decimal latitude, decimal longitude)
+        public IGeoLocation Create(double latitude, double longitude)
         {
-            var latDMS = _coordinateMath.DecimalToGeoCoordinate(GeoCoordinateType.Latitude, latitude);
-            var lonDMS = _coordinateMath.DecimalToGeoCoordinate(GeoCoordinateType.Longitude, longitude);
+            var latDMS = _coordinateMath.DoubleToGeoCoordinate(GeoCoordinateType.Latitude, latitude);
+            var lonDMS = _coordinateMath.DoubleToGeoCoordinate(GeoCoordinateType.Longitude, longitude);
             return new DefaultGeoLocation(latitude, longitude, latDMS, lonDMS);
         }
     }

@@ -2,8 +2,8 @@ namespace Core.Mathematics
 {
     public interface IGeoLocation
     {
-        decimal        Longitude    { get; }
-        decimal        Latitude     { get; }
+        double        Longitude    { get; }
+        double        Latitude     { get; }
         IGeoCoordinate LongitudeDMS { get; }
         IGeoCoordinate LatitudeDMS  { get; }
     }
