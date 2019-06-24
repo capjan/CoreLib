@@ -30,5 +30,13 @@ namespace Core.Mathematics.Impl
             
             return new GeoCoordinate(coordinateType, isNegative, degrees, minutes, secondsRemainder);
         }
+
+        public double GeoCoordinateToDouble(IGeoCoordinate value)
+        {
+            var angle = value.Degrees + (value.Minutes * 60.0 + value.Seconds) / 3600.0;
+            if (value.IsNegative)
+                return -angle;
+            return angle;
+        }
     }
 }

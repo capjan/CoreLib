@@ -5,5 +5,6 @@ namespace Core.Mathematics
     public interface IGeoCoordinateMath
     {
         IGeoCoordinate DoubleToGeoCoordinate(GeoCoordinateType coordinateType, double value);
+        double GeoCoordinateToDouble(IGeoCoordinate value);
     }
 }
