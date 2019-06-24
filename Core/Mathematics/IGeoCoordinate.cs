@@ -2,6 +2,9 @@ using Core.Enums;
 
 namespace Core.Mathematics
 {
+    /// <summary>
+    /// DMS Geo Coordinate (Degree, Minutes, Seconds) 
+    /// </summary>
     public interface IGeoCoordinate
     {
         GeoCoordinateType Type         { get; }
