@@ -3,7 +3,7 @@ using Core.Enums;
 
 namespace Core.Mathematics.Impl
 {
-    public class DefaultGeoCoordinateMath : IGeoCoordinateMath
+    public class GeoCoordinateMath : IGeoCoordinateMath
     {
         public IGeoCoordinate DoubleToGeoCoordinate(GeoCoordinateType coordinateType, double angleInDegrees)
         {
@@ -28,7 +28,7 @@ namespace Core.Mathematics.Impl
             var minutes          = (int) Math.Floor(secondsTotal / 60.0);
             var secondsRemainder = secondsTotal - (minutes * 60);
             
-            return new DefaultGeoCoordinate(coordinateType, isNegative, degrees, minutes, secondsRemainder);
+            return new GeoCoordinate(coordinateType, isNegative, degrees, minutes, secondsRemainder);
         }
     }
 }
