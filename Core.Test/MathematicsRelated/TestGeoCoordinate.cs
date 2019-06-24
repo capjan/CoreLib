@@ -33,6 +33,15 @@ namespace Core.Test.MathematicsRelated
             Assert.Equal("E 13° 22' 33.9\"", geoBerlin.LongitudeDMS.WriteToString());
             geoBerlin.LongitudeDMS.WriteToString();
         }
+
+        [Fact]
+        public void TestConversionDMSToDouble()
+        {
+            var math = new GeoCoordinateMath();
+            var latitudeDMS = new GeoCoordinate(GeoCoordinateType.Latitude, false, 35, 45,0.0 );
+            var latitude = math.GeoCoordinateToDouble(latitudeDMS);
+            Assert.Equal(35.75, latitude);
+        }
         
     }
 }
