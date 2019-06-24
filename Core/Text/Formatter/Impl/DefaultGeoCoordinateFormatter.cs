@@ -9,7 +9,7 @@ namespace Core.Text.Formatter.Impl
 {
     public class DefaultGeoCoordinateFormatter : IGeoCoordinateFormatter
     {
-        public ITextFormatter<double> _formatter;
+        private readonly ITextFormatter<double> _formatter;
 
         public DefaultGeoCoordinateFormatter(ITextFormatter<double> formatter = null)
         {
