@@ -12,16 +12,16 @@
 # Examples
 
 ```csharp
-var factory  = new DefaultGeoLocationFactory();
-var location = factory.Create(52.518639M, 13.376090M);
+var geoFactory  = new GeoLocationFactory();
+var location = geoFactory.Create(52.518639, 13.376090);
 
-// access longitude and latiduce in decimal and DMS format via properties.
+// access longitude and latitude in decimal and DMS format via properties.
 // Note: calculation of DMS coordinates (IGeoCoordinateMath) and formatting (IGeoCoordinateFormatter) is exchangeable
 ```
 
 Format Geo Coordinates (DMS) to string
 ```csharp
-var location = new DefaultGeoLocationFactory().Create(52.518639M, 13.376090M);
+var location = new GeoLocationFactory().Create(52.518639, 13.376090);
 
 // ToString is overwritten and uses the default formatter
 var latDMSStr = location.LatitudeDMS.ToString();  // N 52° 31' 07.1"
@@ -30,7 +30,7 @@ var lonDMSStr = location.LongitudeDMS.ToString(); // E 13° 22' 33.9"
 
 Custom formatting of Geo Coordinates (DMS)
 ```csharp
-var location = new DefaultGeoLocationFactory().Create(52.518639M, 13.376090M);
+var location = new GeoLocationFactory().Create(52.518639, 13.376090);
 
 // TODO: implement your own DMS coordinate formatter and replace the default formatter
 IGeoCoordinateFormatter formatter = new DefaultGeoCoordinateFormatter();
