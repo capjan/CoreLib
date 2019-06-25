@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices.ComTypes;
 using Core.Enums;
 using Core.Extensions.MathematicsRelated;
 using Core.Mathematics.Impl;
@@ -52,14 +51,14 @@ namespace Core.Test.MathematicsRelated
             Assert.Equal(0.0, loc.Latitude);
             Assert.Equal(0.0, loc.Longitude);
 
-            var minValues = fac.Create(-90.0, -180);
-            var maxLocation = fac.Create(90.0, 180.0);
+            // passive assert: this lines must not throw an exception 
+            fac.Create(-90.0, -180); // min. values
+            fac.Create(90.0, 180.0); // max. values
+            
             Assert.Throws<ArgumentOutOfRangeException>(() =>fac.Create(-90.1, 0.0));
             Assert.Throws<ArgumentOutOfRangeException>(() => fac.Create(90.1, 0));
             Assert.Throws<ArgumentOutOfRangeException>(() => fac.Create(0, -180.1));
             Assert.Throws<ArgumentOutOfRangeException>(() => fac.Create(0, 180.1));
         }
-        
-
     }
 }
