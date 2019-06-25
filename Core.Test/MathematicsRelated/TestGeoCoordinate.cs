@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices.ComTypes;
 using Core.Enums;
 using Core.Extensions.MathematicsRelated;
 using Core.Mathematics.Impl;
@@ -42,6 +43,23 @@ namespace Core.Test.MathematicsRelated
             var latitude = math.GeoCoordinateToDouble(latitudeDMS);
             Assert.Equal(35.75, latitude);
         }
+
+        [Fact]
+        public void TestCreateLocation()
+        {
+            var fac = new GeoLocationFactory();
+            var loc = fac.Create(0.0,0.0);
+            Assert.Equal(0.0, loc.Latitude);
+            Assert.Equal(0.0, loc.Longitude);
+
+            var minValues = fac.Create(-90.0, -180);
+            var maxLocation = fac.Create(90.0, 180.0);
+            Assert.Throws<ArgumentOutOfRangeException>(() =>fac.Create(-90.1, 0.0));
+            Assert.Throws<ArgumentOutOfRangeException>(() => fac.Create(90.1, 0));
+            Assert.Throws<ArgumentOutOfRangeException>(() => fac.Create(0, -180.1));
+            Assert.Throws<ArgumentOutOfRangeException>(() => fac.Create(0, 180.1));
+        }
         
+
     }
 }

@@ -13,8 +13,8 @@ namespace Core.Mathematics.Impl
         {
             if (latitude < -90.0 || latitude > 90.0)
                 throw new ArgumentOutOfRangeException(nameof(latitude), $"latitude must be between -90 to 90. Value: {latitude}");
-            if (longitude < 180.0 || longitude > 180.0)
-                throw new ArgumentException(nameof(longitude), $"longitude must be between -180 and +180 degrees. Value: {longitude}");
+            if (longitude < -180.0 || longitude > 180.0)
+                throw new ArgumentOutOfRangeException(nameof(longitude), $"longitude must be between -180 and +180 degrees. Value: {longitude}");
             if (latitudeDMS == null)
                 throw new ArgumentNullException(nameof(latitudeDMS));
             if (longitudeDMS == null)
