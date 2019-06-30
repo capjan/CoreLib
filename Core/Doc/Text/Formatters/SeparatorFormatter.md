@@ -14,7 +14,7 @@ formatter.WriteFormatted(intArray, Console.Out);
 // writes 1, 2, 3, 4, 5 to stdout
 
 // same as above, but as string
-var formattedString = formatter.FormatToString(intArray);
+var formattedString = formatter.WriteToString(intArray);
 
 // via extension method-- 
 var formattedViaExtension = intArray.ToSeparatedString();
