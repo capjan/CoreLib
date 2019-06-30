@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using Core.Enums;
@@ -41,6 +42,11 @@ namespace Core.Extensions.TextRelated
         {
             formatter.Write(DateTime.UtcNow, writer);
             writer.WriteLine();
+        }
+
+        public static void MakeCultureInvariant<T>(this IFormattableTextFormatter<T> formatter)
+        {
+            formatter.FormatProvider = CultureInfo.InvariantCulture;
         }
 
         /// <summary>
