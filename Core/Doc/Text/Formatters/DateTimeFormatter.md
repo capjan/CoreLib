@@ -13,7 +13,7 @@ IDateTimeFormatter formatter = new DefaultDateTimeFormatter(
                 format: " dd.MM.yyyy HH:mm:ss.fff ",
                 localTime: true,
                 formatProvider: CultureInfo.CurrentCulture);
-var localTime = formatter.FormatToString(DateTime.UtcNow);
+var localTime = formatter.WriteToString(DateTime.UtcNow);
 ```
 
 With:
