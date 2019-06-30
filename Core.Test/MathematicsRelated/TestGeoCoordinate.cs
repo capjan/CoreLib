@@ -10,8 +10,7 @@ namespace Core.Test.MathematicsRelated
     {
         private const double DecimalLatitudeOfBerlin = 52.518639;
         private const double DecimalLongitudeOfBerlin = 13.376090;
-
-
+        
         [Fact]
         public void TestGeoLocationFactory()
         {
