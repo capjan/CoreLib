@@ -3,7 +3,7 @@ namespace Core.Text.Formatter
     /// <summary>
     /// Formats a given number to a formatted string representation with si-prefix. e.g. 1000 => 1 k
     /// </summary>
-    public interface ISiFormatter : IFormattableTextFormatter<double>
+    public interface ISiFormatter : IFormattableTextFormatter<decimal>
     {
         /// <summary>
         /// content between number and si-prefix unit. Defaults to a single space 
@@ -19,5 +19,10 @@ namespace Core.Text.Formatter
         /// Optional unit postfix. Defaults to null
         /// </summary>
         string Unit { get; set; }
+        
+        /// <summary>
+        /// Limits the count of significant decimal places. All non significant decimal places are cut off.
+        /// </summary>
+        int? SignificantDecimalPlaces { get; set; } 
     }
 }
