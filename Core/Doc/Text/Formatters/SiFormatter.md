@@ -11,6 +11,7 @@ e.g. 1000 => 1 k
 * auto determination of the SI prefix. Forcing to a given SI Prefix is also possible
 * possibility to set the name of the unit. defaults to null (no unit)
 * possibility to set the delimiter between value and unit. e.g. replace a space by a tab etc.
+* possibility to limit the significant decimal places to a given value. (avoids unwanted rounding due to formatting)
  
 ## Examples
 ```csharp
@@ -27,7 +28,7 @@ var formatter = new SiFormatter();
 formatter.MakeCultureInvariant(); // extension to make the formatter culture invariant
 formatter.ForceMega();
 
-var result = formatter.WriteToString(144e4);
+var result = formatter.WriteToString(144e4m);
 // result contains 1.44 M
 ```
 
@@ -38,7 +39,7 @@ formatter.MakeCultureInvariant();
 formatter.ForceMega();
 formatter.Unit = "B"; // Byte
 
-var result = formatter.WriteToString(144e4);
+var result = formatter.WriteToString(144e4m);
 // result contains 1.44 MB
 ```
 
