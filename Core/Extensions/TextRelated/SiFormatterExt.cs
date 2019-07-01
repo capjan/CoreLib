@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Core.Text.Formatter;
 
 namespace Core.Extensions.TextRelated
