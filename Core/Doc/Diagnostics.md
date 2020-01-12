@@ -1,4 +1,4 @@
-﻿# Diagnositcs
+﻿# Diagnositics
 
 Diagnostics namespace consits of:
 
