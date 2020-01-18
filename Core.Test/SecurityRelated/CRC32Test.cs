@@ -12,7 +12,7 @@ namespace Core.Test.SecurityRelated
         public void BasicTest()
         {
             var data   = Encoding.UTF8.GetBytes("Hello World");
-            var crc32  = new Crc32HashProvider();
+            var crc32  = new CRC32HashProvider();
             var result = crc32.ComputeHash(data).ToHexString();
             Assert.Equal("4A17B156", result);
         }
@@ -20,9 +20,9 @@ namespace Core.Test.SecurityRelated
         [Fact]
         public void TestStringExtensions()
         {
-            Assert.Equal("4A17B156", "Hello World".CalcCrc32());
-            Assert.Equal("00000000", "".CalcCrc32());
-            Assert.Equal("54A0C7BD", "Jan".CalcCrc32());
+            Assert.Equal("4A17B156", "Hello World".CalcCRC32());
+            Assert.Equal("00000000", "".CalcCRC32());
+            Assert.Equal("54A0C7BD", "Jan".CalcCRC32());
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Core.Extensions.SecurityRelated
         {
             switch (hashType)
             {
-                case HashType.CRC32: return new Crc32HashProvider();
+                case HashType.CRC32: return new CRC32HashProvider();
                 case HashType.MD5: return new MD5CryptoServiceProvider();
                 case HashType.SHA1: return new SHA1CryptoServiceProvider();
                 default: throw new ArgumentException($"unsupported hash type {hashType}");
@@ -61,17 +61,17 @@ namespace Core.Extensions.SecurityRelated
                 return stream.Checksum(hashType);
         }
 
-        public static string CalcCrc32(this string value)
+        public static string CalcCRC32(this string value)
         {
-            return value.CalcChecksum<Crc32HashProvider>().ToHexString();
+            return value.CalcChecksum<CRC32HashProvider>().ToHexString();
         }
 
-        public static string CalcMd5(this string value)
+        public static string CalcMD5(this string value)
         {
             return value.CalcChecksum<MD5CryptoServiceProvider>().ToHexString();
         }
 
-        public static string CalcSha1(this string value)
+        public static string CalcSHA1(this string value)
         {
             return value.CalcChecksum<SHA1CryptoServiceProvider>().ToHexString();
         }

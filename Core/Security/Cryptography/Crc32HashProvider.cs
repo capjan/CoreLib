@@ -6,17 +6,17 @@ namespace Core.Security.Cryptography
 {
     namespace Security
     {
-        public class Crc32HashProvider : HashAlgorithm
+        public class CRC32HashProvider : HashAlgorithm
         {
             public const uint DefaultPolynomial = 0xedb88320u;
             public const uint DefaultSeed       = 0xffffffffu;
 
             private static uint[] _defaultTable;
 
-            public Crc32HashProvider()
+            public CRC32HashProvider()
                 : this(DefaultPolynomial, DefaultSeed) { }
 
-            public Crc32HashProvider(uint polynomial, uint seed)
+            public CRC32HashProvider(uint polynomial, uint seed)
             {
                 if (!BitConverter.IsLittleEndian)
                     throw new PlatformNotSupportedException("Not supported on Big Endian processors");
