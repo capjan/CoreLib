@@ -29,6 +29,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Cryptography" />
     <Folder Include="Mathematics\Impl\" />
     <Folder Include="Security\Cryptography\" />
   </ItemGroup>
