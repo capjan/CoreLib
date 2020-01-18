@@ -22,6 +22,7 @@ goal to **reuse as much code as possible**!
 # Solutions
 * [Collections](./Core/Doc/Collections.md) - additional collection classes
 * [ControlFlow](./Core/Doc/ControlFlow.md) - contains control flow utility classes
+* [Cryptography](./Core/Doc/Cryptography.md) - hash calculation, etc.
 * [Diagnostics](./Core/Doc/Diagnostics.md) - contains CliRunner
 * [Generic](./Core/Doc/Generic.md) - Contains utility classes for generic type implementations
 * [IO](./Core/Doc/IO.md) - File System Input/Output
