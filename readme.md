@@ -1,17 +1,14 @@
 # CoreLib
 
-Consider this library as a quick start into a productivity boost
-to achieve your stated development goal faster.
+Consider this library as productivity boost to achieve stated development goals faster in .NET.
 
-This library privides field-proven code solutions to everyday problems
-without adding additional 3rd-party dependencies. It's **open source** and 
-**completely free**. So you can use it (or parts of it) in your projects, 
-whether they are open source or not.
+**Features:**
 
-A core library unfolds its maximum effectiveness for you, if you are 
-occupied with the offered solutions and use them again and again.
-So, ideally, you should use this core library in all projects to with the
-goal to **reuse as much code as possible**!
+* field-proven solutions for everyday problems.
+* doesn't add additional 3rd-party dependencies (beside itself of course).
+* **open source** and **completely free** (MIT).
+* faster development by reusing the provided solutions. The more you do it, the faster you'll go.
+* And most important of all: Development feels even more like "**batteries included**".
 
 # Getting started
 
