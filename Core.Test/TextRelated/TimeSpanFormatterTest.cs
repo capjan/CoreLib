@@ -46,7 +46,14 @@ namespace Core.Test.TextRelated
             var formatter = new DefaultTimeSpanFormatter(precision: TimePart.Minute);
             var std = formatter.WriteToString(TimeSpan.FromDays(1.234));
             Assert.Equal("1 day, 5 hours, 36 minutes", std);
-            
+        }
+        
+        [Fact]
+        public void BasicSeparatorTest()
+        {
+            var formatter = new DefaultTimeSpanFormatter(separator: " - ");
+            var std       = formatter.WriteToString(TimeSpan.FromDays(1.234));
+            Assert.Equal("1 day - 5 hours - 36 minutes - 57 seconds", std);
         }
 
         [Fact]
