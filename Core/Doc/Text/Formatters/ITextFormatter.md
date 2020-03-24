@@ -34,12 +34,24 @@ Feel free to extend the ITextFormatter.
 
 Current Extensions:
 
-* **WriteToString**
+* **WriteToString()**
 
   ```C#
   var formatter = new SiFormatter {FormatProvider = CultureInfo.InvariantCulture};
   var std = formatter.WriteToString(144e4m);
   // std = "1.44 M"
+  ```
+
+* **ToFormattedString()**
+
+  * Every Type provides a ToFormattedString() String method.
+  * If the formatting comes from the object itself, the possibility of formatting is found easier by a developer.
+  * hopefully all common objects are providing default extension without the need for providing a formatter.
+  * **Do not use this extension method for core framework code and prefer injecting formatters.**
+
+  ```C#
+  TimeSpan.FromDays(1.234).ToFormattedString();
+  // "1 day, 5 hours, 36 minutes"
   ```
 
   
