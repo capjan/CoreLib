@@ -68,7 +68,17 @@ var std = formatter.WriteToString(TimeSpan.FromDays(1.234));
 // std = "1 day, 5 hours, 36 minutes"
 ```
 
+## Compact
 
+Activate the compact mode if the time values should be displayed in abbreviated form.
+
+### Example
+
+```C#
+var formatter = new DefaultTimeSpanFormatter(compact: true);
+var std = formatter.WriteToString(TimeSpan.FromHours(1)
+// std = "1h, 0m, 0s"
+```
 
 
 
