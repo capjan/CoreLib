@@ -80,6 +80,18 @@ var std = formatter.WriteToString(TimeSpan.FromHours(1)
 // std = "1h, 0m, 0s"
 ```
 
+## Separator
+
+It's easy to replace the used separator (standard: comma) if necessary.
+
+### Example
+
+```C#
+var formatter = new DefaultTimeSpanFormatter(separator: " - ");
+var std       = formatter.WriteToString(TimeSpan.FromDays(1.234));
+// std = "1 day - 5 hours - 36 minutes - 57 seconds"
+```
+
 
 
 
