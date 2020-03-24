@@ -54,7 +54,7 @@ formatter.WriteLine(value, Console.Out);
 
 ## Precision
 
-It's possible to set the precision of the formatter. 
+It's possible to set the precision of the formatter. The precision **defaults to Second**.
 
 * If the precision of minutes is enough set it to Minute.
 * if you measure runtime for performance optimizations set it to Millisecond.
