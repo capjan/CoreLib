@@ -58,7 +58,7 @@ namespace Core.Extensions.TextRelated
         /// <param name="compact">use abbreviations for the units</param>
         /// <param name="separator">used separator between parts</param>
         /// <returns></returns>
-        public static string ToHumanReadable(
+        public static string ToFormattedString(
             this TimeSpan timeSpan,
             string twoLetterLanguageCode = "en",
             TimePart precision = TimePart.Minute,
@@ -71,6 +71,11 @@ namespace Core.Extensions.TextRelated
                 compact: compact,
                 separator: separator)
                 .WriteToString(timeSpan);
+        }
+
+        public static string ToFormattedString<T>(this T value, ITextFormatter<T> formatter)
+        {
+            return formatter.WriteToString(value);
         }
     }
 }
