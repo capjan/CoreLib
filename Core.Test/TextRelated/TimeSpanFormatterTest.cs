@@ -63,5 +63,12 @@ namespace Core.Test.TextRelated
             Assert.Equal("0.01:00:00.000", formatter.WriteToString(TimeSpan.FromHours(1)));
             Assert.Equal("0.01:05:01.000", formatter.WriteToString(new TimeSpan(1, 5, 1)));
         }
+
+        [Fact]
+        public void BasicExtenstionMethodTest()
+        {
+            var str = TimeSpan.FromDays(1.234).ToFormattedString();
+            Assert.Equal("1 day, 5 hours, 36 minutes", str);
+        }
     }
 }
