@@ -34,6 +34,26 @@ Console.WriteLine(formatter.WriteToString(value));
 // writes: 1h, 5m, 4s
 ```
 
+## Localization
+
+The DefaultTimeSpanFormatter is provides localization via ITimeLocalization Interface that can be passed as first argument to the constructor. It defaults to english.
+
+Use the TimeLocalization.create() factory method to create ITimeLocalization localization instances.
+
+### Example
+
+```C#
+// creates a german localized TimeSpan formatter
+var formatter = new DefaultTimeSpanFormatter(TimeLocalization.Create("de"))
+
+var value = new TimeSpan(1, 5, 4); // 1 hour, 5 Minutes, 4 Seconds
+
+formatter.WriteLine(value, Console.Out);
+// writes "1 Stunde, 5 Minuten, 4 Sekunden" to stdout
+```
+
+
+
 
 
 
