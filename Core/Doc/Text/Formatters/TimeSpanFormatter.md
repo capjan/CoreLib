@@ -4,7 +4,7 @@ Formats TimeSpan like **2 weeks, 1 day, 1 hour, 5 minutes, 1 second** (Normal) o
 
 ## Intended Usage
 
-* Hide the concrete formatter implementation behind **ITextFormatter<TimeSpan>** to allow  Dependency Injection and changing the implementation without changing your code.
+* Features all benefits of implementing **ITextFormatter<TimeSpan>.
 * CoreLib provides a default implementation called **DefaultTimeSpanFormatter**
 * ITextFormatter
 * Just use ToString() formatting for simple formatting purposes.
@@ -34,22 +34,21 @@ Console.WriteLine(formatter.WriteToString(value));
 // writes: 1h, 5m, 4s
 ```
 
+# Features
+
 ## Localization
 
-The DefaultTimeSpanFormatter is provides localization via ITimeLocalization Interface that can be passed as first argument to the constructor. It defaults to english.
+It's easy to change the used localization. 
 
-Use the TimeLocalization.create() factory method to create ITimeLocalization localization instances.
-
-### Example
+**Example:**
 
 ```C#
 // creates a german localized TimeSpan formatter
-var formatter = new DefaultTimeSpanFormatter(TimeLocalization.Create("de"))
-
-var value = new TimeSpan(1, 5, 4); // 1 hour, 5 Minutes, 4 Seconds
+var formatter = new DefaultTimeSpanFormatter(TimeLocalization.Create("de"));
+var value = TimeSpan.FromHours(1.234);
 
 formatter.WriteLine(value, Console.Out);
-// writes "1 Stunde, 5 Minuten, 4 Sekunden" to stdout
+// writes "1 Tag, 5 Stunden, 36 Minuten, 57 Sekunden" to stdout
 ```
 
 ## Precision
@@ -59,37 +58,42 @@ It's possible to set the precision of the formatter. The precision **defaults to
 * If the precision of minutes is enough set it to Minute.
 * if you measure runtime for performance optimizations set it to Millisecond.
 
-### Example
+**Example:**
 
 ```C#
 var formatter = new DefaultTimeSpanFormatter(precision: TimePart.Minute);
+var value = TimeSpan.FromHours(1.234);
 
-var std = formatter.WriteToString(TimeSpan.FromDays(1.234));
-// std = "1 day, 5 hours, 36 minutes"
+formatter.WriteLine(value, Console.Out)
+// writes "1 day, 5 hours, 36 minutes" to stdout
 ```
 
 ## Compact
 
-Activate the compact mode if the time values should be displayed in abbreviated form.
+Activate the compact mode to use abbreviated units.
 
-### Example
+**Example:**
 
 ```C#
 var formatter = new DefaultTimeSpanFormatter(compact: true);
-var std = formatter.WriteToString(TimeSpan.FromHours(1)
-// std = "1h, 0m, 0s"
+var value = TimeSpan.FromHours(1.234);
+
+formatter.WriteLine(value, Console.Out)
+// writes "1d, 5h, 36m, 57s" to stdout
 ```
 
 ## Separator
 
 It's easy to replace the used separator (standard: comma) if necessary.
 
-### Example
+**Example:**
 
 ```C#
 var formatter = new DefaultTimeSpanFormatter(separator: " - ");
-var std       = formatter.WriteToString(TimeSpan.FromDays(1.234));
-// std = "1 day - 5 hours - 36 minutes - 57 seconds"
+var value = TimeSpan.FromHours(1.234);
+
+formatter.WriteLine(value, Console.Out)
+// writes "1 day - 5 hours - 36 minutes - 57 seconds" to stdout
 ```
 
 
