@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Enums;
 using Core.Extensions.TextRelated;
 using Core.Localization.Impl;
 using Core.Text.Formatter;
@@ -37,6 +38,15 @@ namespace Core.Test.TextRelated
             var formatter = new DefaultTimeSpanFormatter(compact: true);
             Assert.Equal("1h, 0m, 0s", formatter.WriteToString(TimeSpan.FromHours(1)));
             Assert.Equal("1h, 5m, 1s", formatter.WriteToString(new TimeSpan(1, 5, 1)));
+        }
+        
+        [Fact]
+        public void BasicPrecisionTest()
+        {
+            var formatter = new DefaultTimeSpanFormatter(precision: TimePart.Minute);
+            var std = formatter.WriteToString(TimeSpan.FromDays(1.234));
+            Assert.Equal("1 day, 5 hours, 36 minutes", std);
+            
         }
 
         [Fact]
