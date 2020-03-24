@@ -52,6 +52,22 @@ formatter.WriteLine(value, Console.Out);
 // writes "1 Stunde, 5 Minuten, 4 Sekunden" to stdout
 ```
 
+## Precision
+
+It's possible to set the precision of the formatter. 
+
+* If the precision of minutes is enough set it to Minute.
+* if you measure runtime for performance optimizations set it to Millisecond.
+
+### Example
+
+```C#
+var formatter = new DefaultTimeSpanFormatter(precision: TimePart.Minute);
+
+var std = formatter.WriteToString(TimeSpan.FromDays(1.234));
+// std = "1 day, 5 hours, 36 minutes"
+```
+
 
 
 
