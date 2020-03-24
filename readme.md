@@ -2,7 +2,7 @@
 
 Consider this library as productivity boost to achieve stated development goals faster in .NET.
 
-**Features:**
+# Features
 
 * field-proven solutions for everyday problems.
 * doesn't add additional 3rd-party dependencies (beside itself of course).
