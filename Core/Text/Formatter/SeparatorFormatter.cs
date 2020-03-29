@@ -44,14 +44,10 @@ namespace Core.Text.Formatter
                 }
 
                 if (itm == null)
-                {
                     writer.Write(_nullPlaceholder);
-                }
                 else
-                {
                     _itemFormatter.Write(itm, writer);
-                }
-                
+
                 index++;
             }
         }
