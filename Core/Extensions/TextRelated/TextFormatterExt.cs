@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Text;
 using Core.Enums;
 using Core.Localization.Impl;
 using Core.Text.Formatter;
-using Core.Text.Formatter.Impl;
 
 namespace Core.Extensions.TextRelated
 {
@@ -65,7 +65,7 @@ namespace Core.Extensions.TextRelated
             bool compact = false,
             string separator = ", ")
         {
-            return new DefaultTimeSpanFormatter(
+            return new TimeSpanFormatter(
                 localization: TimeLocalization.Create(twoLetterLanguageCode), 
                 precision: precision, 
                 compact: compact,
@@ -76,6 +76,12 @@ namespace Core.Extensions.TextRelated
         public static string ToFormattedString<T>(this T value, ITextFormatter<T> formatter)
         {
             return formatter.WriteToString(value);
+        }
+
+        public static string ToFormattedString(this DateTime value, string format = null, bool universalTime = false, IFormatProvider formatProvider = default)
+        {
+            var formatter = new DateTimeFormatter(format: format, universalTime: universalTime, formatProvider: formatProvider);
+            return value.ToFormattedString(formatter);
         }
     }
 }

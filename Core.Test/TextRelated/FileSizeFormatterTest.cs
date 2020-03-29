@@ -1,6 +1,5 @@
 ﻿using System;
 using Core.Text.Formatter;
-using Core.Text.Formatter.Impl;
 using Core.Extensions.TextRelated;
 using Xunit;
 

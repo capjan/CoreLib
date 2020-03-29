@@ -5,11 +5,11 @@ using Core.Extensions.LocalizationRelated;
 using Core.Localization;
 using Core.Localization.Impl;
 
-namespace Core.Text.Formatter.Impl
+namespace Core.Text.Formatter
 {
-    public class DefaultTimeSpanFormatter : ITextFormatter<TimeSpan>
+    public class TimeSpanFormatter : ITextFormatter<TimeSpan>
     {
-        public DefaultTimeSpanFormatter(
+        public TimeSpanFormatter(
             ITimeLocalization localization = default, 
             TimePart precision = TimePart.Second,
             bool compact = false,

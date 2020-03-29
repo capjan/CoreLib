@@ -1,7 +1,7 @@
 ﻿using System;
 using Core.Extensions.CollectionRelated;
 using Core.Extensions.TextRelated;
-using Core.Text.Formatter.Impl;
+using Core.Text.Formatter;
 using Xunit;
 
 namespace Core.Test.TextRelated
@@ -19,7 +19,7 @@ namespace Core.Test.TextRelated
         {
             var intArray = new[] {1, 2, 3, 4, 5};
 
-            var formatter = new DefaultSeparatorFormatter<int>();
+            var formatter = new SeparatorFormatter<int>();
 
             formatter.Write(intArray, Console.Out);
             var formatted = formatter.WriteToString(intArray);

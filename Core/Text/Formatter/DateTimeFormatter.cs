@@ -2,16 +2,18 @@
 using System.IO;
 using System.Threading;
 
-namespace Core.Text.Formatter.Impl
+namespace Core.Text.Formatter
 {
-    public class DefaultDateTimeFormatter : IDateTimeFormatter
+    public class DateTimeFormatter : IDateTimeFormatter
     {
-        public DefaultDateTimeFormatter(
-            string format = "dd.MM.yyyy HH:mm:ss.fff", 
+        public static string DefaultFormat = "dd.MM.yyyy HH:mm:ss.fff";
+
+        public DateTimeFormatter(
+            string format = null, 
             bool universalTime = false, 
             IFormatProvider formatProvider = default)
         {
-            Format = format;
+            Format = format ?? DefaultFormat;
             UniversalTime = universalTime;
             FormatProvider = formatProvider ?? Thread.CurrentThread.CurrentCulture;
         }

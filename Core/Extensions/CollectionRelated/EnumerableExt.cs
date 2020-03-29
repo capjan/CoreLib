@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Core.Extensions.TextRelated;
-using Core.Text.Formatter.Impl;
+using Core.Text.Formatter;
+
 // ReSharper disable UnusedMember.Global
 
 namespace Core.Extensions.CollectionRelated
@@ -12,13 +13,13 @@ namespace Core.Extensions.CollectionRelated
             this IEnumerable<T> value,
             string separator = ", ",
             int groupLength = 1,
-            Func<T, string> toStringFunc = default,
+            ITextFormatter<T> itemFormatter = default,
             string nullPlaceholder = "")
         {
-            var formatter = new DefaultSeparatorFormatter<T>(
+            var formatter = new SeparatorFormatter<T>(
                 separator,
                 groupLength,
-                toStringFunc,
+                itemFormatter,
                 nullPlaceholder
             );
             return formatter.WriteToString(value);

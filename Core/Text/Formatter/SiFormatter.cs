@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Core.Extensions.MathematicsRelated;
 
-namespace Core.Text.Formatter.Impl
+namespace Core.Text.Formatter
 {
     public class SiFormatter : ISiFormatter
     {

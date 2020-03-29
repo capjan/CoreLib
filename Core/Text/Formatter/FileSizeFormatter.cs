@@ -2,14 +2,14 @@
 using System.IO;
 using Core.Enums;
 
-namespace Core.Text.Formatter.Impl
+namespace Core.Text.Formatter
 {
     /// <summary>
     /// Implements a File Size Formatter
     /// </summary>
     public class FileSizeFormatter : IFileSizeFormatter
     {
-        private IFormattableTextFormatter<double> _numberFormatter = new DefaultNumberFormatter<double>();
+        private readonly IFormattableTextFormatter<double> _numberFormatter = new GenericNumberFormatter<double>();
 
         private const long _kib = 1024L;
         private const long _mib = 1024 * _kib;

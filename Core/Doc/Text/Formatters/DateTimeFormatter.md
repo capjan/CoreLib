@@ -9,7 +9,7 @@ You should start using UTC only DateTimes as early as possible.
 
 ## Example
 ```csharp
-IDateTimeFormatter formatter = new DefaultDateTimeFormatter(
+IDateTimeFormatter formatter = new DateTimeFormatter(
                 format: " dd.MM.yyyy HH:mm:ss.fff ",
                 localTime: true,
                 formatProvider: CultureInfo.CurrentCulture);

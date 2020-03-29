@@ -4,10 +4,10 @@
 ```csharp
 var intArray = new[] {1, 2, 3, 4, 5};
 
-var formatter = new DefaultSeparatorFormatter<int>(
+var formatter = new SeparatorFormatter<int>(
     separator: ", ",
     groupLength: 1,
-    toStringFunc: v => v.ToString(),
+    itemFormatter: null,
     nullPlaceholder: "");
 
 formatter.WriteFormatted(intArray, Console.Out);
@@ -23,7 +23,7 @@ var formattedViaExtension = intArray.ToSeparatedString();
 With:
 * `separator` - used separator. Defaults to `, `
 * `groupLength` - sets how many items should be written until the separator is inserted. Defaults to 1.
-* `toStringFunc` - defines the callback function to create the string for the result string.
+* `itemFormatter` - defines the formatter function to create the string for the result string. Defaults to a LambdaFormatter that calls ToString()
 * `nullPlaceholder` - sets the text placeholder for null values.
 
 

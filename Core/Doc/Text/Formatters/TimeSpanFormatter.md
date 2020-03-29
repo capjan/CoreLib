@@ -13,7 +13,7 @@ Formats TimeSpan like **2 weeks, 1 day, 1 hour, 5 minutes, 1 second** (Normal) o
 
 ```c#
 // or hide the implementation behind ITextFormatter<TimeSpan>
-var formatter = new DefaultTimeSpanFormatter();
+var formatter = new TimeSpanFormatter();
 
 var value = new TimeSpan(1, 5, 4); // 1 hour, 5 Minutes, 4 Seconds
 

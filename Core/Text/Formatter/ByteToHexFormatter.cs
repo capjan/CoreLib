@@ -1,10 +1,13 @@
 ﻿using System.IO;
 
-namespace Core.Text.Formatter.Impl
+namespace Core.Text.Formatter
 {
-    public class DefaultByteHexFormatter : IByteHexFormatter
+    /// <summary>
+    /// Byte to Hex Formatter (Lookup Table based).
+    /// </summary>
+    public class ByteToHexFormatter : IByteHexFormatter
     {
-        public DefaultByteHexFormatter(bool upperCase = true)
+        public ByteToHexFormatter(bool upperCase = true)
         {
             var format = upperCase ? "X2" : "x2";
             _lookup = new string[byte.MaxValue+1];

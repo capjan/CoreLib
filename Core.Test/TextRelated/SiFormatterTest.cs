@@ -1,6 +1,6 @@
 using System.Globalization;
 using Core.Extensions.TextRelated;
-using Core.Text.Formatter.Impl;
+using Core.Text.Formatter;
 using Xunit;
 
 namespace Core.Test.TextRelated

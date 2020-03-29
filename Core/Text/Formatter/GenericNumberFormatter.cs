@@ -3,11 +3,15 @@ using System.IO;
 using System.Numerics;
 using Core.Generic;
 
-namespace Core.Text.Formatter.Impl
+namespace Core.Text.Formatter
 {
-    public class DefaultNumberFormatter<T> : IFormattableTextFormatter<T>
+    /// <summary>
+    /// Formatter for generic types that are numbers. Supports integer and floating point numbers.
+    /// </summary>
+    /// <typeparam name="T">must be an integer, floating point, decimal or bigint type</typeparam>
+    public class GenericNumberFormatter<T> : IFormattableTextFormatter<T>
     {
-        public DefaultNumberFormatter()
+        public GenericNumberFormatter()
         {
             var typeChecker = TypeChecker<T>.Numeric();
             if (!typeChecker.IsValid())

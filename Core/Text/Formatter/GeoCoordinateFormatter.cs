@@ -5,15 +5,15 @@ using Core.Enums;
 using Core.Extensions.TextRelated;
 using Core.Mathematics;
 
-namespace Core.Text.Formatter.Impl
+namespace Core.Text.Formatter
 {
-    public class DefaultGeoCoordinateFormatter : IGeoCoordinateFormatter
+    public class GeoCoordinateFormatter : IGeoCoordinateFormatter
     {
         private readonly ITextFormatter<double> _formatter;
 
-        public DefaultGeoCoordinateFormatter(ITextFormatter<double> formatter = null)
+        public GeoCoordinateFormatter(ITextFormatter<double> formatter = null)
         {
-            _formatter = formatter ?? new DefaultNumberFormatter<double> {Format = "00.0", FormatProvider = CultureInfo.InvariantCulture};
+            _formatter = formatter ?? new GenericNumberFormatter<double> {Format = "00.0", FormatProvider = CultureInfo.InvariantCulture};
         }
 
         public void Write(IGeoCoordinate value, TextWriter writer)

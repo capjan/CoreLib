@@ -1,12 +1,12 @@
 ﻿using System.IO;
 
-namespace Core.Text.Formatter.Impl
+namespace Core.Text.Formatter
 {
-    public class DefaultHexFormatter<T> : IHexFormatter<T>
+    public class GenericNumberToHexFormatter<T> : IHexFormatter<T>
     {
-        public DefaultHexFormatter()
+        public GenericNumberToHexFormatter()
         {
-            _formatter = new DefaultNumberFormatter<T>();
+            _formatter = new GenericNumberFormatter<T>();
             UpdateFormat();
         }
 

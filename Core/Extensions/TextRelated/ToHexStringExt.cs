@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Core.Text.Formatter.Impl;
+using Core.Text.Formatter;
 
 namespace Core.Extensions.TextRelated
 {
@@ -13,8 +13,8 @@ namespace Core.Extensions.TextRelated
         /// <returns></returns>
         public static string ToHexString(this IEnumerable<byte> data, bool upperCase = true)
         {
-            var singleByteFormatter = new DefaultByteHexFormatter(upperCase);
-            var formatter           = new DefaultByteListHexFormatter(singleByteFormatter);
+            var singleByteFormatter = new ByteToHexFormatter(upperCase);
+            var formatter           = new EnumerableByteToHexFormatter(singleByteFormatter);
             return formatter.WriteToString(data);
         }
 

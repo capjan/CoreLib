@@ -1,7 +1,6 @@
 using Core.Extensions.TextRelated;
 using Core.Mathematics;
 using Core.Text.Formatter;
-using Core.Text.Formatter.Impl;
 
 namespace Core.Extensions.MathematicsRelated
 {
@@ -9,7 +8,7 @@ namespace Core.Extensions.MathematicsRelated
     {
         public static string WriteToString(this IGeoCoordinate coordinate, IGeoCoordinateFormatter formatter = null)
         {
-            formatter = formatter ?? new DefaultGeoCoordinateFormatter();
+            formatter = formatter ?? new GeoCoordinateFormatter();
             return formatter.WriteToString(coordinate);
         }
     }
