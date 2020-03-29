@@ -11,7 +11,7 @@ CoreLib contains already some useful formatters:
 * [DateTimeFormatter](./Formatters/DateTimeFormatter.md) - makes it easy to format datetime values
 * [SeparatorFormatter](./Formatters/SeparatorFormatter.md) - makes it easy to format lists/arrays/etc to comma separated strings
 * [SiFormatter](./Formatters/SiFormatter.md) - formats a number to a number with a si prefixed unit
-* [TimeSpan](./Formatters/TimeSpanFormatter.md) -  define ITextFormatter<Timespan>  and use DefaultTimeSpanFormatter
+* [TimeSpanFormatter](./Formatters/TimeSpanFormatter.md) -  define ITextFormatter<Timespan>  and use TimeSpanFormatter
 
 
 

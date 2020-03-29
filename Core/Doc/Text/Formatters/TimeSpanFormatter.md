@@ -1,11 +1,11 @@
-# Time Span Formatter
+# TimeSpan Formatter
 
 Formats TimeSpan like **2 weeks, 1 day, 1 hour, 5 minutes, 1 second** (Normal) or **1h, 5m, 1s** (Compact)
 
 ## Intended Usage
 
 * Features all benefits of [ITextFormatter](./ITextFormatter.md).
-* CoreLib provides a default implementation called **DefaultTimeSpanFormatter**
+* CoreLib provides a default implementation called **TimeSpanFormatter**
 * ITextFormatter
 * Just use ToString() formatting for simple formatting purposes.
 

@@ -1,4 +1,4 @@
-﻿# Date Time Formatter
+﻿# DateTime Formatter
 
 You should start using UTC only DateTimes as early as possible. 
 
