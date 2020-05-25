@@ -21,6 +21,7 @@ Consider this library as productivity boost to achieve stated development goals 
 * [ControlFlow](./Core/Doc/ControlFlow.md) - contains control flow utility classes
 * [Cryptography](./Core/Doc/Cryptography.md) - hash calculation, etc.
 * [Diagnostics](./Core/Doc/Diagnostics.md) - contains CliRunner
+* [Environment](./Core/Doc/Environment.md) - contains information objects of the App/API environement
 * [Generic](./Core/Doc/Generic.md) - Contains utility classes for generic type implementations
 * [IO](./Core/Doc/IO.md) - File System Input/Output
 * [Logging](./Core/Doc/Logging.md) - Logging

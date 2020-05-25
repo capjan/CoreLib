@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using Core.Reflection;
 
@@ -35,6 +36,16 @@ namespace Core.Extensions.ReflectionRelated
         public static string GetVersionSummary(this IAssemblyInfo info)
         {
             return $"Version {info.GetBestMatchingVersion()}";
+        }
+
+        /// <summary>
+        /// Returns the absolute path of the folder where the assembly is stored in the file system.
+        /// </summary>
+        public static string GetFolderPath(this Assembly assembly)
+        {
+            var assemblyFilePath  = assembly.Location;
+            var assemblyDirectory = Path.GetDirectoryName(assemblyFilePath);
+            return assemblyDirectory;
         }
     }
 }
