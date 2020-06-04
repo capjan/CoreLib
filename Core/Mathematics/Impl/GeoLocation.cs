@@ -5,7 +5,7 @@ namespace Core.Mathematics.Impl
 {
     public class GeoLocation : IGeoLocation
     {
-        public GeoLocation(
+        internal GeoLocation(
             double latitude, 
             double longitude,
             IGeoCoordinate latitudeDMS,
