@@ -15,8 +15,8 @@ namespace Core.Test.TextRelated
             const double latitudeOfBerlin  = 52.518639;
             const double longitudeOfBerlin = 13.376090;
 
-            var locationFactory = new GeoLocationFactory();
-            var locationOfBerlin = locationFactory.Create(latitudeOfBerlin, longitudeOfBerlin);
+            var locationFactory = new GeoFactory();
+            var locationOfBerlin = locationFactory.CreateLocation(latitudeOfBerlin, longitudeOfBerlin);
 
             var googleMapsLink = locationOfBerlin.ToGoogleMapsLink();
             var bingLink = locationOfBerlin.ToBingMapsLink();

@@ -16,8 +16,8 @@ const double latitudeOfBerlin  = 52.518639;
 const double longitudeOfBerlin = 13.376090;
 
 // create a location with a GeoLocationFactory
-var locationFactory = new GeoLocationFactory();
-var locationOfBerlin = locationFactory.Create(latitudeOfBerlin, longitudeOfBerlin);
+var geoFactory = new GeoFactory();
+var locationOfBerlin = geoFactory.CreateLocation(latitudeOfBerlin, longitudeOfBerlin);
 
 // create your search links for Google Maps, Bing Maps and OpenSteetMap
 var googleMapsLink = locationOfBerlin.ToGoogleMapsLink();

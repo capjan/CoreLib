@@ -14,8 +14,8 @@ namespace Core.Test.MathematicsRelated
         [Fact]
         public void TestGeoLocationFactory()
         {
-            var factory = new GeoLocationFactory();
-            var geoBerlin = factory.Create(DecimalLatitudeOfBerlin, DecimalLongitudeOfBerlin);
+            var factory = new GeoFactory();
+            var geoBerlin = factory.CreateLocation(DecimalLatitudeOfBerlin, DecimalLongitudeOfBerlin);
 
             var latBerlin = geoBerlin.LatitudeDMS;
             var lonBerlin = geoBerlin.LongitudeDMS;
@@ -36,6 +36,7 @@ namespace Core.Test.MathematicsRelated
         [Fact]
         public void TestConversionDMSToDouble()
         {
+            var fac = new GeoFactory();
             var math = new GeoCoordinateMath();
             var latitudeDMS = new GeoCoordinate(GeoCoordinateType.Latitude, false, 35, 45,0.0 );
             var latitude = math.GeoCoordinateToDouble(latitudeDMS);
@@ -45,19 +46,19 @@ namespace Core.Test.MathematicsRelated
         [Fact]
         public void TestCreateLocation()
         {
-            var fac = new GeoLocationFactory();
-            var loc = fac.Create(0.0,0.0);
+            var fac = new GeoFactory();
+            var loc = fac.CreateLocation(0.0,0.0);
             Assert.Equal(0.0, loc.Latitude);
             Assert.Equal(0.0, loc.Longitude);
 
             // passive assert: this lines must not throw an exception 
-            fac.Create(-90.0, -180); // min. values
-            fac.Create(90.0, 180.0); // max. values
+            fac.CreateLocation(-90.0, -180); // min. values
+            fac.CreateLocation(90.0, 180.0); // max. values
             
-            Assert.Throws<ArgumentOutOfRangeException>(() =>fac.Create(-90.1, 0.0));
-            Assert.Throws<ArgumentOutOfRangeException>(() => fac.Create(90.1, 0));
-            Assert.Throws<ArgumentOutOfRangeException>(() => fac.Create(0, -180.1));
-            Assert.Throws<ArgumentOutOfRangeException>(() => fac.Create(0, 180.1));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>fac.CreateLocation(-90.1, 0.0));
+            Assert.Throws<ArgumentOutOfRangeException>(() => fac.CreateLocation(90.1, 0));
+            Assert.Throws<ArgumentOutOfRangeException>(() => fac.CreateLocation(0, -180.1));
+            Assert.Throws<ArgumentOutOfRangeException>(() => fac.CreateLocation(0, 180.1));
         }
     }
 }
