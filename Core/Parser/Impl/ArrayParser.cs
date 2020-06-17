@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 namespace Core.Parser.Impl
 {
 
+    public class DoubleArrayParser : ArrayParser<double>
+    {
+        public DoubleArrayParser(IParser<double?> partParser) : base(partParser ?? new OptionalDoubleParser()) { }
+    }
+
     public class IntArrayParser: ArrayParser<int>
     {
         public IntArrayParser(IParser<int?> nestedParser = default) : base(nestedParser ?? new OptionalIntParser()) {}
