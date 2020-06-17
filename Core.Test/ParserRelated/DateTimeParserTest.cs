@@ -17,6 +17,8 @@ namespace Core.Test.ParserRelated
             Assert.Equal(new DateTime(2020,06,17, 1,2,3, 210), parser.ParseOrFallback("2020-06-17 01:02:03.21Z"));
             Assert.Equal(new DateTime(2020,06,17, 1,2,3), parser.ParseOrFallback("2020-06-17 01:02:03Z"));
             Assert.Equal(new DateTime(2020,06,17, 1,2,0), parser.ParseOrFallback("2020.06.17 - 01:02 Z"));
+            Assert.Equal(new DateTime(1976,7,10), parser.ParseOrFallback(null, new DateTime(1976,7,10)));
+
         }
     }
 }

@@ -36,6 +36,7 @@ namespace Core.Parser.Impl
 
         public DateTime? ParseOrFallback(string input, DateTime? fallback = default)
         {
+            if (string.IsNullOrWhiteSpace(input)) return fallback;
             var m = Regex.Match(input, RegexPattern);
             if (m.Success)
             {
