@@ -10,7 +10,7 @@ namespace Core.Parser.Impl
 
     public class DoubleArrayParser : ArrayParser<double>
     {
-        public DoubleArrayParser(IParser<double?> partParser) : base(partParser ?? new OptionalDoubleParser()) { }
+        public DoubleArrayParser(IParser<double?> partParser = default) : base(partParser ?? new OptionalDoubleParser()) { }
     }
 
     public class IntArrayParser: ArrayParser<int>
