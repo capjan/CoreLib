@@ -47,7 +47,7 @@ class Program
        {
            // the parser instance provides a possibility to 
            // write the usage at a later program stage if needed
-           parser.WriteUsage()
+           parser.WriteUsage();
        }
     }
 }
