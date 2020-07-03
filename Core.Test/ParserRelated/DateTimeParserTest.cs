@@ -1,5 +1,5 @@
 ﻿using System;
-using Core.Parser.Impl;
+using Core.Parser.Basic;
 using Xunit;
 
 namespace Core.Test.ParserRelated
