@@ -6,7 +6,7 @@ using Core.Extensions.TextRelated;
 using Core.Text;
 using Core.Text.Impl;
 
-namespace Core.Parser.Impl
+namespace Core.Parser.Special
 {
     public class ParserInput : IParserInput
     {

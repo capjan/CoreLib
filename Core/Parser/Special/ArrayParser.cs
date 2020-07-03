@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Core.Parser.Basic;
 
-namespace Core.Parser.Impl
+namespace Core.Parser.Special
 {
 
     public class DoubleArrayParser : ArrayParser<double>

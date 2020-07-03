@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Core.Mathematics;
 using Core.Mathematics.Impl;
 
-namespace Core.Parser.Impl
+namespace Core.Parser.Special
 {
  /// <summary>
     /// Parses a GeoCircle from a string representation
