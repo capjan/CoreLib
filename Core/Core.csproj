@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Title>CoreLib</Title>
-    <TargetFrameworks>net472;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net472;netstandard2.0;netcoreapp3.1</TargetFrameworks>
     <PackageId>Cap.Core</PackageId>
     <Authors>Jan Ruhlaender</Authors>
     <Product>CoreLib</Product>
@@ -10,12 +10,12 @@
     <Copyright>©2020 Jan Ruhlaender</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>    
     <LangVersion>7.3</LangVersion>	
-    <Version>4.0.1</Version>
+    <Version>4.0.2</Version>
     <PackageProjectUrl>https://github.com/capjan/CoreLib</PackageProjectUrl>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <AssemblyVersion>4.0.1.0</AssemblyVersion>
+    <AssemblyVersion>4.0.2.0</AssemblyVersion>
     <AssemblyName>CoreLib</AssemblyName>
-    <FileVersion>4.0.1.0</FileVersion>
+    <FileVersion>4.0.2.0</FileVersion>
     <RepositoryUrl>https://github.com/capjan/CoreLib</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseUrl></PackageLicenseUrl>
