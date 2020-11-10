@@ -1,7 +1,7 @@
-﻿# Generic
+﻿# Environment
 
-This namespace contains classes that simplify the implementation of generic classes.
+This namespace contains classes that provides information about the environment.
 
-* [TypeChecker](./Generic/TypeChecker.md) - makes it easy to restrict a generic type to a given list of supported types.
+* [AppInfo](./Environment/AppInfo.md) - Provides common information about the app environment.
 
 
