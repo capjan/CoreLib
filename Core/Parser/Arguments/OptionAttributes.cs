@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Core.Extensions.ReflectionRelated;
 using Core.Reflection;
+using Core.Text.Formatter;
 
 namespace Core.Parser.Arguments
 {
@@ -32,16 +33,22 @@ namespace Core.Parser.Arguments
 
     public class OptionParser<T> where T : CliOptions, new()
     {
-        private readonly TextWriter _out;
-        private readonly TextWriter _err;
-        private readonly IAssemblyInfo _assemblyInfo;
-        private OptionSet _optionSet;
+        private readonly TextWriter             _out;
+        private readonly TextWriter             _err;
+        private readonly IAssemblyInfo          _assemblyInfo;
+        private          OptionSet              _optionSet;
+        private readonly ITextFormatter<string> _usageLineFormatter;
 
-        public OptionParser(IAssemblyInfo assemblyInfo = null, TextWriter stdOut = null, TextWriter stdErr = null)
+        public OptionParser(
+            IAssemblyInfo          assemblyInfo = default, 
+            TextWriter             stdOut       = default, 
+            TextWriter             stdErr       = default,
+            ITextFormatter<string> usageLineFormatter = default)
         {
-            _assemblyInfo = assemblyInfo ?? new AssemblyInfo();
-            _out = stdOut ?? Console.Out;
-            _err = stdErr ?? Console.Error;
+            _assemblyInfo       = assemblyInfo ?? new AssemblyInfo();
+            _out                = stdOut ?? Console.Out;
+            _err                = stdErr ?? Console.Error;
+            _usageLineFormatter = usageLineFormatter ?? new LambdaFormatter<string>((s => $" {s} [options]"));
         }
 
         public bool TryParse(IEnumerable<string> args, out T options)
@@ -128,7 +135,7 @@ namespace Core.Parser.Arguments
                 throw new InvalidOperationException($"{nameof(WriteUsage)}() must be called after {nameof(TryParse)}()");
             _out.WriteLine();
             _out.WriteLine("Usage:");
-            _out.WriteLine($" {_assemblyInfo.Title} [options]");
+            _usageLineFormatter.Write(_assemblyInfo.Title, _out);
             _out.WriteLine();
             _out.WriteLine("Options:");
             _optionSet.WriteOptionDescriptions(_out);
