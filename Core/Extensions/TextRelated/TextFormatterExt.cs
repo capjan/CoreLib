@@ -11,11 +11,14 @@ namespace Core.Extensions.TextRelated
 {
     public static class TextFormatterExt
     {
-        public static string WriteToString<T>(this ITextFormatter<T> formatter, T value)
+        public static string WriteToString<T>(this ITextFormatter<T> formatter, T value, string newLine = default)
         {
             var sb = new StringBuilder();
             using (var stream = new StringWriter(sb))
+            {
+                stream.NewLine = newLine ?? stream.NewLine;
                 formatter.Write(value, stream);
+            }
             return sb.ToString();
         }
 
