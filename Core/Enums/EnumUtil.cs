@@ -14,14 +14,14 @@ namespace Core.Enums
         /// </summary>
         /// <typeparam name="T">Type of the enumeration</typeparam>
         /// <returns></returns>
-        public static IEnumerable<EnumInfo<T>> List<T>()
+        public static IEnumerable<EnumInfo<T>> List<T>() where T: Enum
         {
             return Enum.GetValues(typeof(T))
                        .Cast<T>()
                        .Select(enumValue => {
-                            var enumName = Enum.GetName(typeof(T), enumValue);
-                            return new EnumInfo<T>(enumName, enumValue);
-                        });
+                           var enumName = Enum.GetName(typeof(T), enumValue);
+                           return new EnumInfo<T>(enumName, enumValue);
+                       });
         }
     }
 
