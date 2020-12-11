@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Core.Extensions.NetRelated;
 using Core.Extensions.ParserRelated;
 using Core.Parser.Arguments;
 using Xunit;
@@ -98,7 +99,6 @@ namespace Core.Test.ParserRelated
                 options.WriteOptionDescriptions(Console.Out);
                 throw;
             }
-            
             
             Assert.True(showVersion);
             Assert.Equal("C:\\temp", outputFolder);
