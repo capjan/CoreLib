@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Core.Extensions.NetRelated;
 using Core.Extensions.ParserRelated;
 using Core.Parser.Arguments;
 using Xunit;

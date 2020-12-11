@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core.Parser.Basic;
+﻿using Core.Parser.Basic;
 using Xunit;
 
 namespace Core.Test.ParserRelated

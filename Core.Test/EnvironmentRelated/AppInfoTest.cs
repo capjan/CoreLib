@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core.Environment;
+﻿using Core.Environment;
 using Xunit;
 
 namespace Core.Test.EnvironmentRelated

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core.Extensions.MathematicsRelated;
+﻿using Core.Extensions.MathematicsRelated;
 using Core.Mathematics.Impl;
 using Xunit;
 
