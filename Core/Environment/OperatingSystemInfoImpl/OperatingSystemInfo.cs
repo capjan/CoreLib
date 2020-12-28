@@ -42,14 +42,7 @@ namespace Core.Environment.OperatingSystemInfoImpl
         public override string ToString()
         {
             var sb = new StringBuilder();
-            if (!string.IsNullOrEmpty(Name))
-            {
-                sb.Append(Name);
-            }
-            else
-            {
-                sb.Append($"{Platform}");
-            }
+            sb.Append(!string.IsNullOrEmpty(Name) ? Name : $"{Platform}");
 
             if (!string.IsNullOrEmpty(Version))
             {
