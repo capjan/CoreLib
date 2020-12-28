@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
 using Core.Enums;
 
-namespace Core.Environment
+namespace Core.Environment.OperatingSystemInfoImpl
 {
     public interface IOSSystemResolver
     {
@@ -23,7 +18,7 @@ namespace Core.Environment
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 return OSSystem.Windows;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                return OSSystem.OSX;
+                return OSSystem.MacOS;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return OSSystem.Linux;
             return OSSystem.Unknown;

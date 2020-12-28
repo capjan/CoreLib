@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Core.Enums;
 using Core.Environment;
+using Core.Environment.OperatingSystemInfoImpl;
 using Core.Test.ParserRelated;
 using Xunit;
 
@@ -23,7 +24,7 @@ namespace Core.Test.EnvironmentRelated
         {
             var resolver   = new OSSystemResolver();
             var detectedOS = resolver.Detect();
-            var osInfo = new OSInfo();
+            var osInfo = new OperatingSystemInfo();
 
             Assert.NotEqual(detectedOS, osInfo.Platform);
         }
