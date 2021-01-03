@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core.Enums;
-using Core.Environment;
+﻿using Core.Enums;
 using Core.Environment.OperatingSystemInfoImpl;
-using Core.Test.ParserRelated;
 using Xunit;
 
 namespace Core.Test.EnvironmentRelated
