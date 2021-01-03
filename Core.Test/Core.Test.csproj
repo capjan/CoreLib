@@ -6,7 +6,7 @@
     <LangVersion>7.3</LangVersion>
     <Company>Jan Ruhlaender</Company>
     <Authors>Jan Ruhlaender</Authors>
-    <Copyright>©2020 Jan Ruhlaender</Copyright>
+    <Copyright>©2021 Jan Ruhlaender</Copyright>
     <Product>CoreLib Unit Tests</Product>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
