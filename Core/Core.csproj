@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Title>CoreLib</Title>
-    <TargetFrameworks>net472;netstandard2.0;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net5.0;netcoreapp3.1;net48</TargetFrameworks>
     <PackageId>Cap.Core</PackageId>
     <Authors>Jan Ruhlaender</Authors>
     <Product>CoreLib</Product>
@@ -25,6 +25,10 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
+  <!-- additional references for .NET 4.8-->
+  <ItemGroup Condition=" '$(TargetFramework)'=='net48'">
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <NoWarn>1701;1702;NU5125</NoWarn>
