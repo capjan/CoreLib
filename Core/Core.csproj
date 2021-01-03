@@ -12,9 +12,7 @@
     <LangVersion>7.3</LangVersion>	
     <Version>5.0.1</Version>
     <PackageProjectUrl>https://github.com/capjan/CoreLib</PackageProjectUrl>
-    <AssemblyVersion>5.0.1.0</AssemblyVersion>
     <AssemblyName>CoreLib</AssemblyName>
-    <FileVersion>5.0.1.0</FileVersion>
     <RepositoryUrl>https://github.com/capjan/CoreLib</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
