@@ -7,9 +7,9 @@
     <Authors>Jan Ruhlaender</Authors>
     <Product>CoreLib</Product>
     <Description>Intended to be used in every project to reuse as much code as possible for daily coding tasks.</Description>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>    
-    <LangVersion>7.3</LangVersion>	
     <Copyright>©2021 Jan Ruhlaender</Copyright>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <LangVersion>7.3</LangVersion>
     <Version>5.0.1</Version>
     <PackageProjectUrl>https://github.com/capjan/CoreLib</PackageProjectUrl>
     <AssemblyName>CoreLib</AssemblyName>
