@@ -9,7 +9,7 @@
     <Description>Intended to be used in every project to reuse as much code as possible for daily coding tasks.</Description>
     <Copyright>©2021 Jan Ruhlaender</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>5.0.1</Version>
+    <Version>6.0.0</Version>
     <PackageProjectUrl>https://github.com/capjan/CoreLib</PackageProjectUrl>
     <AssemblyName>CoreLib</AssemblyName>
     <RepositoryUrl>https://github.com/capjan/CoreLib</RepositoryUrl>
