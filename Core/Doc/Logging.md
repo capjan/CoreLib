@@ -1,5 +1,7 @@
 ﻿# Logging
 
+[Home](./README.md)
+
 Logging should ...
 
 * be easy to use
