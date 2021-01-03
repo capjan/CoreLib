@@ -26,7 +26,7 @@ namespace Core.Test.EnvironmentRelated
             var detectedOS = resolver.Detect();
             var osInfo = new OperatingSystemInfo();
 
-            Assert.NotEqual(detectedOS, osInfo.Platform);
+            Assert.Equal(detectedOS, osInfo.Platform);
         }
     }
 }
