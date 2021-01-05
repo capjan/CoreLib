@@ -38,7 +38,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Cryptography" />
     <Folder Include="Utils\" />
     <Folder Include="Security\Cryptography\" />
   </ItemGroup>
