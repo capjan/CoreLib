@@ -14,6 +14,12 @@ namespace Core.IO.Impl
         private readonly IFileUtil _fileUtil;
         private readonly IDirectoryUtil _directoryUtil;
 
+        /// <inheritdoc cref="ITempUtil.GetTempDirectory"/>
+        public string GetTempDirectory()
+        {
+            return Path.GetTempPath();
+        }
+
         public DefaultTempUtil(
             string defaultRootPath = default,
             IPathNameGenerator dirNameGen = default, 

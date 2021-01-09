@@ -7,6 +7,51 @@ namespace Core.Test.IORelated
     public class TestTempUtil
     {
         [Fact]
+        public void DefaultTempFolderExists()
+        {
+            var tempProvider = new DefaultTempUtil();
+            var tempPath = tempProvider.GetTempDirectory();
+            Assert.True(Directory.Exists(tempPath));
+            
+            var filenameGen = new DefaultPathNameGenerator();
+            
+            filenameGen.Generate(tempPath);
+        }
+
+        [Fact]
+        public void TempFolderAllowsFolderCreateAndDelete()
+        {
+            var tempUtil = new DefaultTempUtil();
+            var tempPath = tempUtil.GetTempDirectory();
+
+            var filenameGen = new DefaultPathNameGenerator();
+            var folderPath = filenameGen.Generate(tempPath);
+
+            Assert.False(Directory.Exists(folderPath));
+            Directory.CreateDirectory(folderPath);
+            Assert.True(Directory.Exists(folderPath));
+            Directory.Delete(folderPath);
+            Assert.False(Directory.Exists(folderPath));
+        }
+        
+        
+        [Fact]
+        public void TempFolderAllowsFileCreateAndDelete()
+        {
+            var tempUtil = new DefaultTempUtil();
+            var tempPath = tempUtil.GetTempDirectory();
+
+            var filenameGen = new DefaultPathNameGenerator();
+            var filePath = filenameGen.Generate(tempPath);
+
+            Assert.False(File.Exists(filePath));
+            new DefaultFileUtil().Touch(filePath);
+            Assert.True(File.Exists(filePath));
+            File.Delete(filePath);
+            Assert.False(File.Exists(filePath));
+        }
+        
+        [Fact]
         public void BasicTest()
         {
             var tmp = new DefaultTempUtil();

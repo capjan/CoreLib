@@ -6,7 +6,12 @@ namespace Core.IO
     /// Makes it easy to use temporary files and folders
     /// </summary>
     public interface ITempUtil
-    {        
+    {
+        /// <summary>
+        /// Returns the path of the current user's temporary folder. 
+        /// </summary>
+        string GetTempDirectory();
+        
         string CreateDir(string parentDirectory = default);
         string CreateFile(string parentDirectory = default);
 
