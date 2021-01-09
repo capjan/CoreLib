@@ -21,10 +21,7 @@ namespace Core.IO
         public bool IsRooted { get; }
         public PathType Type { get; }
         public string[] Parts { get; }
-        
         public string Drive { get; }
-        
-        
     }
     
 
@@ -35,18 +32,18 @@ namespace Core.IO
         {
             path = path ?? throw new ArgumentNullException(nameof(path));
             
-            var winRootedPathMatch = Regex.Match(path, @"^(?<drive>[a-z]:)?(?<path>(\\[^\\/]+)*)(?<trailing>\\)?$", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            var winRootedPathMatch = Regex.Match(path, @"^(?<drive>[a-z]:)?(?<path>(\\?[^\\/]+)*)(?<trailing>\\)?$", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
             if (winRootedPathMatch.Success)
             {
                 var drivePart = winRootedPathMatch.Groups["drive"];
                 var partsGroup = winRootedPathMatch.Groups["path"];
-                var parts = partsGroup.Success
-                    ? partsGroup.Value.Split(new[] {'\\'}, StringSplitOptions.RemoveEmptyEntries)
-                    : new string[] { };
+                var pathInDrive = partsGroup.Success ? partsGroup.Value : "";
+                var isRooted = pathInDrive.StartsWith("\\");
+                var parts = pathInDrive.Split(new[] {'\\'}, StringSplitOptions.RemoveEmptyEntries);
                 var driveLetter = drivePart.Success
-                    ? drivePart.Value
+                    ? drivePart.Value.Substring(0,1)
                     : "";
-                return new PathInfo(PathType.Windows, true, driveLetter, parts);
+                return new PathInfo(PathType.Windows, isRooted, driveLetter, parts);
             }
 
             var winPath = Regex.Match(path, @"^(?<isRooted>\\)?[^\\/]+(\\[^\\/]+)*(?<trailing>\\)?$");
