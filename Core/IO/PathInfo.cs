@@ -8,15 +8,6 @@ using Core.Enums;
 
 namespace Core.IO
 {
-    public interface IPathInfo
-    {
-        bool IsRooted { get; }
-        PathType Type { get; }
-        
-        string Drive { get; }
-        string[] Parts { get; }
-    }
-
     public partial class PathInfo : IPathInfo
     {
         public PathInfo(PathType type, bool isRooted, string drive, string[] parts)
