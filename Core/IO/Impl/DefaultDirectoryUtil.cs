@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.CompilerServices;
+using Core.Extensions.IORelated;
 
 namespace Core.IO.Impl
 {
@@ -10,31 +10,14 @@ namespace Core.IO.Impl
         
         public void EnsureExistence(string dirPath)
         {
-            if (dirPath == null)
+            dirPath = dirPath ?? throw new ArgumentNullException(nameof(dirPath));
+            var pathInfo = PathInfo.Create(dirPath);
+            if (!pathInfo.IsRooted) throw new ArgumentException("path must be rooted", nameof(dirPath));
+            
+            foreach (var directoryPath in pathInfo.IterateParts())
             {
-                throw new ArgumentNullException(nameof(dirPath));
-            }
-            string   rootPart;
-            string[] dirs;
-            var      m = System.Text.RegularExpressions.Regex.Match(dirPath, "(?<drive>[a-z]:)\\\\", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
-            if (m.Success)
-            {
-                rootPart = m.Groups["drive"].Value;
-                dirs     = dirPath.Substring(m.Value.Length).Split(_dirSeparator);
-            }
-            else
-            {
-                rootPart = Directory.GetCurrentDirectory();
-                dirs     = dirPath.Split(_dirSeparator);
-            }
-            var currentPath = rootPart;
-            foreach (var dirPart in dirs)
-            {
-                currentPath += _dirSeparator + dirPart;
-                if (!Directory.Exists(currentPath))
-                {
-                    Directory.CreateDirectory(currentPath);
-                }
+                if (!Directory.Exists(directoryPath))
+                    Directory.CreateDirectory(directoryPath);
             }
         }
     }
