@@ -1,5 +1,7 @@
 # CoreLib
 
+![Build-Badge](https://github.com/capjan/CoreLib/workflows/.NET/badge.svg)
+
 Consider this library as productivity boost to achieve stated development goals faster in .NET.
 
 # Pros
