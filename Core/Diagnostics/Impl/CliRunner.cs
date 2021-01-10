@@ -57,7 +57,7 @@ namespace Core.Diagnostics.Impl
 
         private void DataReceived(object sender, DataReceivedEventArgs e)
         {
-            _readDataCallback(e.Data);
+            if (e.Data != null) _readDataCallback(e.Data);
         }
 
         private          Action<string>   _readDataCallback;
