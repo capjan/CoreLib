@@ -2,6 +2,7 @@
 using System.Text;
 using Core.Enums;
 using Core.Environment.OperatingSystemInfoImpl.Details;
+using Core.Environment.OperatingSystemInfoImpl.Details.LinuxDetection;
 using Core.Environment.OperatingSystemInfoImpl.Details.MacOSDetection;
 using Core.Environment.OperatingSystemInfoImpl.Details.NullDetection;
 using Core.Environment.OperatingSystemInfoImpl.Details.WindowsDetection;
@@ -73,7 +74,7 @@ namespace Core.Environment.OperatingSystemInfoImpl
                 case OSSystem.Windows:
                     return new Lazy<IOperatingSystemDetailsResolver>(() => new WindowsDetailsResolver());
                 case OSSystem.Linux:
-                    return new Lazy<IOperatingSystemDetailsResolver>(() => new NullOSDetailsResolver());
+                    return new Lazy<IOperatingSystemDetailsResolver>(() => new LinuxDetailsResolver());
                 default:
                     return new Lazy<IOperatingSystemDetailsResolver>(() => new NullOSDetailsResolver());
             }
