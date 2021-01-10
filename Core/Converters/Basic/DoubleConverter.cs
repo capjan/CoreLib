@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -8,11 +6,11 @@ namespace Core.Converters.Basic
 {
     public class DoubleConverter: IConverter<string, double>
     {
-        private const string deToInvariantPattern = @"^(?<signs>\s*-\s*)*(?<number>\d+)(?<grouped>(\.\d{3})*)(?<fraction>,\d+)\s*$";
+        private const string DEToInvariantPattern = @"^(?<signs>\s*-\s*)*(?<number>\d+)(?<grouped>(\.\d{3})*)(?<fraction>,\d+)\s*$";
         public double Convert(string input)
         {
             var usedInput = input;
-            var m = Regex.Match(input, deToInvariantPattern);
+            var m = Regex.Match(input, DEToInvariantPattern);
             if (m.Success)
             {
                 var sb = new StringBuilder();

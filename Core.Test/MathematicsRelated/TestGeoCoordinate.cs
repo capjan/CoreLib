@@ -36,7 +36,6 @@ namespace Core.Test.MathematicsRelated
         [Fact]
         public void TestConversionDMSToDouble()
         {
-            var fac = new GeoFactory();
             var math = new GeoCoordinateMath();
             var latitudeDMS = new GeoCoordinate(GeoCoordinateType.Latitude, false, 35, 45,0.0 );
             var latitude = math.GeoCoordinateToDouble(latitudeDMS);

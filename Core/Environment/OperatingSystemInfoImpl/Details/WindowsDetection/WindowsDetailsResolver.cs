@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Text.RegularExpressions;
-using Core.Diagnostics.Impl;
-using Core.Parser.Basic;
 
 namespace Core.Environment.OperatingSystemInfoImpl.Details.WindowsDetection
 {

@@ -19,9 +19,9 @@ namespace Core.Test.ParserRelated
         public void TestIntArrayParser()
         {
             var parser = new IntArrayParser();
-            Assert.Equal(new int[] {1,2,3}, parser.ParseOrFallback("1,2,3"));
-            Assert.Equal(new int[] {4,5,6}, parser.ParseOrFallback("4, 5,6"));
-            Assert.Equal(new int[] {7,8,9}, parser.ParseOrFallback(null, new []{7,8,9}));
+            Assert.Equal(new [] {1,2,3}, parser.ParseOrFallback("1,2,3"));
+            Assert.Equal(new [] {4,5,6}, parser.ParseOrFallback("4, 5,6"));
+            Assert.Equal(new [] {7,8,9}, parser.ParseOrFallback(null, new []{7,8,9}));
             Assert.Null(parser.ParseOrFallback(null));
             Assert.Null(parser.ParseOrFallback("1,2,3,kill"));
         }

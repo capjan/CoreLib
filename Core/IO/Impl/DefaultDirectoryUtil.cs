@@ -6,8 +6,6 @@ namespace Core.IO.Impl
 {
     public class DefaultDirectoryUtil : IDirectoryUtil
     {
-        private readonly char _dirSeparator = Path.DirectorySeparatorChar;
-        
         public void EnsureExistence(string dirPath)
         {
             dirPath = dirPath ?? throw new ArgumentNullException(nameof(dirPath));

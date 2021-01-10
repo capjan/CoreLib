@@ -1,5 +1,4 @@
-﻿using System;
-namespace Core.Enums
+﻿namespace Core.Enums
 {
     /// <summary>
     /// Binary Unit Prefix (often used for file sizes)

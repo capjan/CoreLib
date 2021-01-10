@@ -1,5 +1,4 @@
-﻿using System;
-using Core.Enums;
+﻿using Core.Enums;
 
 namespace Core.Text.Formatter
 {

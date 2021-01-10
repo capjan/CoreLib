@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core.Environment.OperatingSystemInfoImpl;
+﻿using Core.Environment.OperatingSystemInfoImpl;
 using Xunit;
 
 namespace Core.Test.EnvironmentRelated

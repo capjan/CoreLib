@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Core.Parser
+﻿namespace Core.Parser
 {
     /// <summary>
     /// Generic parser to parse a string to a given output type. 

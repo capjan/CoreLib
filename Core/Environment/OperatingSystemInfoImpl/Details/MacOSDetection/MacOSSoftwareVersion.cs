@@ -1,5 +1,4 @@
-﻿using System;
-using Core.Diagnostics.Impl;
+﻿using Core.Diagnostics.Impl;
 
 namespace Core.Environment.OperatingSystemInfoImpl.Details.MacOSDetection
 {

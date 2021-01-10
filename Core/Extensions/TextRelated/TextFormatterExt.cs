@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Text;
 using Core.Enums;
 using Core.Localization.Impl;

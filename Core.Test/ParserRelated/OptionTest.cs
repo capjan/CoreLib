@@ -65,7 +65,9 @@ namespace Core.Test.ParserRelated
             Assert.Equal("c:\\temp", outputFolder);
             Assert.True(recursive);
             Assert.False(isUltra);
-            
+            Assert.True(keyValues.ContainsKey("key"));
+            Assert.True(keyValues.ContainsValue("value"));
+            Assert.True(keyValues.Count == 2); // one from kv and one from dc argument
         }
 
         [Fact]

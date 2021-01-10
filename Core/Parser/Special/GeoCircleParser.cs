@@ -36,7 +36,7 @@ namespace Core.Parser.Special
         {
             try
             {
-                var values = _doubleArrayParser.ParseOrFallback(input, null);
+                var values = _doubleArrayParser.ParseOrFallback(input);
                 if (values == null) return fallback;
                 switch (values.Length)
                 {

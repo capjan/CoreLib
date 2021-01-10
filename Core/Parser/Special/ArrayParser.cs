@@ -29,7 +29,7 @@ namespace Core.Parser.Special
             if (string.IsNullOrWhiteSpace(input)) return fallback;
             try
             {
-                var stringArray = input.Split(new char[] {','} , StringSplitOptions.RemoveEmptyEntries);
+                var stringArray = input.Split(new [] {','} , StringSplitOptions.RemoveEmptyEntries);
                 return stringArray
                        .Select(i => i.Trim())
                        .Select(i => PartParser.ParseOrFallback(i, null) ?? throw new InvalidOperationException())

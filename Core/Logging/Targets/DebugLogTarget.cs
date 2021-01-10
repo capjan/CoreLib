@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Core.Extensions.TextRelated;
+// ReSharper disable All
 
 namespace Core.Logging.Targets
 {

@@ -130,9 +130,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 using System.Text;
 using System.Text.RegularExpressions;
+// ReSharper disable All
 
 namespace Core.Parser.Arguments
 {

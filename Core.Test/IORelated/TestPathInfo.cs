@@ -1,10 +1,7 @@
-﻿using System.IO;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Linq;
 using Core.Enums;
 using Core.Extensions.IORelated;
 using Core.IO;
-using Core.IO.Impl;
 using Xunit;
 
 namespace Core.Test.IORelated

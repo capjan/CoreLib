@@ -11,15 +11,11 @@ namespace Core.Text.Formatter
     {
         private readonly IFormattableTextFormatter<double> _numberFormatter = new GenericNumberFormatter<double>();
 
-        private const long _kib = 1024L;
-        private const long _mib = 1024 * _kib;
-        private const long _gib = 1024 * _mib;
-        private const long _tib = 1024 * _gib;
-        private const long _pib = 1024 * _tib;      
-
-        public FileSizeFormatter()
-        {
-        }
+        private const long Kib = 1024L;
+        private const long Mib = 1024 * Kib;
+        private const long Gib = 1024 * Mib;
+        private const long Tib = 1024 * Gib;
+        private const long Pib = 1024 * Tib;
 
         public string Format {
             get => _numberFormatter.Format;
@@ -50,19 +46,19 @@ namespace Core.Text.Formatter
             {
                 switch (ForcedUnit.Value)
                 {
-                    case BinaryUnitPrefix.Kibi: return ("Ki", _kib);
-                    case BinaryUnitPrefix.Mebi: return ("Mi", _mib);
-                    case BinaryUnitPrefix.Gibi: return ("Gi", _gib);
-                    case BinaryUnitPrefix.Tebi: return ("Ti", _tib);
-                    case BinaryUnitPrefix.Pebi: return ("Pi", _pib);
+                    case BinaryUnitPrefix.Kibi: return ("Ki", Kib);
+                    case BinaryUnitPrefix.Mebi: return ("Mi", Mib);
+                    case BinaryUnitPrefix.Gibi: return ("Gi", Gib);
+                    case BinaryUnitPrefix.Tebi: return ("Ti", Tib);
+                    case BinaryUnitPrefix.Pebi: return ("Pi", Pib);
                     default: throw new InvalidOperationException($"The given value '{Enum.GetName(typeof(BinaryUnitPrefix), ForcedUnit)}' for the property '{nameof(ForcedUnit)}' is unexpected/not implemented.");
                 }
             }
-            if (value >= _pib) return ("Pi", _pib);
-            if (value >= _tib) return ("Ti", _tib);
-            if (value >= _gib) return ("Gi", _gib);
-            if (value >= _mib) return ("Mi", _mib);
-            if (value >= _kib) return ("Ki", _kib);
+            if (value >= Pib) return ("Pi", Pib);
+            if (value >= Tib) return ("Ti", Tib);
+            if (value >= Gib) return ("Gi", Gib);
+            if (value >= Mib) return ("Mi", Mib);
+            if (value >= Kib) return ("Ki", Kib);
             return ("", 1);
         }
     }
