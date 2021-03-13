@@ -16,18 +16,18 @@ namespace Core.Mathematics.Impl
         /// <param name="minutes">partial of 1 degree in minutes. (60 min = 1°)</param>
         /// <param name="seconds">partial of 1 degree in seconds. (3600 s = 1°)</param>
         public GeoCoordinate(
-            GeoCoordinateType type, 
-            bool isNegative, 
-            int degrees, 
-            int minutes, 
+            GeoCoordinateType type,
+            bool isNegative,
+            int degrees,
+            int minutes,
             double seconds)
         {
             // Argument validation
             switch (type)
             {
-                case GeoCoordinateType.Latitude when (degrees < 0 || degrees > 90):
+                case GeoCoordinateType.Latitude when degrees < 0 || degrees > 90:
                     throw new ArgumentOutOfRangeException(nameof(degrees),$"latitude value of {nameof(degrees)} must be between 0 to 90. Value: {degrees}");
-                case GeoCoordinateType.Longitude when (degrees < 0 || degrees > 180):
+                case GeoCoordinateType.Longitude when degrees < 0 || degrees > 180:
                     throw new ArgumentOutOfRangeException(nameof(degrees), $"longitude values of {nameof(degrees)} must be between 0 to 180. Value: {degrees}");
             }
             if (minutes < 0 || minutes > 59)
@@ -52,6 +52,6 @@ namespace Core.Mathematics.Impl
         {
             return this.WriteToString();
         }
-        
+
     }
 }

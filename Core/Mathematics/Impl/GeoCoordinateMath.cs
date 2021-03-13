@@ -28,8 +28,8 @@ namespace Core.Mathematics.Impl
             //gets minutes and seconds
             var secondsTotal     = delta * 3600.0;
             var minutes          = (int) Math.Floor(secondsTotal / 60.0);
-            var secondsRemainder = secondsTotal - (minutes * 60);
-            
+            var secondsRemainder = secondsTotal - minutes * 60;
+
             return new GeoCoordinate(coordinateType, isNegative, degrees, minutes, secondsRemainder);
         }
 
@@ -42,7 +42,7 @@ namespace Core.Mathematics.Impl
         }
 
         /// <summary>
-        /// Calculates a new GeoLocation for the given 
+        /// Calculates a new GeoLocation for the given
         /// </summary>
         /// <param name="origin"></param>
         /// <param name="dx"></param>
@@ -65,8 +65,8 @@ namespace Core.Mathematics.Impl
         /// <returns></returns>
         public (double latitude, double longitude) CalculateOffset(double originLatitude, double originLongitude, double dy, double dx)
         {
-            var newLatitude  = originLatitude  + (dy / RadiusOfEarth) * (180 / Math.PI);
-            var newLongitude = originLongitude + (dx / RadiusOfEarth) * (180 / Math.PI) / Math.Cos(originLatitude * Math.PI/180);
+            var newLatitude  = originLatitude  + dy / RadiusOfEarth * (180 / Math.PI);
+            var newLongitude = originLongitude + dx / RadiusOfEarth * (180 / Math.PI) / Math.Cos(originLatitude * Math.PI/180);
             return (newLatitude, newLongitude);
         }
     }
