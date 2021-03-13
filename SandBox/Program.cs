@@ -2,11 +2,11 @@
 
 namespace SandBox
 {
-    class Program
+    internal static class Program
     {
 
         // ReSharper disable once UnusedParameter.Local
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             // todo: Add your sandbox tests here
 

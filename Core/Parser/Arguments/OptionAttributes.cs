@@ -40,15 +40,15 @@ namespace Core.Parser.Arguments
         private readonly ITextFormatter<string> _usageLineFormatter;
 
         public OptionParser(
-            IAssemblyInfo          assemblyInfo = default, 
-            TextWriter             stdOut       = default, 
+            IAssemblyInfo          assemblyInfo = default,
+            TextWriter             stdOut       = default,
             TextWriter             stdErr       = default,
             ITextFormatter<string> usageLineFormatter = default)
         {
             _assemblyInfo       = assemblyInfo ?? new AssemblyInfo();
             _out                = stdOut ?? Console.Out;
             _err                = stdErr ?? Console.Error;
-            _usageLineFormatter = usageLineFormatter ?? new LambdaFormatter<string>((s => $" {s} [options]"));
+            _usageLineFormatter = usageLineFormatter ?? new LambdaFormatter<string>(s => $" {s} [options]");
         }
 
         public bool TryParse(IEnumerable<string> args, out T options)

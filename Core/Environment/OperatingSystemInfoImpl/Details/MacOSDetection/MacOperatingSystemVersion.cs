@@ -5,20 +5,20 @@ namespace Core.Environment.OperatingSystemInfoImpl.Details.MacOSDetection
     /// <summary>
     /// Wrapper for the sw_ver cli tool to determine information about the OS on macOS
     /// </summary>
-    internal class MacOSSoftwareVersion
+    internal class MacOperatingSystemVersion
     {
         public        string ProductName    { get; }
         public        string ProductVersion { get; }
         public        string BuildVersion   { get; }
         private const string CliProgramName = "sw_vers";
 
-        public MacOSSoftwareVersion()
+        public MacOperatingSystemVersion()
         {
             var cli                  = new CliRunner(CliProgramName);
             var detectedVersion      = string.Empty;
             var detectedBuildVersion = string.Empty;
             var detectedProductName  = string.Empty;
-                
+
             cli.ReadLines(line =>
             {
                 if (line == null) return;

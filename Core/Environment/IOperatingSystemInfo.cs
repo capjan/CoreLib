@@ -20,7 +20,7 @@ namespace Core.Environment
         /// <summary>
         /// Returns the platform of the Operating System (Unknown, Windows, Linux, macOS)
         /// </summary>
-        OSSystem Platform { get; }
+        OperatingSystemKind Platform { get; }
 
         /// <summary>
         /// Returns the version of the Operating System

@@ -2,9 +2,9 @@
 
 namespace Core.Environment.OperatingSystemInfoImpl.Details.MacOSDetection
 {
-    public class MacOSDetailsResolver : IOperatingSystemDetailsResolver
+    public class MacOperatingSystemDetailsResolver : IOperatingSystemDetailsResolver
     {
-        private readonly Lazy<MacOSSoftwareVersion> _swVersion = new Lazy<MacOSSoftwareVersion>(() => new MacOSSoftwareVersion());
+        private readonly Lazy<MacOperatingSystemVersion> _swVersion = new Lazy<MacOperatingSystemVersion>(() => new MacOperatingSystemVersion());
 
         public string ResolveVersion()
         {

@@ -14,7 +14,7 @@ namespace Core.Environment.OperatingSystemInfoImpl
         /// <summary>
         /// Return the Platform of the operating system. e.g. Windows, OS X, Linux
         /// </summary>
-        public OSSystem Platform { get; }
+        public OperatingSystemKind Platform { get; }
 
         /// <summary>
         /// Returns the Name of the Operating System
@@ -33,10 +33,10 @@ namespace Core.Environment.OperatingSystemInfoImpl
 
         private readonly Lazy<IOperatingSystemDetailsResolver> _detailsResolver;
 
-        public OperatingSystemInfo(IOSSystemResolver osSystemResolver = default, IOperatingSystemDetailsResolver detailsResolver = default)
+        public OperatingSystemInfo(IOperatingSystemResolver operatingSystemResolver = default, IOperatingSystemDetailsResolver detailsResolver = default)
         {
-            osSystemResolver = osSystemResolver ?? new OSSystemResolver();
-            Platform         = osSystemResolver.Detect();
+            operatingSystemResolver = operatingSystemResolver ?? new OperatingSystemResolver();
+            Platform         = operatingSystemResolver.Detect();
             _detailsResolver = InitializeDetailsResolver(detailsResolver, Platform);
         }
 
@@ -60,23 +60,23 @@ namespace Core.Environment.OperatingSystemInfoImpl
             return sb.ToString();
         }
 
-        private static Lazy<IOperatingSystemDetailsResolver> InitializeDetailsResolver(IOperatingSystemDetailsResolver givenResolver, OSSystem osPlatform)
+        private static Lazy<IOperatingSystemDetailsResolver> InitializeDetailsResolver(IOperatingSystemDetailsResolver givenResolver, OperatingSystemKind operatingPlatform)
         {
             if (givenResolver != null)
                 return new Lazy<IOperatingSystemDetailsResolver>(() => givenResolver);
             
-            switch (osPlatform)
+            switch (operatingPlatform)
             {
-                case OSSystem.MacOS:
-                    return new Lazy<IOperatingSystemDetailsResolver>(() => new MacOSDetailsResolver());
-                case OSSystem.Unknown:
-                    return new Lazy<IOperatingSystemDetailsResolver>(() => new NullOSDetailsResolver());
-                case OSSystem.Windows:
+                case OperatingSystemKind.MacOS:
+                    return new Lazy<IOperatingSystemDetailsResolver>(() => new MacOperatingSystemDetailsResolver());
+                case OperatingSystemKind.Unknown:
+                    return new Lazy<IOperatingSystemDetailsResolver>(() => new NullOperatingSystemDetailsResolver());
+                case OperatingSystemKind.Windows:
                     return new Lazy<IOperatingSystemDetailsResolver>(() => new WindowsDetailsResolver());
-                case OSSystem.Linux:
+                case OperatingSystemKind.Linux:
                     return new Lazy<IOperatingSystemDetailsResolver>(() => new LinuxDetailsResolver());
                 default:
-                    return new Lazy<IOperatingSystemDetailsResolver>(() => new NullOSDetailsResolver());
+                    return new Lazy<IOperatingSystemDetailsResolver>(() => new NullOperatingSystemDetailsResolver());
             }
             
         }

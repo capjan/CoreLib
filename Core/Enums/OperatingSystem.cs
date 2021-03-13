@@ -1,6 +1,6 @@
 ﻿namespace Core.Enums
 {
-    public enum OSSystem
+    public enum OperatingSystemKind
     {
         /// <summary>
         /// Placeholder for the condition when the operation system is unknown.

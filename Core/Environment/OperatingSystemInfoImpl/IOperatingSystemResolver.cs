@@ -3,25 +3,25 @@ using Core.Enums;
 
 namespace Core.Environment.OperatingSystemInfoImpl
 {
-    public interface IOSSystemResolver
+    public interface IOperatingSystemResolver
     {
-        OSSystem Detect();
+        OperatingSystemKind Detect();
     }
 
     /// <summary>
     /// Default OS System Resolver
     /// </summary>
-    public class OSSystemResolver: IOSSystemResolver
+    public class OperatingSystemResolver: IOperatingSystemResolver
     {
-        public OSSystem Detect()
+        public OperatingSystemKind Detect()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return OSSystem.Windows;
+                return OperatingSystemKind.Windows;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                return OSSystem.MacOS;
+                return OperatingSystemKind.MacOS;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return OSSystem.Linux;
-            return OSSystem.Unknown;
+                return OperatingSystemKind.Linux;
+            return OperatingSystemKind.Unknown;
         }
     }
 }

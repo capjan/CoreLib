@@ -6,11 +6,11 @@ namespace Core.Converters.Basic
 {
     public class DoubleConverter: IConverter<string, double>
     {
-        private const string DEToInvariantPattern = @"^(?<signs>\s*-\s*)*(?<number>\d+)(?<grouped>(\.\d{3})*)(?<fraction>,\d+)\s*$";
+        private const string GermanToInvariantNumberPattern = @"^(?<signs>\s*-\s*)*(?<number>\d+)(?<grouped>(\.\d{3})*)(?<fraction>,\d+)\s*$";
         public double Convert(string input)
         {
             var usedInput = input;
-            var m = Regex.Match(input, DEToInvariantPattern);
+            var m = Regex.Match(input, GermanToInvariantNumberPattern);
             if (m.Success)
             {
                 var sb = new StringBuilder();

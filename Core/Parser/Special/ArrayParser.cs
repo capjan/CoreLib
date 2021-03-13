@@ -32,7 +32,7 @@ namespace Core.Parser.Special
                 var stringArray = input.Split(new [] {','} , StringSplitOptions.RemoveEmptyEntries);
                 return stringArray
                        .Select(i => i.Trim())
-                       .Select(i => PartParser.ParseOrFallback(i, null) ?? throw new InvalidOperationException())
+                       .Select(i => PartParser.ParseOrFallback(i) ?? throw new InvalidOperationException())
                        .ToArray();
             }
             catch (Exception)

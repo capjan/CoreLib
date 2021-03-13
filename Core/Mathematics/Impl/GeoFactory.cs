@@ -18,7 +18,7 @@ namespace Core.Mathematics.Impl
                 throw new ArgumentException("type error", nameof(latitudeDMS));
             if (longitudeDMS.Type != GeoCoordinateType.Longitude)
                 throw new ArgumentException("type error", nameof(longitudeDMS));
-            
+
             var lat = _coordinateMath.GeoCoordinateToDouble(latitudeDMS);
             var lon = _coordinateMath.GeoCoordinateToDouble(longitudeDMS);
             return new GeoLocation(lat, lon, latitudeDMS, longitudeDMS);
@@ -40,7 +40,7 @@ namespace Core.Mathematics.Impl
             var left = _coordinateMath.CalculateOffset(latitude, longitude, 0, -radius);
             var right = _coordinateMath.CalculateOffset(latitude, longitude, 0, radius);
 
-            return new GeoCircle(latitude, longitude, latDMS, lonDMS, radius, minLatitude: bottom.latitude, maxLatitude: top.latitude, left.longitude, right.longitude);
+            return new GeoCircle(latitude, longitude, latDMS, lonDMS, radius, bottom.latitude, top.latitude, left.longitude, right.longitude);
         }
     }
 }

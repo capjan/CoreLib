@@ -9,15 +9,15 @@ namespace Core.Test.EnvironmentRelated
         [Fact]
         public void BasicTest()
         {
-            var resolver = new OSSystemResolver();
+            var resolver = new OperatingSystemResolver();
             var detectedOS       = resolver.Detect();
-            Assert.NotEqual(OSSystem.Unknown, detectedOS);
+            Assert.NotEqual(OperatingSystemKind.Unknown, detectedOS);
         }
 
         [Fact]
         public void ResolverMatchesOsInfo()
         {
-            var resolver   = new OSSystemResolver();
+            var resolver   = new OperatingSystemResolver();
             var detectedOS = resolver.Detect();
             var osInfo = new OperatingSystemInfo();
 
