@@ -5,7 +5,7 @@ namespace Core.Environment.OperatingSystemInfoImpl.Details.MacOSDetection
     public class MacOSDetailsResolver : IOperatingSystemDetailsResolver
     {
         private readonly Lazy<MacOSSoftwareVersion> _swVersion = new Lazy<MacOSSoftwareVersion>(() => new MacOSSoftwareVersion());
-            
+
         public string ResolveVersion()
         {
             return _swVersion.Value.ProductVersion;
@@ -19,7 +19,7 @@ namespace Core.Environment.OperatingSystemInfoImpl.Details.MacOSDetection
         public string ResolveName()
         {
             var version = _swVersion.Value.ProductVersion;
-            if (version.StartsWith("11.1") || version.StartsWith("11.0"))
+            if (version.StartsWith("11.2") || version.StartsWith("11.1") || version.StartsWith("11.0"))
                 return "macOS Big Sur";
             if (version.StartsWith("10.15"))
                 return "macOS Catalina";
