@@ -24,11 +24,13 @@ namespace Core.Test.TextRelated
         public void BasicLocalizationTest()
         {
             var formatter = new TimeSpanFormatter(TimeLocalization.Create("de"));
+            // ReSharper disable StringLiteralTypo
             Assert.Equal("1 Stunde, 0 Minuten, 0 Sekunden", formatter.WriteToString(TimeSpan.FromHours(1)));
             Assert.Equal("1 Stunde, 5 Minuten, 1 Sekunde", formatter.WriteToString(new TimeSpan(1, 5, 1)));
             Assert.Equal("6 Tage, 1 Stunde, 5 Minuten, 1 Sekunde", formatter.WriteToString(new TimeSpan(6, 1, 5, 1)));
             Assert.Equal("1 Woche, 1 Tag, 1 Stunde, 5 Minuten, 1 Sekunde", formatter.WriteToString(new TimeSpan(8, 1, 5, 1)));
             Assert.Equal("2 Wochen, 1 Tag, 1 Stunde, 5 Minuten, 1 Sekunde", formatter.WriteToString(new TimeSpan(15, 1, 5, 1)));
+            // ReSharper restore StringLiteralTypo
         }
 
         [Fact]
@@ -38,7 +40,7 @@ namespace Core.Test.TextRelated
             Assert.Equal("1h, 0m, 0s", formatter.WriteToString(TimeSpan.FromHours(1)));
             Assert.Equal("1h, 5m, 1s", formatter.WriteToString(new TimeSpan(1, 5, 1)));
         }
-        
+
         [Fact]
         public void BasicPrecisionTest()
         {
@@ -46,7 +48,7 @@ namespace Core.Test.TextRelated
             var std = formatter.WriteToString(TimeSpan.FromDays(1.234));
             Assert.Equal("1 day, 5 hours, 36 minutes", std);
         }
-        
+
         [Fact]
         public void BasicSeparatorTest()
         {
