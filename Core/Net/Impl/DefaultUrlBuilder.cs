@@ -105,7 +105,7 @@ namespace Core.Net.Impl
             sb.Append("?");
             sb.Append(_nameValueCollection
                       .Select(i => $"{_urlEncoder.Encode(i.Key)}={_urlEncoder.Encode(i.Value)}")
-                      .ToSeparatedString(separator: "&"));
+                      .ToSeparatedString("&"));
 
             return sb.ToString();
         }
