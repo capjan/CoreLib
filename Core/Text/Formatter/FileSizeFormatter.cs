@@ -32,15 +32,15 @@ namespace Core.Text.Formatter
 
         public void Write(long value, TextWriter writer)
         {
-            var dividerInfo = GetDeviderInfo(value);
-            var result = value / dividerInfo.Denominator;            
+            var dividerInfo = GetDividerInfo(value);
+            var result = value / dividerInfo.Denominator;
             var delimiter = Delimiter ?? "";
 
-            _numberFormatter.Write(result, writer);            
+            _numberFormatter.Write(result, writer);
             writer.Write($"{delimiter}{dividerInfo.Prefix}B");
         }
 
-        private (string Prefix, double Denominator) GetDeviderInfo(long value)
+        private (string Prefix, double Denominator) GetDividerInfo(long value)
         {
             if (ForcedUnit.HasValue)
             {

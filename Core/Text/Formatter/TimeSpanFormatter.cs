@@ -10,7 +10,7 @@ namespace Core.Text.Formatter
     public class TimeSpanFormatter : ITextFormatter<TimeSpan>
     {
         public TimeSpanFormatter(
-            ITimeLocalization localization = default, 
+            ITimeLocalization localization = default,
             TimePart precision = TimePart.Second,
             bool compact = false,
             string separator = ", ")
@@ -21,23 +21,10 @@ namespace Core.Text.Formatter
             Separator = separator;
         }
 
-        /// <summary>
-        /// Sets a custom .NET TimeSpan format string. If this value is set, the human optimized formatting is disabled.
-        /// </summary>
-        public string CustomFormat { get; set; }
-        public TimePart          Precision    { get; set; }
-        public ITimeLocalization Localization { get; set; }
-        public bool              Compact      { get; set; }
-        public string            Separator    { get; set; }
+
 
         public void Write(TimeSpan value, TextWriter writer)
         {
-            if (!string.IsNullOrWhiteSpace(CustomFormat))
-            {
-                writer.Write(value.ToString(CustomFormat));
-                return;
-            }
-
             _outputStarted = false;
             if (value.Days != 0)
             {
@@ -74,8 +61,10 @@ namespace Core.Text.Formatter
                 .WriteValue(writer, value, Compact);
         }
 
-        
         private bool _outputStarted;
-        
+        private TimePart          Precision    { get; set; }
+        private ITimeLocalization Localization { get; set; }
+        private bool              Compact      { get; set; }
+        private string            Separator    { get; set; }
     }
 }

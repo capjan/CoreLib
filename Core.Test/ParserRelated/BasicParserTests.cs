@@ -12,7 +12,7 @@ namespace Core.Test.ParserRelated
             var parser = new OptionalIntParser();
             Assert.Equal(123, parser.ParseOrFallback("123"));
             Assert.Equal(234, parser.ParseOrFallback(null, 234));
-            Assert.Equal(567, parser.ParseOrFallback("blabla", 567));
+            Assert.Equal(567, parser.ParseOrFallback("wrong input", 567));
         }
 
         [Fact]

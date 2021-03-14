@@ -10,10 +10,10 @@ namespace Core.Test.ParserRelated
         public void BasicTest()
         {
             var parser = new StringTokenParser();
-            
+
             using (var input = ParserInput.CreateFromString("\"Hello World!\""))
                 Assert.Equal("Hello World!", parser.Parse(input));
-            
+
             using (var input = ParserInput.CreateFromString("\"\\\\\""))
                 Assert.Equal("\\", parser.Parse(input));
 
@@ -27,11 +27,11 @@ namespace Core.Test.ParserRelated
         [Fact]
         public void DoubleQuotationTest()
         {
-            var doubleQuoteStringParser = new StringTokenParser(allowDoubleQuotationEscaping: true);
+            var doubleQuoteStringParser = new StringTokenParser( true);
             using (var input = ParserInput.CreateFromString("\"abc\"\"123\""))
                 Assert.Equal("abc\"123", doubleQuoteStringParser.Parse(input));
 
-            var singleQuoteParser = new StringTokenParser(allowDoubleQuotationEscaping: true, quotationChar: '\'');
+            var singleQuoteParser = new StringTokenParser(true, '\'');
             using (var input = ParserInput.CreateFromString("'abc''123'"))
                 Assert.Equal("abc'123", singleQuoteParser.Parse(input));
         }

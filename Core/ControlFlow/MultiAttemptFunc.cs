@@ -42,7 +42,7 @@ namespace Core.ControlFlow
 
     public abstract class AbstractMultiAttemptFunc<TResult>
     {
-        public AbstractMultiAttemptFunc(
+        protected AbstractMultiAttemptFunc(
             int      maxAttempts  = MultiAttemptFuncCallback<TResult>.MaxAttempts,
             TimeSpan attemptDelay = default)
         {

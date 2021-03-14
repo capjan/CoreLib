@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.IO;
 using Core.Mathematics;
+// ReSharper disable StringLiteralTypo
 
 namespace Core.Text.Formatter
 {
@@ -15,5 +16,5 @@ namespace Core.Text.Formatter
             writer.Write($"http://www.openstreetmap.org/?mlat={lat}&mlon={lon}&zoom={ZoomLevel}");
         }
     }
-    
+
 }

@@ -15,7 +15,7 @@ namespace Core.Test.LinqRelated
             // ReSharper restore UnusedAutoPropertyAccessor.Local
         }
 
-        public class PropertyDumper<T>
+        private class PropertyDumper<T>
         {
             public string Dump<TProperty>(Expression<Func<T, TProperty>> expression)
             {

@@ -1,6 +1,7 @@
-﻿namespace Core.Mathematics
+﻿// ReSharper disable MemberCanBePrivate.Global
+namespace Core.Mathematics
 {
-    public struct DoubleDetails
+    public readonly struct DoubleDetails
     {
         public double Value { get; }
         public int IntegralPart { get; }

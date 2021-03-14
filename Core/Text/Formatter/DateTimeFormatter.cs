@@ -6,11 +6,11 @@ namespace Core.Text.Formatter
 {
     public class DateTimeFormatter : IDateTimeFormatter
     {
-        public static string DefaultFormat = "dd.MM.yyyy HH:mm:ss.fff";
+        private const string DefaultFormat = "dd.MM.yyyy HH:mm:ss.fff";
 
         public DateTimeFormatter(
-            string format = null, 
-            bool universalTime = false, 
+            string format = null,
+            bool universalTime = false,
             IFormatProvider formatProvider = default)
         {
             Format = format ?? DefaultFormat;
@@ -28,7 +28,7 @@ namespace Core.Text.Formatter
 
             writer.Write(value.ToString(Format, FormatProvider));
         }
-    
+
         public IFormatProvider FormatProvider { get; set; }
         public bool UniversalTime { get; set; }
         public string Format { get; set; }

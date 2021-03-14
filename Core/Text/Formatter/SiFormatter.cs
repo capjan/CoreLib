@@ -8,7 +8,7 @@ namespace Core.Text.Formatter
     {
         private readonly char[] _incPrefixes = { 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y' };
         private readonly char[] _decPrefixes = { 'm', '\u03bc', 'n', 'p', 'f', 'a', 'z', 'y' };
-        
+
         public void Write(decimal value, TextWriter writer)
         {
             // handle special case 0
@@ -26,7 +26,7 @@ namespace Core.Text.Formatter
                 WriteScaledValue(writer, "< 1",'y');
                 return;
             }
-            
+
             if (degree > _incPrefixes.Length)
             {
                 // result exceeds max limit
@@ -34,9 +34,9 @@ namespace Core.Text.Formatter
                 WriteScaledValue(writer, valueAsString,'Y');
                 return;
             }
-            
+
             var scaled = value * Convert.ToDecimal(Math.Pow(1000, -degree));
-            
+
             if (SignificantDecimalPlaces.HasValue)
                 scaled = scaled.TruncateAfterDecimalPlace(SignificantDecimalPlaces.Value);
 
@@ -47,7 +47,7 @@ namespace Core.Text.Formatter
                 case -1: prefix = _decPrefixes[-degree - 1]; break;
             }
 
-            var valueStr = scaled.ToString(Format, FormatProvider); 
+            var valueStr = scaled.ToString(Format, FormatProvider);
             WriteScaledValue(writer, valueStr, prefix);
         }
 
@@ -60,7 +60,7 @@ namespace Core.Text.Formatter
             writer.Write(Unit);
         }
 
-        private int CalculateDegree(decimal value)
+        private static int CalculateDegree(decimal value)
         {
             var log10 = Math.Log10(Convert.ToDouble(Math.Abs(value)));
             var result = (int) Math.Floor(log10 / 3);

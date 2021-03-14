@@ -1,6 +1,7 @@
 ﻿using Core.Parser.Special;
 using Core.Text.Impl;
 using Xunit;
+// ReSharper disable StringLiteralTypo
 
 namespace Core.Test.ParserRelated
 {

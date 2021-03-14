@@ -60,7 +60,7 @@ namespace Core.Test.TextRelated
         [Fact]
         public void BasicCustomFormattingTest()
         {
-            var formatter = new TimeSpanFormatter {CustomFormat = @"d\.hh\:mm\:ss\.fff"};
+            var formatter = new CustomTimeSpanFormatter(@"d\.hh\:mm\:ss\.fff");
             Assert.Equal("0.01:00:00.000", formatter.WriteToString(TimeSpan.FromHours(1)));
             Assert.Equal("0.01:05:01.000", formatter.WriteToString(new TimeSpan(1, 5, 1)));
         }

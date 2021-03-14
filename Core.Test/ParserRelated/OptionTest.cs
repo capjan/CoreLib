@@ -88,7 +88,7 @@ namespace Core.Test.ParserRelated
 
             // write description directly to std out
             options.WriteOptionDescriptions(Console.Out);
-            
+
             try
             {
                 // extra contains the remaining 'non option' arguments
@@ -100,14 +100,17 @@ namespace Core.Test.ParserRelated
                 options.WriteOptionDescriptions(Console.Out);
                 throw;
             }
-            
+
             Assert.True(showVersion);
             Assert.Equal("C:\\temp", outputFolder);
         }
 
-        public class TestOptions : CliOptions
+        private class TestOptions : CliOptions
         {
             [Option("m|max=", "Sets the maximum for the value")]
+
+            // setter must be given, otherwise the OptionParser can't set the value
+            // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
             public int MaxValue { get; set; } = 10;
         }
 
@@ -119,7 +122,7 @@ namespace Core.Test.ParserRelated
             Assert.False(result.ShowHelp);
             Assert.Equal(1234, result.MaxValue);
         }
-        
+
         [Fact]
         public void BasicShowHelpTest()
         {

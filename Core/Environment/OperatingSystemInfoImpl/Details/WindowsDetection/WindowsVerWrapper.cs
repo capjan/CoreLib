@@ -8,13 +8,13 @@ namespace Core.Environment.OperatingSystemInfoImpl.Details.WindowsDetection
     /// <summary>
     /// Wrapper for the embedded CLI.exe command ver
     /// </summary>
-    internal class WindowsVerWrapper
+    internal static class WindowsVerWrapper
     {
-        public Version GetVersion()
+        public static Version GetVersion()
         {
             var cli    = new CliRunner("cmd.exe", "/C ver");
             var output = cli.ReadToEnd();
-            
+
 
             const string pattern = @"(?<major>\d+)(\.(?<minor>\d+)(\.(?<build>\d+))?)?";
             var          m       = Regex.Match(output, pattern);
@@ -32,5 +32,5 @@ namespace Core.Environment.OperatingSystemInfoImpl.Details.WindowsDetection
             return new Version(major, minor, build);
         }
     }
-	
+
 }

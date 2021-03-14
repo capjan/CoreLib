@@ -1,5 +1,6 @@
 ﻿using Core.Parser.Basic;
 using Xunit;
+// ReSharper disable StringLiteralTypo
 
 namespace Core.Test.ParserRelated
 {
@@ -19,7 +20,7 @@ namespace Core.Test.ParserRelated
             Assert.True(parser.ParseOrFallback("y"));
             Assert.True(parser.ParseOrFallback("j"));
             Assert.True(parser.ParseOrFallback(null, true));
-            
+
             // must evaluate to false
             Assert.False(parser.ParseOrFallback("false"));
             Assert.False(parser.ParseOrFallback("False"));
@@ -38,4 +39,3 @@ namespace Core.Test.ParserRelated
         }
     }
 }
-

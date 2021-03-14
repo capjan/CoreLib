@@ -9,7 +9,7 @@ namespace Core.Environment.OperatingSystemInfoImpl.Details.WindowsDetection
 
         public WindowsDetailsResolver()
         {
-            _lazyVersion = new Lazy<Version>(() => new WindowsVerWrapper().GetVersion());
+            _lazyVersion = new Lazy<Version>(() => WindowsVerWrapper.GetVersion());
         }
 
         public string ResolveVersion()

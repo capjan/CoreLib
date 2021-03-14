@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using Core.Mathematics;
 using Core.Mathematics.Impl;
+// ReSharper disable StringLiteralTypo
 
 namespace Core.Text.Generator.Impl
 {
@@ -15,8 +16,8 @@ namespace Core.Text.Generator.Impl
         }
 
         public void WriteText(int wordCount, TextWriter output)
-        {            
-            var wordsWritten = 0;                        
+        {
+            var wordsWritten = 0;
             // special handling of the first 5 words
             while (wordsWritten < wordCount && wordsWritten < 5)
             {
@@ -31,7 +32,7 @@ namespace Core.Text.Generator.Impl
                 output.Write(' ');
                 output.Write(randomWord);
                 wordsWritten++;
-            }                
+            }
         }
 
         private readonly IRandom _random;

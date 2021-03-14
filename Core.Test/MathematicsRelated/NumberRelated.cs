@@ -8,7 +8,7 @@ namespace Core.Test.MathematicsRelated
         [Fact]
         public void DoubleTest()
         {
-            var value = 2.73;
+            const double value = 2.73;
             var detail = value.Details();
             Assert.Equal(2, detail.IntegralPart);
             Assert.Equal(0.73, detail.FractionPart);

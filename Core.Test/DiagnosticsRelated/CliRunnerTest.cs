@@ -12,19 +12,17 @@ namespace Core.Test.DiagnosticsRelated
         [Fact]
         public void BasicTest()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return;
+            var cli = new CliRunner("hostname");
+            var sb = new StringBuilder();
+            using (var sw = new StringWriter(sb))
             {
-                var cli = new CliRunner("hostname");
-                var sb = new StringBuilder();
-                using (var sw = new StringWriter(sb))
-                {
-                    cli.Redirect(sw);
-                }
-
-                var hostname = sb.ToString().Trim();
-                Assert.NotNull(hostname);
-                Assert.True(hostname.Length > 0);
+                cli.Redirect(sw);
             }
+
+            var hostname = sb.ToString().Trim();
+            Assert.NotNull(hostname);
+            Assert.True(hostname.Length > 0);
         }
     }
 }
