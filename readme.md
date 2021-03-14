@@ -1,6 +1,6 @@
 # CoreLib
 
-![Build-Badge](https://github.com/capjan/CoreLib/workflows/.NET/badge.svg)
+[![.NET 5.0](https://github.com/capjan/CoreLib/actions/workflows/dotnet.yml/badge.svg)](https://github.com/capjan/CoreLib/actions/workflows/dotnet.yml)
 
 Consider this library as productivity boost to achieve stated development goals faster in .NET.
 
