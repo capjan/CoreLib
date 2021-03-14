@@ -94,8 +94,13 @@ namespace Core.Parser.Arguments
 
             foreach (var propertyInfo in allProperties)
             {
-                if (!propertyInfo.CanRead || !propertyInfo.CanWrite || !propertyInfo.TryGetAttribute<OptionAttribute>(
-                        out var attribute)) continue;
+                if (!propertyInfo.TryGetAttribute<OptionAttribute>(out var attribute)) continue;
+
+                var canRead = propertyInfo.CanRead;
+                var canWrite = propertyInfo.CanWrite;
+                if (!(canRead && canWrite))
+                    throw new InvalidOperationException(
+                        $"The property \"{propertyInfo.Name}\" of type \"{type.Name}\" must implement a getter and setter method to be used as an option for the {nameof(OptionParser<T>)}.");
 
                 var pType = propertyInfo.PropertyType;
                 if (pType == typeof(bool))
