@@ -16,6 +16,7 @@ Consider this library as productivity boost to achieve stated development goals 
 
 * CoreLib probably contains more features/solutions than required for your use case. 
   *Usually this con should not be a problem, but if a size optimized solution is required, extracting the used parts into the project could be a viable response to this drawback.* 
+* You must read the documentation. If you don't know the provided solutions you don't use them or make them even better.
 
 # Getting started
 
