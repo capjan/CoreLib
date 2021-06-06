@@ -1,3 +1,5 @@
+using Core.Enums;
+
 namespace Core.Text.Formatter
 {
     /// <summary>
@@ -21,8 +23,14 @@ namespace Core.Text.Formatter
         string Unit { get; set; }
         
         /// <summary>
-        /// Limits the count of significant decimal places. All non significant decimal places are cut off.
+        /// Limits the count of significant decimal places. All non significant decimal places are removed and the remaining number is shortened by the given strategy.
         /// </summary>
-        int? SignificantDecimalPlaces { get; set; } 
+        int? SignificantDecimalPlaces { get; set; }
+
+        /// <summary>
+        /// Specifies how a shortened number (limited by significant decimal places) is shortened. It's defaults to truncate.
+        /// </summary>
+        NumberShortenStrategy ShortenStrategy { get; set; }
+
     }
 }

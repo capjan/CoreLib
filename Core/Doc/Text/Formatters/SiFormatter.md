@@ -12,7 +12,8 @@ e.g. 1000 => 1 k
 * possibility to set the name of the unit. defaults to null (no unit)
 * possibility to set the delimiter between value and unit. e.g. replace a space by a tab etc.
 * possibility to limit the significant decimal places to a given value. (avoids unwanted rounding due to formatting)
- 
+*  Multiple shorten strategies for decimal places. Currently: truncate and round (defaults to truncate).
+
 ## Examples
 ```csharp
 var formatter = new SiFormatter();

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Core.Enums;
 using Core.Extensions.MathematicsRelated;
 
 namespace Core.Text.Formatter
@@ -35,10 +36,22 @@ namespace Core.Text.Formatter
                 return;
             }
 
-            var scaled = value * Convert.ToDecimal(Math.Pow(1000, -degree));
-
+            var scaled  = value * Convert.ToDecimal(Math.Pow(1000, -degree));
+           
             if (SignificantDecimalPlaces.HasValue)
-                scaled = scaled.TruncateAfterDecimalPlace(SignificantDecimalPlaces.Value);
+            {
+                switch (ShortenStrategy)
+                {
+                    case NumberShortenStrategy.Round:
+                        scaled = Math.Round(scaled, SignificantDecimalPlaces.Value, MidpointRounding.AwayFromZero);
+                        break;
+                    case NumberShortenStrategy.Truncate:
+                    case NumberShortenStrategy.Default:
+                        scaled = scaled.TruncateAfterDecimalPlace(SignificantDecimalPlaces.Value);
+                        break;
+                }
+            }
+                
 
             char? prefix = null;
             switch (Math.Sign(degree))
@@ -68,11 +81,12 @@ namespace Core.Text.Formatter
             return result;
         }
 
-        public string Format { get; set; } = "0.###";
-        public IFormatProvider FormatProvider { get; set; }
-        public string Delimiter { get; set; } = " ";
-        public int? ForcedDegree { get; set; }
-        public string Unit { get; set; }
-        public int? SignificantDecimalPlaces { get; set; }
+        public string                Format                   { get; set; } = "0.###";
+        public IFormatProvider       FormatProvider           { get; set; }
+        public string                Delimiter                { get; set; } = " ";
+        public int?                  ForcedDegree             { get; set; }
+        public string                Unit                     { get; set; }
+        public int?                  SignificantDecimalPlaces { get; set; }
+        public NumberShortenStrategy ShortenStrategy          { get; set; }
     }
 }
