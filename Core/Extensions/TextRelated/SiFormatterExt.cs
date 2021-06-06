@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using Core.Text.Formatter;
 
 namespace Core.Extensions.TextRelated
@@ -74,6 +76,30 @@ namespace Core.Extensions.TextRelated
         public static void ForcePico(this ISiFormatter formatter)
         {
             formatter.ForcedDegree = -4;
+        }
+        /// <summary>
+        /// Convenience method to write a double value where the required conversion to decimal is automatically applied.
+        /// </summary>
+        /// <param name="formatter">formatter</param>
+        /// <param name="value">value to write</param>
+        /// <param name="writer">output writer</param>
+        public static void Write(this ISiFormatter formatter, double value, TextWriter writer)
+        {
+            var convertedValue = Convert.ToDecimal(value);
+            formatter.Write(convertedValue, writer);
+        }
+
+        /// <summary>
+        /// Convenience method to write a double value formatted to a string. The required conversion is automatically applied.
+        /// </summary>
+        /// <param name="formatter">the formatter</param>
+        /// <param name="value">the value to format</param>
+        /// <param name="newLine">option to overwrite the used newline chars to newlines. (defaults the the newline chars of the operating system)</param>
+        /// <returns>The SI-formatted double value.</returns>
+        public static string WriteToString(this ISiFormatter formatter, double value, string newLine = default)
+        {
+            var convertedValue = Convert.ToDecimal(value);
+            return formatter.WriteToString(convertedValue, newLine);
         }
     }
 }
