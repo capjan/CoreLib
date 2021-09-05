@@ -10,10 +10,12 @@ jobs:
   semver:
     runs-on: ubuntu-20.04
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v2
       - name: install git-mkver
         run: curl -L https://github.com/idc101/git-mkver/releases/download/v1.2.2/git-mkver-linux-amd64-1.2.2.tar.gz | tar xvz && mv git-mkver /usr/local/bin
+      - name: List all Git Tags
+        run: git tag
       - name: determine next version 
         run: git-mkver next
         
