@@ -12,6 +12,7 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       OWNER_EMAIL: ${{ secrets.OWNER_EMAIL }}
+      OWNER_NAME: $ {{ secrets.OWNER_NAME }}
     steps:
     - uses: actions/checkout@v2
       with:
@@ -32,5 +33,9 @@ jobs:
       run: dotnet build -f net5.0 --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: setup git config
+      run: |
+        git config --global user.email "$OWNER_EMAIL"
+        git config --global user.name "$OWNER_NAME"
     - name: add tag for new version
       run: git-mkver tag
