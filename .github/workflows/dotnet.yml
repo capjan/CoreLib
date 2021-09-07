@@ -7,33 +7,25 @@ on:
     branches: [ main ]
 
 jobs:
-  semver:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-            fetch-depth: 0
-      - name: install git-mkver
-        run: curl -L https://github.com/idc101/git-mkver/releases/download/v1.2.2/git-mkver-linux-amd64-1.2.2.tar.gz | tar xvz && mv git-mkver /usr/local/bin
-      - name: List files in current dir
-        run: ls
-      - name: print git version
-        run: git --version
-      - name: List all Git Tags
-        run: /usr/bin/git tag
-      - name: determine next version 
-        run: git-mkver next
-        
   build-and-test:
-    needs: [ semver ]
     runs-on: ubuntu-20.04
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      OWNER_EMAIL: ${{ secrets.OWNER_EMAIL }}
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
+    - name: install git-mkver
+      run: curl -L https://github.com/idc101/git-mkver/releases/download/v1.2.2/git-mkver-linux-amd64-1.2.2.tar.gz | tar xvz && mv git-mkver /usr/local/bin
+    - name: determine next version 
+      run: git-mkver next
+    - name: patch new version
+      run: git-mkver patch
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
