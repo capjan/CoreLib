@@ -12,7 +12,7 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       OWNER_EMAIL: ${{ secrets.OWNER_EMAIL }}
-      OWNER_NAME: $ {{ secrets.OWNER_NAME }}
+      OWNER_NAME: ${{ secrets.OWNER_NAME }}
     steps:
     - uses: actions/checkout@v2
       with:
