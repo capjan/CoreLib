@@ -32,3 +32,5 @@ jobs:
       run: dotnet build -f net5.0 --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: add tag for new version
+      run: git-mkver tag
