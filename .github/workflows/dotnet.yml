@@ -40,4 +40,4 @@ jobs:
     - name: add semver tag for new version via git-mkver
       run: git-mkver tag
     - name: push changes (Tags) to Repository
-      run: git push
+      run: git push origin --tags
