@@ -23,7 +23,7 @@ jobs:
         dotnet-version: 5.0.x
     - name: install git-mkver
       run: curl -L https://github.com/idc101/git-mkver/releases/download/v1.2.2/git-mkver-linux-amd64-1.2.2.tar.gz | tar xvz && mv git-mkver /usr/local/bin
-    - name: determine next version 
+    - name: determine next version
       run: git-mkver next
     - name: patch new version
       run: git-mkver patch
@@ -37,5 +37,7 @@ jobs:
       run: |
         git config --global user.email "$OWNER_EMAIL"
         git config --global user.name "$OWNER_NAME"
-    - name: add tag for new version
+    - name: add semver tag for new version via git-mkver
       run: git-mkver tag
+    - name: push changes (Tags) to Repository
+      run: git push
