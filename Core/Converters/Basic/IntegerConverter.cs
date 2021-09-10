@@ -5,7 +5,7 @@ namespace Core.Converters.Basic
 {
     public class IntegerConverter: IConverter<string, int>
     {
-        private const string RegexPattern = @"(?<number>\d+)";
+        private const string RegexPattern = @"(?<number>-?\d+)";
 
         public int Convert(string input)
         {
