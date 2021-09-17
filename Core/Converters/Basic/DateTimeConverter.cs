@@ -14,7 +14,7 @@ namespace Core.Converters.Basic
         }
 
         private const string RegexPattern =
-            @"(?<year>\d{4})(?<date_separator>[-.])(?<month>\d{2})\k<date_separator>(?<days>\d{2})\s?[T\s-]\s?(?<hours>\d{2}):(?<minutes>\d{2})(:(?<seconds>\d{2})(\.(?<milliseconds>\d{1,3}))?)?\s?Z";
+            @"(?<year>\d{4})(?<date_separator>[-.])(?<month>\d{2})\k<date_separator>(?<days>\d{2})\s?[T\s-]\s?(?<hours>\d{2}):(?<minutes>\d{2})(:(?<seconds>\d{2})(\.(?<milliseconds>\d{1,6}))?)?\s?Z";
 
         public DateTime Convert(string input)
         {
@@ -40,6 +40,19 @@ namespace Core.Converters.Basic
                 case 2:
                     milliseconds *= 10;
                     break;
+                case 3:
+                    break;
+                case 4:
+                    milliseconds /= 10;
+                    break;
+                case 5:
+                    milliseconds /= 100;
+                    break;
+                case 6:
+                    milliseconds /= 1000;
+                    break;
+                default:
+                    throw new NotSupportedException("digits must be less or equal to 6");
             }
 
             return new DateTime(year, month, days, hours, minutes, seconds, milliseconds, DateTimeKind.Utc);
