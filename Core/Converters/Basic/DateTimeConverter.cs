@@ -14,7 +14,7 @@ namespace Core.Converters.Basic
         }
 
         private const string RegexPattern =
-            @"(?<year>\d{4})(?<date_separator>[-.])(?<month>\d{2})\k<date_separator>(?<days>\d{2})\s?[T\s-]\s?(?<hours>\d{2}):(?<minutes>\d{2})(:(?<seconds>\d{2})(\.(?<milliseconds>\d{1,6}))?)?\s?Z";
+            @"(?<year>\d{4})(?<date_separator>[-.])(?<month>\d{2})\k<date_separator>(?<days>\d{2})\s?[T\s-]\s?(?<hours>\d{2}):(?<minutes>\d{2})(:(?<seconds>\d{2})(\.(?<milliseconds>\d{1,6}))?)?\s?(?<utc_sign>Z)?";
 
         public DateTime Convert(string input)
         {
@@ -32,6 +32,7 @@ namespace Core.Converters.Basic
             var seconds         = _intParser.ParseOrFallback(m.Groups["seconds"].Value);
             var millisecondsStr = m.Groups["milliseconds"].Value;
             var milliseconds    = _intParser.ParseOrFallback(millisecondsStr);
+            var utcSign = m.Groups["utc_sign"].Success;
             switch (millisecondsStr.Length)
             {
                 case 1:
@@ -40,7 +41,7 @@ namespace Core.Converters.Basic
                 case 2:
                     milliseconds *= 10;
                     break;
-                case 3:
+                case 0: case 3:
                     break;
                 case 4:
                     milliseconds /= 10;
@@ -55,7 +56,8 @@ namespace Core.Converters.Basic
                     throw new NotSupportedException("digits must be less or equal to 6");
             }
 
-            return new DateTime(year, month, days, hours, minutes, seconds, milliseconds, DateTimeKind.Utc);
+            var usedDateTimeKind = utcSign ? DateTimeKind.Utc : DateTimeKind.Unspecified;
+            return new DateTime(year, month, days, hours, minutes, seconds, milliseconds, usedDateTimeKind);
         }
     }
 }
