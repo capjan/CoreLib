@@ -33,7 +33,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: setup gpg
       run: |
-        echo "$OWNER_GPG_KEY_BASE64" | base64 -d >> signkey.asc
+        echo "$OWNER_GPG_KEY_BASE64" | base64 -d -i >> signkey.asc
         shasum signkey.asc
     - name: setup git config
       run: |
