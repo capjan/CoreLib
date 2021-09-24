@@ -14,6 +14,10 @@ namespace Core.Parser.Basic
         private readonly IParser<double?> _optionalDoubleParser;
         private readonly IParser<bool?> _optionalBoolParser;
         private readonly IParser<DateTime?> _optionalDateTimeParser;
+        
+        /// <summary>
+        /// Creates an instance of the object.
+        /// </summary>
         public AnyBasicParser()
         {
             _intParser = new IntegerParser();
@@ -26,6 +30,15 @@ namespace Core.Parser.Basic
             _optionalDateTimeParser = new OptionalDateTimeParser();
             _optionalBoolParser = new OptionalBoolParser();
         }
+
+        /// <summary>
+        /// Parses a given input string to a specific output type T.
+        /// </summary>
+        /// <param name="input">the string value to parse</param>
+        /// <param name="fallback">fallback, if the input cannot be parsed</param>
+        /// <typeparam name="T">currently supported types: int, int?, double, double?, DateTime, DateTime?, bool, bool?</typeparam>
+        /// <returns></returns>
+        /// <exception cref="NotSupportedException"></exception>
         public T ParseOrFallBack<T>(string input, T fallback = default)
         {
             var currType = typeof(T);
