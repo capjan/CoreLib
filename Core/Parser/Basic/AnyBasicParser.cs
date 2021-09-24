@@ -18,17 +18,34 @@ namespace Core.Parser.Basic
         /// <summary>
         /// Creates an instance of the object.
         /// </summary>
-        public AnyBasicParser()
+        /// <param name="integerParser"></param>
+        /// <param name="doubleParser"></param>
+        /// <param name="dateTimeParser"></param>
+        /// <param name="boolParser"></param>
+        /// <param name="optionalIntParser"></param>
+        /// <param name="optionalDoubleParser"></param>
+        /// <param name="optionalDateTimeParser"></param>
+        /// <param name="optionalBoolParser"></param>
+        public AnyBasicParser(
+            AbstractParser<int> integerParser = default,
+            AbstractParser<double> doubleParser = default,
+            AbstractParser<DateTime> dateTimeParser = default,
+            AbstractParser<bool> boolParser = default,
+            AbstractNullableParser<int> optionalIntParser = default,
+            AbstractNullableParser<double> optionalDoubleParser = default,
+            AbstractNullableParser<DateTime> optionalDateTimeParser = default,
+            AbstractNullableParser<bool> optionalBoolParser = default
+        )
         {
-            _intParser = new IntegerParser();
-            _doubleParser = new DoubleParser();
-            _dateTimeParser = new DateTimeParser();
-            _boolParser = new BoolParser();
+            _intParser = integerParser ?? new IntegerParser();
+            _doubleParser = doubleParser ?? new DoubleParser();
+            _dateTimeParser = dateTimeParser ?? new DateTimeParser();
+            _boolParser = boolParser ?? new BoolParser();
 
-            _optionalIntParser = new OptionalIntParser();
-            _optionalDoubleParser = new OptionalDoubleParser();
-            _optionalDateTimeParser = new OptionalDateTimeParser();
-            _optionalBoolParser = new OptionalBoolParser();
+            _optionalIntParser = optionalIntParser ?? new OptionalIntParser();
+            _optionalDoubleParser = optionalDoubleParser ?? new OptionalDoubleParser();
+            _optionalDateTimeParser = optionalDateTimeParser ?? new OptionalDateTimeParser();
+            _optionalBoolParser = optionalBoolParser ?? new OptionalBoolParser();
         }
 
         /// <summary>
