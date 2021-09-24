@@ -1,5 +1,7 @@
 ﻿# Separator Formatter
 
+Think about the [SeparatorFormatter](../../../Text/Formatter/SeparatorFormatter.cs) as a [String.Join()](https://docs.microsoft.com/en-us/dotnet/api/system.string.join) on steroids, because it add Grouping, a ItemFormatter and a NullPlaceholder.
+
 ## Example
 ```csharp
 var intArray = new[] {1, 2, 3, 4, 5};
