@@ -27,14 +27,14 @@ namespace Core.Parser.Basic
         /// <param name="optionalDateTimeParser"></param>
         /// <param name="optionalBoolParser"></param>
         public AnyBasicParser(
-            AbstractParser<int> integerParser = default,
-            AbstractParser<double> doubleParser = default,
-            AbstractParser<DateTime> dateTimeParser = default,
-            AbstractParser<bool> boolParser = default,
-            AbstractNullableParser<int> optionalIntParser = default,
-            AbstractNullableParser<double> optionalDoubleParser = default,
-            AbstractNullableParser<DateTime> optionalDateTimeParser = default,
-            AbstractNullableParser<bool> optionalBoolParser = default
+            IParser<int> integerParser = default,
+            IParser<double> doubleParser = default,
+            IParser<DateTime> dateTimeParser = default,
+            IParser<bool> boolParser = default,
+            IParser<int?> optionalIntParser = default,
+            IParser<double?> optionalDoubleParser = default,
+            IParser<DateTime?> optionalDateTimeParser = default,
+            IParser<bool?> optionalBoolParser = default
         )
         {
             _intParser = integerParser ?? new IntegerParser();
@@ -102,7 +102,7 @@ namespace Core.Parser.Basic
                 return (T)(object)_optionalBoolParser.ParseOrFallback(input, (bool?)(object) fallback);
             }
 
-            throw new NotSupportedException($"Parsing of datatype {typeof(T)} is not supported.");
+            throw new NotSupportedException($"Parsing of datatype {currType} is not supported.");
         }
     }
 }
