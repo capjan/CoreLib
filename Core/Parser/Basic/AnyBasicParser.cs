@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Parser.Basic.Constants;
 using Core.Parser.Basic.Interfaces;
 
 namespace Core.Parser.Basic
@@ -58,51 +59,29 @@ namespace Core.Parser.Basic
         /// <exception cref="NotSupportedException"></exception>
         public T ParseOrFallBack<T>(string input, T fallback = default)
         {
-            var currType = typeof(T);
-            
-            // Basic
-            if (currType == typeof(int))
-            {
-                return (T)(object)_intParser.ParseOrFallback(input, (int)(object) fallback);
-            }
+            var currType = typeof(T).ToString();
 
-            if (currType == typeof(double))
+            switch (currType)
             {
-                return (T)(object)_doubleParser.ParseOrFallback(input, (double)(object) fallback);
+                case KnownDataTypes.Int:
+                    return (T) (object) _intParser.ParseOrFallback(input, (int) (object) fallback);
+                case KnownDataTypes.Double:
+                    return (T) (object) _doubleParser.ParseOrFallback(input, (double) (object) fallback);
+                case KnownDataTypes.DateTime:
+                    return (T) (object) _dateTimeParser.ParseOrFallback(input, (DateTime) (object) fallback);
+                case KnownDataTypes.Bool:
+                    return (T) (object) _boolParser.ParseOrFallback(input, (bool) (object) fallback);
+                case KnownDataTypes.IntOptional:
+                    return (T) (object) _optionalIntParser.ParseOrFallback(input, (int?) (object) fallback);
+                case KnownDataTypes.DoubleOptional:
+                    return (T)(object)_optionalDoubleParser.ParseOrFallback(input, (double?)(object) fallback);
+                case KnownDataTypes.DateTimeOptional:
+                    return (T) (object) _optionalDateTimeParser.ParseOrFallback(input, (DateTime?) (object) fallback);
+                case KnownDataTypes.BoolOptional:
+                    return (T) (object) _optionalBoolParser.ParseOrFallback(input, (bool?) (object) fallback);
+                default:
+                    throw new NotSupportedException($"Parsing of datatype {currType} is not supported.");
             }
-
-            if (currType == typeof(DateTime))
-            {
-                return (T)(object)_dateTimeParser.ParseOrFallback(input, (DateTime)(object) fallback);
-            }
-
-            if (currType == typeof(bool))
-            {
-                return (T)(object)_boolParser.ParseOrFallback(input, (bool)(object) fallback);
-            }
-
-            // Basic optional
-            if (currType == typeof(int?))
-            {
-                return (T)(object)_optionalIntParser.ParseOrFallback(input, (int?)(object) fallback);
-            }
-
-            if (currType == typeof(double?))
-            {
-                return (T)(object)_optionalDoubleParser.ParseOrFallback(input, (double?)(object) fallback);
-            }
-
-            if (currType == typeof(DateTime?))
-            {
-                return (T)(object)_optionalDateTimeParser.ParseOrFallback(input, (DateTime?)(object) fallback);
-            }
-
-            if (currType == typeof(bool?))
-            {
-                return (T)(object)_optionalBoolParser.ParseOrFallback(input, (bool?)(object) fallback);
-            }
-
-            throw new NotSupportedException($"Parsing of datatype {currType} is not supported.");
         }
     }
 }
