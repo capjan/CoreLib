@@ -57,7 +57,7 @@ namespace Core.Parser.Basic
         /// <typeparam name="T">currently supported types: int, int?, double, double?, DateTime, DateTime?, bool, bool?</typeparam>
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
-        public T ParseOrFallBack<T>(string input, T fallback = default)
+        public T ParseOrFallback<T>(string input, T fallback = default)
         {
             var currType = typeof(T).ToString();
 

@@ -13,12 +13,12 @@ namespace Core.Test.ParserRelated
         {
             var stringValue = "1";
             var sut = CreateSut();
-            var result = sut.ParseOrFallBack<int>(stringValue);
+            var result = sut.ParseOrFallback<int>(stringValue);
 
             Assert.Equal(1, result);
 
             var fallback = default(int);
-            result = sut.ParseOrFallBack<int>("random");
+            result = sut.ParseOrFallback<int>("random");
             Assert.Equal(fallback, result);
         }
         
@@ -27,12 +27,12 @@ namespace Core.Test.ParserRelated
         {
             var stringValue = "1.56";
             var sut = CreateSut();
-            var result = sut.ParseOrFallBack<double>(stringValue);
+            var result = sut.ParseOrFallback<double>(stringValue);
 
             Assert.Equal(1.56, result);
 
             var fallback = default(double);
-            result = sut.ParseOrFallBack<double>("random");
+            result = sut.ParseOrFallback<double>("random");
             Assert.Equal(fallback, result);
         }
         
@@ -42,12 +42,12 @@ namespace Core.Test.ParserRelated
             var checkTime = new DateTime(2021, 09, 24, 15, 04, 56);
             var stringValue = "2021-09-24T15:04:56.000Z";
             var sut = CreateSut();
-            var result = sut.ParseOrFallBack<DateTime>(stringValue);
+            var result = sut.ParseOrFallback<DateTime>(stringValue);
 
             Assert.Equal(checkTime, result);
 
             var fallback = default(DateTime);
-            result = sut.ParseOrFallBack<DateTime>("random");
+            result = sut.ParseOrFallback<DateTime>("random");
             Assert.Equal(fallback, result);
         }
         
@@ -56,12 +56,12 @@ namespace Core.Test.ParserRelated
         {
             var stringValue = "yes";
             var sut = CreateSut();
-            var result = sut.ParseOrFallBack<bool>(stringValue);
+            var result = sut.ParseOrFallback<bool>(stringValue);
 
             Assert.True(result);
 
             var fallback = default(bool);
-            result = sut.ParseOrFallBack<bool>("random");
+            result = sut.ParseOrFallback<bool>("random");
             Assert.Equal(fallback, result);
         }
         
@@ -70,12 +70,12 @@ namespace Core.Test.ParserRelated
         {
             var stringValue = "2";
             var sut = CreateSut();
-            var result = sut.ParseOrFallBack<int?>(stringValue);
+            var result = sut.ParseOrFallback<int?>(stringValue);
 
             Assert.Equal(2, result);
             
             var fallback = default(int?);
-            result = sut.ParseOrFallBack<int?>("random");
+            result = sut.ParseOrFallback<int?>("random");
             Assert.Equal(fallback, result);
         }
         
@@ -84,12 +84,12 @@ namespace Core.Test.ParserRelated
         {
             var stringValue = "1.56";
             var sut = CreateSut();
-            var result = sut.ParseOrFallBack<double?>(stringValue);
+            var result = sut.ParseOrFallback<double?>(stringValue);
 
             Assert.Equal(1.56, result);
 
             var fallback = default(double?);
-            result = sut.ParseOrFallBack<double?>("random");
+            result = sut.ParseOrFallback<double?>("random");
             Assert.Equal(fallback, result);
         }
         
@@ -99,12 +99,12 @@ namespace Core.Test.ParserRelated
             var checkTime = new DateTime(2021, 09, 24, 15, 04, 56);
             var stringValue = "2021-09-24T15:04:56.000Z";
             var sut = CreateSut();
-            var result = sut.ParseOrFallBack<DateTime?>(stringValue);
+            var result = sut.ParseOrFallback<DateTime?>(stringValue);
 
             Assert.Equal(checkTime, result);
 
             var fallback = default(DateTime?);
-            result = sut.ParseOrFallBack<DateTime?>("random");
+            result = sut.ParseOrFallback<DateTime?>("random");
             Assert.Equal(fallback, result);
         }
         
@@ -113,12 +113,12 @@ namespace Core.Test.ParserRelated
         {
             var stringValue = "yes";
             var sut = CreateSut();
-            var result = sut.ParseOrFallBack<bool?>(stringValue);
+            var result = sut.ParseOrFallback<bool?>(stringValue);
 
             Assert.True(result);
 
             var fallback = default(bool?);
-            result = sut.ParseOrFallBack<bool?>("random");
+            result = sut.ParseOrFallback<bool?>("random");
             Assert.Equal(fallback, result);
         }
         
@@ -129,7 +129,7 @@ namespace Core.Test.ParserRelated
             {
                 var stringValue = "random";
                 var sut = CreateSut();
-                sut.ParseOrFallBack<BigInteger>(stringValue);
+                sut.ParseOrFallback<BigInteger>(stringValue);
             }
             catch (Exception e)
             {
