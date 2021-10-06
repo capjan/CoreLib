@@ -1,0 +1,14 @@
+﻿namespace Core.Parser.Basic.Constants
+{
+    public static class KnownDataTypes
+    {
+        public const string Int = "System.Int32";
+        public const string Double = "System.Double";
+        public const string Bool = "System.Boolean";
+        public const string DateTime = "System.DateTime";
+        public const string IntOptional = "System.Nullable`1[System.Int32]";
+        public const string DoubleOptional = "System.Nullable`1[System.Double]";
+        public const string BoolOptional = "System.Nullable`1[System.Boolean]";
+        public const string DateTimeOptional = "System.Nullable`1[System.DateTime]";
+    }
+}
