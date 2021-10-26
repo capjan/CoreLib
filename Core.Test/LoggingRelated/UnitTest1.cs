@@ -13,10 +13,15 @@ namespace Core.Test.LoggingRelated
             using (var dumper = new DumpLogTarget {Connected = true})
             {
                 var log = Logger.Create<TestLog>();
+                Assert.Empty(dumper.EventLog);
                 log.Trace("Hello Trace");
+                Assert.Single(dumper.EventLog);
                 log.Debug("Hello Debug");
+                Assert.Equal(2, dumper.EventLog.Count);
                 log.Info("Hello Info");
+                Assert.Equal(3, dumper.EventLog.Count);
                 log.Warning("Hello Warning");
+                Assert.Equal(4, dumper.EventLog.Count);
                 log.Error("Hello Error", new InvalidOperationException("Bad things sometimes happen"));
                 Assert.Equal(5, dumper.EventLog.Count);
                 Assert.Equal("Hello Trace", dumper.EventLog[0].Message);
