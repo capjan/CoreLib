@@ -1,4 +1,4 @@
-﻿namespace Core.Parser.Basic.Interfaces
+﻿namespace Core.Parser
 {
     public interface IAnyParser
     {
@@ -7,7 +7,7 @@
         /// </summary>
         /// <param name="input">the string value to parse</param>
         /// <param name="fallback">fallback, if the input cannot be parsed</param>
-        /// <typeparam name="T">currently supported types: int, int?, double, double?, DateTime, DateTime?, bool, bool?</typeparam>
+        /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         T ParseOrFallback<T>(string input, T fallback = default);
     }

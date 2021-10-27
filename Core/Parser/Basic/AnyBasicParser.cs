@@ -1,6 +1,5 @@
 ﻿using System;
-using Core.Parser.Basic.Constants;
-using Core.Parser.Basic.Interfaces;
+using Core.Parser.Constants;
 
 namespace Core.Parser.Basic
 {
