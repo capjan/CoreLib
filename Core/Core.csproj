@@ -9,7 +9,7 @@
     <Description>Intended to be used in every project to reuse as much code as possible for daily coding tasks.</Description>
     <Copyright>©2021 Jan Ruhlaender</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>6.4.0</Version>
+    <Version>6.4.1</Version>
     <PackageProjectUrl>https://github.com/capjan/CoreLib</PackageProjectUrl>
     <AssemblyName>CoreLib</AssemblyName>
     <RepositoryUrl>https://github.com/capjan/CoreLib</RepositoryUrl>
@@ -40,18 +40,18 @@
   <ItemGroup>
     <Folder Include="Security\Cryptography\" />
   </ItemGroup>
-  
+
   <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
     <Reference Include="System.Net.Http" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Include="..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
   </ItemGroup>
-  
-  
+
+
 
 </Project>
