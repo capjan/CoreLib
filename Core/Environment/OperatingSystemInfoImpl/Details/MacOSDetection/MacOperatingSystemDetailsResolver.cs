@@ -19,7 +19,9 @@ namespace Core.Environment.OperatingSystemInfoImpl.Details.MacOSDetection
         public string ResolveName()
         {
             var version = _swVersion.Value.ProductVersion;
-            if (version.StartsWith("11.4") || version.StartsWith("11.3") || version.StartsWith("11.2") || version.StartsWith("11.1") || version.StartsWith("11.0"))
+            if (version.StartsWith("12."))
+                return "macOS Monterey";
+            if (version.StartsWith("11."))
                 return "macOS Big Sur";
             if (version.StartsWith("10.15"))
                 return "macOS Catalina";

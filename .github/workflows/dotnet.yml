@@ -1,6 +1,7 @@
 name: .NET 5.0
 
 on:
+  pull_request:
   push:
     branches: [ main ]
 
@@ -31,15 +32,15 @@ jobs:
       run: dotnet build -f net5.0 --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
-    - name: setup gpg
-      run: |
-        echo "$OWNER_GPG_KEY_BASE64" | base64 -d -i >> signkey.asc
-        shasum signkey.asc
-    - name: setup git config
-      run: |
-        git config --global user.email "$OWNER_EMAIL"
-        git config --global user.name "$OWNER_NAME"
-    - name: add semver tag for new version via git-mkver
-      run: git-mkver tag
-    - name: push changes (Tags) to Repository
-      run: git push origin --tags
+ #   - name: setup gpg
+ #     run: |
+ #       echo "$OWNER_GPG_KEY_BASE64" | base64 -d -i >> signkey.asc
+ #       shasum signkey.asc
+ #   - name: setup git config
+ #     run: |
+ #       git config --global user.email "$OWNER_EMAIL"
+ #       git config --global user.name "$OWNER_NAME"
+ #   - name: add semver tag for new version via git-mkver
+ #     run: git-mkver tag
+ #   - name: push changes (Tags) to Repository
+ #     run: git push origin --tags
