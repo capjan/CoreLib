@@ -24,6 +24,11 @@ ProjectSection(SolutionItems) = preProject
 	.github\workflows\nuget_deploy.yml = .github\workflows\nuget_deploy.yml
 EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{E620AD13-4463-4D27-8385-7D24449DB7A5}"
+ProjectSection(SolutionItems) = preProject
+	readme.md = readme.md
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,5 +57,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{64CFCF40-5207-4F14-8B3F-54362A800E2C} = {07A6316D-CF63-4CD3-854B-03DE98841A8D}
 		{33ECC86E-E004-4E8D-B07B-BBD28B29C670} = {64CFCF40-5207-4F14-8B3F-54362A800E2C}
+		{E620AD13-4463-4D27-8385-7D24449DB7A5} = {07A6316D-CF63-4CD3-854B-03DE98841A8D}
 	EndGlobalSection
 EndGlobal

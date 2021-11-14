@@ -26,16 +26,17 @@ namespace Core.Diagnostics.Impl
 
         public string ReadToEnd()
         {
-            string result;
             using (var p = Process.Start(_psi))
             {
-                if (p == null)
-                    throw new InvalidOperationException($"CliRunner failed to create process for \"{_psi.FileName}\"");
-                result = p.StandardOutput.ReadToEnd();
-                p.WaitForExit();
-            }
+                if (p == null) throw new InvalidOperationException($"CliRunner failed to create process for \"{_psi.FileName}\"");
 
-            return result;
+                p.WaitForExit();
+
+                var stdOut = p.StandardOutput.ReadToEnd();
+                var stdErr = p.StandardError.ReadToEnd();
+
+                return stdOut + stdErr;
+            }
         }
 
         public void ReadLines(Action<string> callback)
