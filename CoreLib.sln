@@ -21,6 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{
 ProjectSection(SolutionItems) = preProject
 	.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 	.github\workflows\ci_playground.yml = .github\workflows\ci_playground.yml
+	.github\workflows\nuget_deploy.yml = .github\workflows\nuget_deploy.yml
 EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{E620AD13-4463-4D27-8385-7D24449DB7A5}"
