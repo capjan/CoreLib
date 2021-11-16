@@ -2,7 +2,7 @@ name: NuGet Deploy
 
 on:
   push: 
-    branches: [ nuget_deployment ]
+    branches: [ main ]
 
 jobs:
   publish:
@@ -50,3 +50,4 @@ jobs:
 
           # Flag to toggle pushing symbols along with nuget package to the server, disabled by default
           INCLUDE_SYMBOLS: true
+          
