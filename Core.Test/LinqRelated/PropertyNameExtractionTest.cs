@@ -9,10 +9,20 @@ namespace Core.Test.LinqRelated
     {
         private class Person
         {
-            // ReSharper disable UnusedAutoPropertyAccessor.Local
-            public string Name { get; set; }
-            public int Age { get; set; }
-            // ReSharper restore UnusedAutoPropertyAccessor.Local
+            public Person(string name, int age)
+            {
+                Name = name;
+                Age = age;
+            }
+
+            public Person()
+            {
+                Name = "";
+                Age = 0;
+            }
+
+            public string Name { get; }
+            public int Age { get; }
         }
 
         private class PropertyDumper<T>

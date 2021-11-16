@@ -15,7 +15,7 @@ namespace Core.Test.ParserRelated
             var sut = CreateSut();
             var intParser = new IntegerParser();
 
-            var expectedResult = intParser.ParseOrFallback(stringValue);
+            var expectedResult = intParser.ParseOrFallback(stringValue, 0);
             var result = sut.ParseOrFallback<int>(stringValue);
 
             Assert.Equal(expectedResult, result);
@@ -32,7 +32,7 @@ namespace Core.Test.ParserRelated
             var sut = CreateSut();
             var doubleParser = new DoubleParser();
 
-            var expectedResult = doubleParser.ParseOrFallback(stringValue);
+            var expectedResult = doubleParser.ParseOrFallback(stringValue, default);
             var result = sut.ParseOrFallback<double>(stringValue);
 
             Assert.Equal(expectedResult, result);
@@ -49,7 +49,7 @@ namespace Core.Test.ParserRelated
             var sut = CreateSut();
             var dateTimeParser = new DateTimeParser();
 
-            var expectedResult = dateTimeParser.ParseOrFallback(stringValue);
+            var expectedResult = dateTimeParser.ParseOrFallback(stringValue, default);
             var result = sut.ParseOrFallback<DateTime>(stringValue);
 
             Assert.Equal(expectedResult, result);
@@ -66,7 +66,7 @@ namespace Core.Test.ParserRelated
             var sut = CreateSut();
             var boolParser = new BoolParser();
 
-            var expectedResult = boolParser.ParseOrFallback(stringValue);
+            var expectedResult = boolParser.ParseOrFallback(stringValue, default);
             var result = sut.ParseOrFallback<bool>(stringValue);
 
             Assert.Equal(expectedResult, result);

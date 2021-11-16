@@ -6,18 +6,18 @@ namespace Core.Reflection
 {
     public class AssemblyInfo : IAssemblyInfo
     {
-        public AssemblyInfo(Assembly assembly = default)
+        public AssemblyInfo(Assembly? assembly = default)
         {
-            assembly = assembly ?? Assembly.GetEntryAssembly();
-            _lazyTitle       = assembly.GetAttributeResultLazy<AssemblyTitleAttribute>(a => a.Title);
-            _lazyDescription = assembly.GetAttributeResultLazy<AssemblyDescriptionAttribute>(a => a.Description);
-            _lazyProduct = assembly.GetAttributeResultLazy<AssemblyProductAttribute>(a => a.Product);
-            _lazyVersion     = assembly.GetAttributeResultLazy<AssemblyVersionAttribute>(a => a.Version);
-            _lazyFileVersion = assembly.GetAttributeResultLazy<AssemblyFileVersionAttribute>(a => a.Version);
-            _lazyCompany = assembly.GetAttributeResultLazy<AssemblyCompanyAttribute>(a => a.Company);
-            _lazyCopyright = assembly.GetAttributeResultLazy<AssemblyCopyrightAttribute>(a => a.Copyright);
-            _lazyTrademark = assembly.GetAttributeResultLazy<AssemblyTrademarkAttribute>(a => a.Trademark);
-            _lazyInformationalVersion = assembly.GetAttributeResultLazy<AssemblyInformationalVersionAttribute>(a => a.InformationalVersion);
+            var usedAssembly = assembly ?? Assembly.GetEntryAssembly() ?? throw new InvalidOperationException("failed to initialize a valid assembly");
+            _lazyTitle       = usedAssembly.GetAttributeResultLazy<AssemblyTitleAttribute>(a => a.Title);
+            _lazyDescription = usedAssembly.GetAttributeResultLazy<AssemblyDescriptionAttribute>(a => a.Description);
+            _lazyProduct = usedAssembly.GetAttributeResultLazy<AssemblyProductAttribute>(a => a.Product);
+            _lazyVersion     = usedAssembly.GetAttributeResultLazy<AssemblyVersionAttribute>(a => a.Version);
+            _lazyFileVersion = usedAssembly.GetAttributeResultLazy<AssemblyFileVersionAttribute>(a => a.Version);
+            _lazyCompany = usedAssembly.GetAttributeResultLazy<AssemblyCompanyAttribute>(a => a.Company);
+            _lazyCopyright = usedAssembly.GetAttributeResultLazy<AssemblyCopyrightAttribute>(a => a.Copyright);
+            _lazyTrademark = usedAssembly.GetAttributeResultLazy<AssemblyTrademarkAttribute>(a => a.Trademark);
+            _lazyInformationalVersion = usedAssembly.GetAttributeResultLazy<AssemblyInformationalVersionAttribute>(a => a.InformationalVersion);
         }
 
         public string Title => _lazyTitle.Value;

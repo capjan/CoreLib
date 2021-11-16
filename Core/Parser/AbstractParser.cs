@@ -16,7 +16,7 @@ namespace Core.Parser
             return ParseOrFallback(input, fallback);
         }
 
-        public T ParseOrFallback(string input, T fallback = default)
+        public T ParseOrFallback(string input, T fallback) 
         {
             try {
                 return _converter.Convert(input);
@@ -24,6 +24,7 @@ namespace Core.Parser
                 return fallback;
             }
         }
+        
     }
 
     public class AbstractNullableParser<T> : IFallbackConverter<string, T?>, IParser<T?>

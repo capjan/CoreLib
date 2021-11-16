@@ -7,7 +7,7 @@ namespace Core.IO.Impl
     public class DefaultFileUtil : IFileUtil
     {
         public DefaultFileUtil(
-            IFileWritableChecker isWritableChecker = default)
+            IFileWritableChecker? isWritableChecker = default)
         {
             _isWritableChecker = isWritableChecker ?? new FileWritableChecker();
         }

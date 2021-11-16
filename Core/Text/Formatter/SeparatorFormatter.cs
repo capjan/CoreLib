@@ -20,7 +20,7 @@ namespace Core.Text.Formatter
         public SeparatorFormatter(
             string          separator       = ", ",
             int             groupLength     = 1,
-            ITextFormatter<T> itemFormatter = default,
+            ITextFormatter<T>? itemFormatter = default,
             string          nullPlaceholder = "")
         {
             _nullPlaceholder = nullPlaceholder;

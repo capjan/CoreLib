@@ -5,7 +5,7 @@ namespace Core.Logging
 {
     public class LogEventArgs
     {
-        public LogEventArgs(LogLevel level, string message, string callerClassFullName, string callerFilePath, string callerMemberName, int callerLineNumber, Exception exception = null)
+        public LogEventArgs(LogLevel level, string message, string callerClassFullName, string callerFilePath, string callerMemberName, int callerLineNumber, Exception? exception = null)
         {
             Level = level;
             Message = message;

@@ -33,7 +33,7 @@ namespace Core.Environment.OperatingSystemInfoImpl
 
         private readonly Lazy<IOperatingSystemDetailsResolver> _detailsResolver;
 
-        public OperatingSystemInfo(IOperatingSystemResolver operatingSystemResolver = default, IOperatingSystemDetailsResolver detailsResolver = default)
+        public OperatingSystemInfo(IOperatingSystemResolver? operatingSystemResolver = default, IOperatingSystemDetailsResolver? detailsResolver = default)
         {
             operatingSystemResolver = operatingSystemResolver ?? new OperatingSystemResolver();
             Platform         = operatingSystemResolver.Detect();

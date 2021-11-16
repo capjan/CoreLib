@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <Title>CoreLib</Title>
-    <TargetFrameworks>net5.0;netcoreapp3.1;netstandard2.0</TargetFrameworks>
+    <TargetFramework>net5.0</TargetFramework>
     <PackageId>Cap.Core</PackageId>
     <Authors>Jan Ruhlaender</Authors>
     <Product>CoreLib</Product>
     <Description>Intended to be used in every project to reuse as much code as possible for daily coding tasks.</Description>
     <Copyright>©2021 Jan Ruhlaender</Copyright>
     <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
-    <Version>6.4.4</Version>
+    <Version>7.0.0</Version>
     <PackageProjectUrl>https://github.com/capjan/CoreLib</PackageProjectUrl>
     <AssemblyName>CoreLib</AssemblyName>
     <RepositoryUrl>https://github.com/capjan/CoreLib</RepositoryUrl>
@@ -18,15 +18,11 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-  </ItemGroup>
-
-  <!-- additional references for .NET 4.8-->
-  <ItemGroup Condition=" '$(TargetFramework)'=='net48'">
-    <Reference Include="System.Net.Http" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -39,10 +35,6 @@
 
   <ItemGroup>
     <Folder Include="Security\Cryptography\" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
-    <Reference Include="System.Net.Http" />
   </ItemGroup>
 
   <ItemGroup>

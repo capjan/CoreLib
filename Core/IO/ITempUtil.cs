@@ -12,8 +12,8 @@ namespace Core.IO
         /// </summary>
         string GetTempDirectory();
         
-        string CreateDir(string parentDirectory = default);
-        string CreateFile(string parentDirectory = default);
+        string CreateDir(string? parentDirectory = default);
+        string CreateFile(string? parentDirectory = default);
 
         void UseDir(Action<string> action);
         void UseDir(string parentDirectory, Action<string> action);

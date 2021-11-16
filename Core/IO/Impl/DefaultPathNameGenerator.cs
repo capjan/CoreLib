@@ -15,7 +15,7 @@ namespace Core.IO.Impl
             string prefix           = "", 
             string postfix          = "", 
             int    randomLength     = 5,
-            IRandomStringGenerator nameGenerator = default)
+            IRandomStringGenerator? nameGenerator = default)
         {
             _nameGenerator = nameGenerator ?? new RandomStringGenerator();
             _prefix = prefix;

@@ -8,7 +8,7 @@ namespace Core.Converters.Basic
     public class DateTimeConverter: IConverter<string, DateTime>
     {
         private readonly IParser<int> _intParser;
-        public DateTimeConverter(IParser<int> intParser = default)
+        public DateTimeConverter(IParser<int>? intParser = default)
         {
             _intParser = intParser ?? new IntegerParser();
         }

@@ -52,7 +52,7 @@ namespace Core.Test.ParserRelated
             var sut = CreateSut();
             var databaseTypeParser = new DatabaseTypeParser();
 
-            var expectedResult = databaseTypeParser.ParseOrFallback(stringValue);
+            var expectedResult = databaseTypeParser.ParseOrFallback(stringValue, default);
             var result = sut.ParseOrFallback<DatabaseType>(stringValue);
 
             Assert.Equal(expectedResult, result);

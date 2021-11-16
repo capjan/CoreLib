@@ -12,24 +12,24 @@ namespace Core.Test.ParserRelated
             var parser = new BoolParser();
 
             // must evaluate to true
-            Assert.True(parser.ParseOrFallback("true"));
-            Assert.True(parser.ParseOrFallback("t"));
-            Assert.True(parser.ParseOrFallback("yes"));
-            Assert.True(parser.ParseOrFallback("ja"));
-            Assert.True(parser.ParseOrFallback("1"));
-            Assert.True(parser.ParseOrFallback("y"));
-            Assert.True(parser.ParseOrFallback("j"));
-            Assert.True(parser.ParseOrFallback(null, true));
+            Assert.True(parser.ParseOrFallback("true", default));
+            Assert.True(parser.ParseOrFallback("t", default));
+            Assert.True(parser.ParseOrFallback("yes",default));
+            Assert.True(parser.ParseOrFallback("ja",default));
+            Assert.True(parser.ParseOrFallback("1",default));
+            Assert.True(parser.ParseOrFallback("y",default));
+            Assert.True(parser.ParseOrFallback("j",default));
+            Assert.True(parser.ParseOrFallback("", true));
 
             // must evaluate to false
-            Assert.False(parser.ParseOrFallback("false"));
-            Assert.False(parser.ParseOrFallback("False"));
-            Assert.False(parser.ParseOrFallback("FALSE"));
-            Assert.False(parser.ParseOrFallback("F"));
-            Assert.False(parser.ParseOrFallback("No"));
-            Assert.False(parser.ParseOrFallback("Nein"));
-            Assert.False(parser.ParseOrFallback("N"));
-            Assert.False(parser.ParseOrFallback(null));
+            Assert.False(parser.ParseOrFallback("false", default));
+            Assert.False(parser.ParseOrFallback("False", default));
+            Assert.False(parser.ParseOrFallback("FALSE", default));
+            Assert.False(parser.ParseOrFallback("F", default));
+            Assert.False(parser.ParseOrFallback("No", default));
+            Assert.False(parser.ParseOrFallback("Nein", default));
+            Assert.False(parser.ParseOrFallback("N", default));
+            Assert.False(parser.ParseOrFallback("", default));
 
         }
 

@@ -14,7 +14,7 @@ namespace Core.Test.ParserRelated
         public void BasicTest(int expected, string input)
         {
             var sut = new IntegerParser();
-            Assert.Equal(expected, sut.ParseOrFallback(input));
+            Assert.Equal(expected, sut.ParseOrFallback(input, default));
         }
 
     }

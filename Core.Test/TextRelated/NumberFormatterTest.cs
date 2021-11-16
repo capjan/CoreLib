@@ -21,7 +21,7 @@ namespace Core.Test.TextRelated
             Assert.Equal("1.44 M", formatter.WriteToString(1440000));
             formatter.Delimiter = "\t";
             Assert.Equal("1.44\tM", formatter.WriteToString(1440000));
-            formatter.Delimiter = null;
+            formatter.Delimiter = "";
             Assert.Equal("1.44M", formatter.WriteToString(1440000));
             formatter.Format = "0.##";
             Assert.Equal($"150{Micro}", formatter.WriteToString(1.5e-4m));
@@ -33,7 +33,7 @@ namespace Core.Test.TextRelated
             var formatter = new SiFormatter();
             formatter.MakeCultureInvariant();
             formatter.ForcedDegree = 1; // force Kilo
-            formatter.Delimiter = null; // remove delimiter between value and unit
+            formatter.Delimiter = ""; // remove delimiter between value and unit
 
             Assert.Equal("0.123k", formatter.WriteToString(123));
             formatter.ForcedDegree = 2; // force mega

@@ -26,8 +26,8 @@ namespace Core.Environment.OperatingSystemInfoImpl.Details.WindowsDetection
             {
 				var parser = new IntegerParser();
                 major  = parser.ParseOrFallback(m.Groups["major"].Value, 1);
-                minor  = parser.ParseOrFallback(m.Groups["minor"].Value);
-                build  = parser.ParseOrFallback(m.Groups["build"].Value);
+                minor  = parser.ParseOrFallback(m.Groups["minor"].Value, 0);
+                build  = parser.ParseOrFallback(m.Groups["build"].Value, 0);
             }
             return new Version(major, minor, build);
         }

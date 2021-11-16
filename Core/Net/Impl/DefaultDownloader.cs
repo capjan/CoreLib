@@ -35,8 +35,8 @@ namespace Core.Net.Impl
     public class HttpChannelDownloader : IDownloader
     {
         public HttpChannelDownloader(
-            IHttpChannel httpChannel = default, 
-            Encoding encoding = default)
+            IHttpChannel? httpChannel = default, 
+            Encoding? encoding = default)
         {
             _httpChannel = httpChannel ?? new DefaultHttpChannel();
             _encoding = encoding ?? Encoding.UTF8;

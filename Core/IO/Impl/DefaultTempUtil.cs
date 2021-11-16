@@ -21,22 +21,21 @@ namespace Core.IO.Impl
         }
 
         public DefaultTempUtil(
-            string defaultRootPath = default,
-            IPathNameGenerator dirNameGen = default, 
-            IPathNameGenerator fileNameGen = default,
-            IFileUtil fileUtil = default,
-            IDirectoryUtil directoryUtil = default)
+            string? defaultRootPath = null,
+            IPathNameGenerator? dirNameGen = null, 
+            IPathNameGenerator? fileNameGen = null,
+            IFileUtil? fileUtil = default,
+            IDirectoryUtil? directoryUtil = null)
         {
             _rootPath = defaultRootPath ?? Path.GetTempPath();
-            _directoryUtil = directoryUtil;
-            var defaultNameGen = dirNameGen == null || fileNameGen == null ? new DefaultPathNameGenerator() : null;
-            _dirNameGen = dirNameGen ?? defaultNameGen;
-            _pathNameGen = fileNameGen ?? defaultNameGen;
+            _directoryUtil = directoryUtil ?? new DefaultDirectoryUtil();
+            _dirNameGen = dirNameGen ?? new DefaultPathNameGenerator();;
+            _pathNameGen = fileNameGen ?? new DefaultPathNameGenerator();
             _fileUtil = fileUtil ?? new DefaultFileUtil();
             _directoryUtil = directoryUtil ?? new DefaultDirectoryUtil();
         }
 
-        public string CreateDir(string parentDirectory = default)
+        public string CreateDir(string? parentDirectory = default)
         {
             parentDirectory = parentDirectory ?? _rootPath;
             var result = _dirNameGen.Generate(parentDirectory);

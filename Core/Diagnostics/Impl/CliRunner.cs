@@ -5,7 +5,7 @@ namespace Core.Diagnostics.Impl
 {
     public class CliRunner : ICliRunner
     {
-        public CliRunner(string filePath, string arguments = null)
+        public CliRunner(string filePath, string? arguments = null)
         {
             _psi = new ProcessStartInfo(filePath)
             {

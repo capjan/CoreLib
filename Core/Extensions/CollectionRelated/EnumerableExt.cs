@@ -12,7 +12,7 @@ namespace Core.Extensions.CollectionRelated
             this IEnumerable<T> value,
             string separator = ", ",
             int groupLength = 1,
-            ITextFormatter<T> itemFormatter = default,
+            ITextFormatter<T>? itemFormatter = default,
             string nullPlaceholder = "")
         {
             var formatter = new SeparatorFormatter<T>(
