@@ -5,9 +5,12 @@ using Core.Net.Impl;
 
 namespace Core.Text.Formatter
 {
+    // todo: remove that class and replace it
+    // PinName should be part of the formatting input
     public class BingMapsLinkFormatter : ITextFormatter<IGeoLocation>
     {
-        public string PinName { get; set; }
+        
+        public string? PinName { get; set; }
 
         public void Write(IGeoLocation value, TextWriter writer)
         {

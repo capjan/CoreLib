@@ -4,11 +4,14 @@ using Core.Mathematics.Impl;
 
 namespace Core.Parser.Special
 {
- /// <summary>
+    /// <summary>
     /// Parses a GeoCircle from a string representation
     /// </summary>
     public class GeoCircleParser: IParser<IGeoCircle>
     {
+        // todo: is it possible to define a good default value?
+        public const double DefaultFallbackRadius = 10000;
+        
         private readonly IGeoFactory _factory;
         private readonly double _fallbackRadius;
         private readonly IParser<double[]> _doubleArrayParser;
@@ -19,7 +22,7 @@ namespace Core.Parser.Special
         /// <param name="fallbackRadius">fallback radius</param>
         /// <param name="factory">used factory to create geoCircles. ignore or set this value to default or null to use the default factory.</param>
         /// <param name="doubleArrayParser">used parser for the input values. set default or null to use the default parser.</param>
-        public GeoCircleParser(double fallbackRadius, IGeoFactory factory = default, IParser<double[]> doubleArrayParser = default)
+        public GeoCircleParser(double fallbackRadius, IGeoFactory? factory = default, IParser<double[]>? doubleArrayParser = default)
         {
             _fallbackRadius = fallbackRadius;
             _doubleArrayParser = doubleArrayParser ?? new DoubleArrayParser();
@@ -36,7 +39,7 @@ namespace Core.Parser.Special
         {
             try
             {
-                var values = _doubleArrayParser.ParseOrFallback(input);
+                var values = _doubleArrayParser.ParseOrFallback(input, Array.Empty<double>());
                 if (values == null) return fallback;
                 switch (values.Length)
                 {

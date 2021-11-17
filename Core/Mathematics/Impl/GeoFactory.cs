@@ -7,7 +7,7 @@ namespace Core.Mathematics.Impl
     {
         private readonly IGeoCoordinateMath _coordinateMath;
 
-        public GeoFactory(IGeoCoordinateMath coordinateMath = default)
+        public GeoFactory(IGeoCoordinateMath? coordinateMath = default)
         {
             _coordinateMath = coordinateMath ?? new GeoCoordinateMath();
         }

@@ -28,7 +28,7 @@ namespace Core.Parser.Arguments
         [Option("h|help", "Shows this help")]
         public bool ShowHelp { get; set; }
 
-        public List<string> Extra { get; set; }
+        public List<string> Extra { get; set; } = new List<string>();
     }
 
     public class OptionParser<T> where T : CliOptions, new()
@@ -40,27 +40,27 @@ namespace Core.Parser.Arguments
         private readonly ITextFormatter<string> _usageLineFormatter;
 
         public OptionParser(
-            IAssemblyInfo          assemblyInfo = default,
-            TextWriter             stdOut       = default,
-            TextWriter             stdErr       = default,
-            ITextFormatter<string> usageLineFormatter = default)
+            IAssemblyInfo?          assemblyInfo = default,
+            TextWriter?             stdOut       = default,
+            TextWriter?             stdErr       = default,
+            ITextFormatter<string>? usageLineFormatter = default)
         {
             _assemblyInfo       = assemblyInfo ?? new AssemblyInfo();
             _out                = stdOut ?? Console.Out;
             _err                = stdErr ?? Console.Error;
             _usageLineFormatter = usageLineFormatter ?? new LambdaFormatter<string>(s => $" {s} [options]");
+            _optionSet          = new OptionSet();
         }
 
         public bool TryParse(IEnumerable<string> args, out T options)
         {
-            options = null;
 
-            var result = new T();
-            InitializeOptionSet(result);
+            options = new T();
+            InitializeOptionSet(options);
 
             try
             {
-                result.Extra = _optionSet.Parse(args);
+                options.Extra = _optionSet.Parse(args);
             }
             catch (Exception ex)
             {
@@ -69,19 +69,18 @@ namespace Core.Parser.Arguments
                 return false;
             }
 
-            if (result.ShowHelp)
+            if (options.ShowHelp)
             {
                 WriteUsage();
                 return false;
             }
 
-            if (result.ShowVersion)
+            if (options.ShowVersion)
             {
                 _out.WriteLine(_assemblyInfo.GetVersionSummary());
                 return false;
             }
-
-            options = result;
+            
             return true;
         }
 

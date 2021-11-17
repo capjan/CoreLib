@@ -49,7 +49,7 @@ namespace Core.Logging.Logger
 
         public void Error(
             string message,
-            Exception exception = null,
+            Exception? exception = null,
             [CallerFilePath] string callerFilePath = "",
             [CallerMemberName] string callerMemberName = "",
             [CallerLineNumber] int callerLineNumber = 0)
@@ -58,7 +58,7 @@ namespace Core.Logging.Logger
         }
 
         public void Error(
-            Exception                 exception        = null,
+            Exception?                 exception        = null,
             [CallerFilePath]   string callerFilePath   = "",
             [CallerMemberName] string callerMemberName = "",
             [CallerLineNumber] int    callerLineNumber = 0)

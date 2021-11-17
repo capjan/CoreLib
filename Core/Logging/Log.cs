@@ -65,7 +65,7 @@ namespace Core.Logging
 
         internal static void Error(
             string message,
-            Exception exception = null,
+            Exception? exception = null,
             string callerClassFullName = "",
             [CallerFilePath] string callerFilePath = "",
             [CallerMemberName] string callerMemberName = "",

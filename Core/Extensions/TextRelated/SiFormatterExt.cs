@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Core.Environment.OperatingSystemInfoImpl;
 using Core.Text.Formatter;
 
 namespace Core.Extensions.TextRelated
@@ -96,10 +97,11 @@ namespace Core.Extensions.TextRelated
         /// <param name="value">the value to format</param>
         /// <param name="newLine">option to overwrite the used newline chars to newlines. (defaults the the newline chars of the operating system)</param>
         /// <returns>The SI-formatted double value.</returns>
-        public static string WriteToString(this ISiFormatter formatter, double value, string newLine = default)
+        public static string WriteToString(this ISiFormatter formatter, double value, string? newLine = default)
         {
             var convertedValue = Convert.ToDecimal(value);
-            return formatter.WriteToString(convertedValue, newLine);
+            var usedNewLine = newLine ?? System.Environment.NewLine;
+            return formatter.WriteToString(convertedValue, usedNewLine);
         }
     }
 }

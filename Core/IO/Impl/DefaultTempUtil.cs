@@ -43,7 +43,7 @@ namespace Core.IO.Impl
             return result;
         }
 
-        public string CreateFile(string parentDirectory = default)
+        public string CreateFile(string? parentDirectory = default)
         {
             parentDirectory = parentDirectory ?? _rootPath;
             var tempFileName = _pathNameGen.Generate(parentDirectory);

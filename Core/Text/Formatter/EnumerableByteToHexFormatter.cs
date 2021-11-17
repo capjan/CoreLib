@@ -9,7 +9,7 @@ namespace Core.Text.Formatter
     public class EnumerableByteToHexFormatter : IByteListHexFormatter
     {
         public EnumerableByteToHexFormatter(
-            IByteHexFormatter singleByteFormatter = default)
+            IByteHexFormatter? singleByteFormatter = default)
         {
             _singleByteFormatter = singleByteFormatter ?? new ByteToHexFormatter();
         }

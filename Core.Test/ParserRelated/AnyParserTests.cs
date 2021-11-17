@@ -257,7 +257,7 @@ namespace Core.Test.ParserRelated
             try
             {
                 const string stringValue = "1";
-                var sut = new AnyParser(0, new AnyBasicParser(), new AnySpecialParser(), new[] {KnownDataTypes.Int},
+                var sut = new AnyParser(0, new AnyParser(), new AnySpecialParser(), new[] {KnownDataTypes.Int},
                     new[] {KnownDataTypes.Int});
                 sut.ParseOrFallback<int>(stringValue);
             }

@@ -12,7 +12,7 @@ namespace Core.Extensions.MathematicsRelated
             return location.ToFormattedString(formatter);
         }
 
-        public static string ToBingMapsLink(this IGeoLocation location, string pinName = null)
+        public static string ToBingMapsLink(this IGeoLocation location, string? pinName = null)
         {
             var formatter = new BingMapsLinkFormatter
             {

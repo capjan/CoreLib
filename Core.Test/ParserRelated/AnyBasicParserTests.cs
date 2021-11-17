@@ -16,12 +16,12 @@ namespace Core.Test.ParserRelated
             var intParser = new IntegerParser();
 
             var expectedResult = intParser.ParseOrFallback(stringValue, 0);
-            var result = sut.ParseOrFallback<int>(stringValue);
+            int result = sut.Parse(stringValue, 0);
 
             Assert.Equal(expectedResult, result);
             
             var fallback = default(int);
-            result = sut.ParseOrFallback<int>("random");
+            result = sut.Parse("random", 0);
             Assert.Equal(fallback, result);
         }
         
@@ -33,12 +33,12 @@ namespace Core.Test.ParserRelated
             var doubleParser = new DoubleParser();
 
             var expectedResult = doubleParser.ParseOrFallback(stringValue, default);
-            var result = sut.ParseOrFallback<double>(stringValue);
+            double result = sut.Parse(stringValue, 0.0);
 
             Assert.Equal(expectedResult, result);
             
             var fallback = default(double);
-            result = sut.ParseOrFallback<double>("random");
+            result = sut.Parse("random", 0.0);
             Assert.Equal(fallback, result);
         }
         
@@ -50,12 +50,12 @@ namespace Core.Test.ParserRelated
             var dateTimeParser = new DateTimeParser();
 
             var expectedResult = dateTimeParser.ParseOrFallback(stringValue, default);
-            var result = sut.ParseOrFallback<DateTime>(stringValue);
+            var result = sut.Parse(stringValue, DateTime.MinValue);
 
             Assert.Equal(expectedResult, result);
             
             var fallback = default(DateTime);
-            result = sut.ParseOrFallback<DateTime>("random");
+            result = sut.Parse("random", DateTime.MinValue);
             Assert.Equal(fallback, result);
         }
         
@@ -67,12 +67,12 @@ namespace Core.Test.ParserRelated
             var boolParser = new BoolParser();
 
             var expectedResult = boolParser.ParseOrFallback(stringValue, default);
-            var result = sut.ParseOrFallback<bool>(stringValue);
+            var result = sut.Parse(stringValue, false);
 
             Assert.Equal(expectedResult, result);
             
             var fallback = default(bool);
-            result = sut.ParseOrFallback<bool>("random");
+            result = sut.Parse("random", false);
             Assert.Equal(fallback, result);
         }
         
@@ -84,12 +84,12 @@ namespace Core.Test.ParserRelated
             var optionalIntParser = new OptionalIntParser();
 
             var expectedResult =optionalIntParser.ParseOrFallback(stringValue);
-            var result = sut.ParseOrFallback<int?>(stringValue);
+            var result = sut.Parse(stringValue, default(int?));
 
             Assert.Equal(expectedResult, result);
             
             var fallback = default(int?);
-            result = sut.ParseOrFallback<int?>("random");
+            result = sut.Parse("random", default(int));
             Assert.Equal(fallback, result);
         }
         
@@ -101,12 +101,12 @@ namespace Core.Test.ParserRelated
             var optionalDoubleParser = new OptionalDoubleParser();
 
             var expectedResult = optionalDoubleParser.ParseOrFallback(stringValue);
-            var result = sut.ParseOrFallback<double?>(stringValue);
+            var result = sut.Parse(stringValue, default(double?));
 
             Assert.Equal(expectedResult, result);
             
             var fallback = default(double?);
-            result = sut.ParseOrFallback<double?>("random");
+            result = sut.Parse("random", default(double?));
             Assert.Equal(fallback, result);
         }
         
@@ -118,12 +118,12 @@ namespace Core.Test.ParserRelated
             var optionalDateTimeParser = new OptionalDateTimeParser();
 
             var expectedResult = optionalDateTimeParser.ParseOrFallback(stringValue);
-            var result = sut.ParseOrFallback<DateTime?>(stringValue);
+            var result = sut.Parse(stringValue, default(DateTime?));
 
             Assert.Equal(expectedResult, result);
             
             var fallback = default(DateTime?);
-            result = sut.ParseOrFallback<DateTime?>("random");
+            result = sut.Parse("random", default(DateTime?));
             Assert.Equal(fallback, result);
         }
         
@@ -135,33 +135,33 @@ namespace Core.Test.ParserRelated
             var optionalBoolParser = new OptionalBoolParser();
 
             var expectedResult = optionalBoolParser.ParseOrFallback(stringValue);
-            var result = sut.ParseOrFallback<bool?>(stringValue);
+            var result = sut.Parse(stringValue, default(bool?));
 
             Assert.Equal(expectedResult, result);
 
             var fallback = default(bool?);
-            result = sut.ParseOrFallback<bool?>("random");
+            result = sut.Parse("random", default(bool?));
             Assert.Equal(fallback, result);
         }
-        
-        [Fact]
-        public void ParseOrFallback_NotImplemented_throwException()
-        {
-            try
-            {
-                const string stringValue = "random";
-                var sut = CreateSut();
-                sut.ParseOrFallback<BigInteger>(stringValue);
-            }
-            catch (Exception e)
-            {
-                Assert.NotNull(e);
-            }
-        }
+        //
+        // [Fact]
+        // public void ParseOrFallback_NotImplemented_throwException()
+        // {
+        //     try
+        //     {
+        //         const string stringValue = "random";
+        //         var sut = CreateSut();
+        //         sut.Parse(stringValue, new BigInteger(123));
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         Assert.NotNull(e);
+        //     }
+        // }
 
         private static IAnyParser CreateSut()
         {
-            return new AnyBasicParser();
+            return new AnyParser();
         }
     }
 }

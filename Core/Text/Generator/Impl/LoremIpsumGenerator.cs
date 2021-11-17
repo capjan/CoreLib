@@ -10,7 +10,7 @@ namespace Core.Text.Generator.Impl
     /// </summary>
     public class LoremIpsumGenerator : ILoremIpsumGenerator
     {
-        public LoremIpsumGenerator(IRandom random = default)
+        public LoremIpsumGenerator(IRandom? random = default)
         {
             _random = random ?? new DefaultRandom();
         }

@@ -9,8 +9,8 @@ namespace Core.Text.Generator.Impl
         private readonly IRandom _random;
 
         public RandomCharGenerator(
-            IAlphabet alphabet = default, 
-            IRandom random = default)
+            IAlphabet? alphabet = default, 
+            IRandom? random = default)
         {
             _alphabet = alphabet ?? new DefaultAlphabet();
             _random = random ?? new DefaultRandom();

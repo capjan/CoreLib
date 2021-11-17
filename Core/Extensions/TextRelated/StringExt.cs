@@ -7,7 +7,7 @@ namespace Core.Extensions.TextRelated
 {
     public static class StringExt
     {
-        public static MemoryStream ToMemoryStream(this string value, bool writable = false, Encoding encoding = default)
+        public static MemoryStream ToMemoryStream(this string value, bool writable = false, Encoding? encoding = default)
         {
             encoding = encoding ?? Encoding.UTF8;
             return new MemoryStream(encoding.GetBytes(value), writable);

@@ -21,16 +21,10 @@ namespace Core.Text.Impl
             return LineNumber == other.LineNumber && ColumnNumber == other.ColumnNumber;
         }
 
-        public bool Equals(ITextPosition other)
+        public bool Equals(ITextPosition? other)
         {
-            return Equals((object) other);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((TextPosition) obj);
+            if (other == null) return false;
+            return ReferenceEquals(this, other) || ColumnNumber == other.ColumnNumber && LineNumber == other.LineNumber;
         }
 
         public override int GetHashCode()

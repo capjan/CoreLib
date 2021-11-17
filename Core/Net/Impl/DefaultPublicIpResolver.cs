@@ -8,8 +8,8 @@ namespace Core.Net.Impl
     public class DefaultPublicIpResolver : IPublicIpResolver
     {
         public DefaultPublicIpResolver(
-            IDownloader downloader = default,
-            string[] serviceUrls = default)
+            IDownloader? downloader = default,
+            string[]? serviceUrls = default)
         {
             _downloader = downloader ?? new DefaultDownloader();
             _serviceUrls = serviceUrls ?? DefaultServiceUrls;

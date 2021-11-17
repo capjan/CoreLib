@@ -9,11 +9,11 @@ namespace Core.Parser.Basic
     /// </summary>
     public class DateTimeParser: AbstractParser<DateTime>
     {
-        public DateTimeParser(IConverter<string, DateTime> converter = default) : base(converter ?? new DateTimeConverter()) { }
+        public DateTimeParser(IConverter<string, DateTime>? converter = default) : base(converter ?? new DateTimeConverter()) { }
     }
 
     public class OptionalDateTimeParser : AbstractNullableParser<DateTime> {
-        public OptionalDateTimeParser(IConverter<string, DateTime> converter = default) : base(converter ?? new DateTimeConverter()) { }
+        public OptionalDateTimeParser(IConverter<string, DateTime>? converter = default) : base(converter ?? new DateTimeConverter()) { }
     }
 
 

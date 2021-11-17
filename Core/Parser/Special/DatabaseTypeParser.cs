@@ -9,7 +9,7 @@ namespace Core.Parser.Special
     /// </summary>
     public class DatabaseTypeParser: AbstractParser<DatabaseType>
     {
-        public DatabaseTypeParser(IConverter<string, DatabaseType> converter = default) : base(converter ?? new DatabaseTypeConverter()) { }
+        public DatabaseTypeParser(IConverter<string, DatabaseType>? converter = default) : base(converter ?? new DatabaseTypeConverter()) { }
     }
 
     /// <summary>
@@ -17,6 +17,6 @@ namespace Core.Parser.Special
     /// </summary>
     public class OptionalDatabaseTypeParser: AbstractNullableParser<DatabaseType>
     {
-        public OptionalDatabaseTypeParser(IConverter<string, DatabaseType> converter = default) : base(converter ?? new DatabaseTypeConverter()) { }
+        public OptionalDatabaseTypeParser(IConverter<string, DatabaseType>? converter = default) : base(converter ?? new DatabaseTypeConverter()) { }
     }
 }

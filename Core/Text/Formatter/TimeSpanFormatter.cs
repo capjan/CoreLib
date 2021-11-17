@@ -10,7 +10,7 @@ namespace Core.Text.Formatter
     public class TimeSpanFormatter : ITextFormatter<TimeSpan>
     {
         public TimeSpanFormatter(
-            ITimeLocalization localization = default,
+            ITimeLocalization? localization = default,
             TimePart precision = TimePart.Second,
             bool compact = false,
             string separator = ", ")

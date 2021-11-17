@@ -11,7 +11,7 @@ namespace Core.Text.Formatter
     {
         private readonly ITextFormatter<double> _formatter;
 
-        public GeoCoordinateFormatter(ITextFormatter<double> formatter = null)
+        public GeoCoordinateFormatter(ITextFormatter<double>? formatter = null)
         {
             _formatter = formatter ?? new GenericNumberFormatter<double> {Format = "00.0", FormatProvider = CultureInfo.InvariantCulture};
         }

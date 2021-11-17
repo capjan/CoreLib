@@ -9,9 +9,9 @@ namespace Core.Text.Formatter
         private const string DefaultFormat = "dd.MM.yyyy HH:mm:ss.fff";
 
         public DateTimeFormatter(
-            string format = null,
+            string? format = null,
             bool universalTime = false,
-            IFormatProvider formatProvider = default)
+            IFormatProvider? formatProvider = default)
         {
             Format = format ?? DefaultFormat;
             UniversalTime = universalTime;

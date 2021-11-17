@@ -3,7 +3,7 @@
     public class TextGenUtil : ITextGenUtil
     {
         public TextGenUtil(
-            IRandomStringGenerator randomStringGenerator = default)
+            IRandomStringGenerator? randomStringGenerator = default)
         {
             _randomStringGenerator = randomStringGenerator ?? new RandomStringGenerator();
         }

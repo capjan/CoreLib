@@ -12,6 +12,6 @@
         /// <param name="input"></param>
         /// <param name="fallback"></param>
         /// <returns></returns>
-        T ParseOrFallback(string input, T fallback = default);
+        T ParseOrFallback(string input, T fallback);
     }
 }

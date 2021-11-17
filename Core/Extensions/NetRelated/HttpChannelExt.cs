@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Concurrent;
+using System.IO;
 using System.Net;
 using System.Text;
 using Core.ControlFlow;
@@ -9,7 +10,7 @@ namespace Core.Extensions.NetRelated
 {
     public static class HttpChannelExt
     {
-        public static string DownloadToString(this IHttpChannel channel, string url, Encoding encoding = default, ICredentials credentials = null)
+        public static string DownloadToString(this IHttpChannel channel, string url, Encoding? encoding = default, ICredentials? credentials = null)
         {
             encoding = encoding ?? Encoding.UTF8;
             var request = channel.CreateRequest(url);
@@ -22,7 +23,7 @@ namespace Core.Extensions.NetRelated
             });
         }
 
-        public static IHttpHeader DownloadHeader(this IHttpChannel channel, string url, ICredentials credentials = null)
+        public static IHttpHeader DownloadHeader(this IHttpChannel channel, string url, ICredentials? credentials = null)
         {
             var request = channel.CreateRequest(url);
             
@@ -30,12 +31,13 @@ namespace Core.Extensions.NetRelated
                 request.Credentials = credentials;
 
             request.Method = "HEAD";
-            IHttpHeader header = null;
+
+            var queue = new BlockingCollection<IHttpHeader>();
             request.HandleResponse(response =>
             {
-                header = new HttpHeader(response.CreateHeaderDictionary());
+                queue.Add(new HttpHeader(response.CreateHeaderDictionary()));
             });
-            return header;
+            return queue.Take();
         }
 
         public static bool TryDownloadHeader(this IHttpChannel channel, string url, out IHttpHeader header)

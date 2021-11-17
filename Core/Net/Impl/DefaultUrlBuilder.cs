@@ -18,7 +18,7 @@ namespace Core.Net.Impl
         private string _username;
         private string _password;
 
-        public DefaultUrlBuilder(string baseUrl, IUrlEncoder urlEncoder = default)
+        public DefaultUrlBuilder(string baseUrl, IUrlEncoder? urlEncoder = default)
         {
             var uri = new Uri(baseUrl);
             _scheme = uri.Scheme;
@@ -29,6 +29,8 @@ namespace Core.Net.Impl
                          .Select(s=>s.Trim('/'))
                          .ToList();
             _urlEncoder = urlEncoder ?? new DefaultUrlEncoder();
+            _username = "";
+            _password = "";
         }
 
         public IUrlBuilder Credentials(string userName, string password)

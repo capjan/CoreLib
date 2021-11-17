@@ -5,7 +5,7 @@ namespace Core.Parser.TokenParser
 {
     public class WordTokenParser
     {
-        public WordTokenParser(Func<char, bool> isValidWordCharFunc = null)
+        public WordTokenParser(Func<char, bool>? isValidWordCharFunc = null)
         {
             _isValidWordCharFunc = isValidWordCharFunc ?? char.IsLetterOrDigit;
         }

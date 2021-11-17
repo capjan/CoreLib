@@ -5,7 +5,7 @@
         private readonly IRandomCharGenerator _randomCharGenerator;
 
         public RandomStringGenerator(
-            IRandomCharGenerator randomCharGenerator = default)
+            IRandomCharGenerator? randomCharGenerator = default)
         {
             _randomCharGenerator = randomCharGenerator ?? new RandomCharGenerator();
         }

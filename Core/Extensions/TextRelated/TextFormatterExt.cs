@@ -10,7 +10,7 @@ namespace Core.Extensions.TextRelated
 {
     public static class TextFormatterExt
     {
-        public static string WriteToString<T>(this ITextFormatter<T> formatter, T value, string newLine = default)
+        public static string WriteToString<T>(this ITextFormatter<T> formatter, T value, string? newLine = default)
         {
             var sb = new StringBuilder();
             using (var stream = new StringWriter(sb))
@@ -80,7 +80,7 @@ namespace Core.Extensions.TextRelated
             return formatter.WriteToString(value);
         }
 
-        public static string ToFormattedString(this DateTime value, string format = null, bool universalTime = false, IFormatProvider formatProvider = default)
+        public static string ToFormattedString(this DateTime value, string? format = null, bool universalTime = false, IFormatProvider? formatProvider = default)
         {
             var formatter = new DateTimeFormatter(format: format, universalTime: universalTime, formatProvider: formatProvider);
             return value.ToFormattedString(formatter);
