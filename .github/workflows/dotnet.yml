@@ -7,18 +7,17 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-20.04
-    
+
     steps:
     - uses: actions/checkout@v2
-  
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.x
+        dotnet-version: 6.0.x
     - name: Restore
       run: dotnet restore
     - name: Build
       run: dotnet build -f net5.0 --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
-
