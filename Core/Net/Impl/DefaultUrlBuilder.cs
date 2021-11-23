@@ -15,8 +15,8 @@ namespace Core.Net.Impl
         private readonly string _host;
         private readonly IList<string> _segments;
         private int? _port;
-        private string _username;
-        private string _password;
+        private string? _username;
+        private string? _password;
 
         public DefaultUrlBuilder(string baseUrl, IUrlEncoder? urlEncoder = default)
         {
@@ -29,8 +29,8 @@ namespace Core.Net.Impl
                          .Select(s=>s.Trim('/'))
                          .ToList();
             _urlEncoder = urlEncoder ?? new DefaultUrlEncoder();
-            _username = "";
-            _password = "";
+            _username = null;
+            _password = null;
         }
 
         public IUrlBuilder Credentials(string userName, string password)

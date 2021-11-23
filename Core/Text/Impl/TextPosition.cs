@@ -4,8 +4,7 @@ using System.Net.Http.Headers;
 namespace Core.Text.Impl
 {
 
-
-    public readonly struct TextPosition : ITextPosition
+    public class TextPosition : ITextPosition, IEquatable<TextPosition>
     {
         private class EmptyTextPosition : ITextPosition
         {
@@ -21,9 +20,9 @@ namespace Core.Text.Impl
         }
 
         public static ITextPosition Empty = new EmptyTextPosition();
-        public static ITextPosition Start = new TextPosition();
+        public static ITextPosition Start = new TextPosition(1,1);
 
-        public TextPosition(int lineNumber = 1, int columnNumber = 1)
+        public TextPosition(int lineNumber, int columnNumber)
         {
             if (lineNumber <= 0) throw new ArgumentException("line number must be 1 or greater");
             if (columnNumber <= 0) throw new ArgumentException("column number must be 1 or greater");
@@ -44,10 +43,23 @@ namespace Core.Text.Impl
 
         public override int GetHashCode()
         {
-            unchecked
-            {
-                return (LineNumber * 397) ^ ColumnNumber;
-            }
+            return HashCode.Combine(LineNumber, ColumnNumber);
+        }
+
+        public bool Equals(TextPosition? other)
+        {
+            if (other == null) return false;
+            return LineNumber == other.LineNumber && ColumnNumber == other.ColumnNumber;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is TextPosition other && Equals(other);
+        }
+
+        public new string ToString()
+        {
+            return $"Line: {LineNumber}, Column: {ColumnNumber}";
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.InteropServices.ComTypes;
 using Core.Parser;
 
@@ -37,15 +38,16 @@ namespace Core.Extensions.ParserRelated
             return parser.Parse(input);
         }
 
-        public static IEnumerable<T> ParseListOrFallback<T>(
+        public static T[] ParseToArrayOrFallback<T>(
             this IParser<T> parser,
             string input,
-            IEnumerable<T> fallback,
+            T[] fallback,
             string separator = ",")
         {
             try
             {
-                return parser.ParseList(input, separator);
+                if (string.IsNullOrWhiteSpace(input)) throw new ArgumentException("input is empty");
+                return parser.ParseToArray(input, separator);
             }
             catch
             {
@@ -53,15 +55,15 @@ namespace Core.Extensions.ParserRelated
             }
         }
 
-        public static IEnumerable<T> ParseListOrEmpty<T>(
+        public static T[] ParseToArrayOrEmpty<T>(
             this IParser<T> parser,
             string input,
             string separator = ",")
         {
-            return parser.ParseListOrFallback(input, Array.Empty<T>(), separator);
+            return parser.ParseToArrayOrFallback(input, Array.Empty<T>(), separator);
         }
 
-        public static IEnumerable<T>? ParseListOrNull<T>(
+        public static T[]? ParseToArrayOrNull<T>(
             this IParser<T> parser,
             string input,
             string separator = ",")
@@ -69,7 +71,8 @@ namespace Core.Extensions.ParserRelated
             if (string.IsNullOrWhiteSpace(input)) return default;
             try
             {
-                return parser.ParseList(input);
+                // Here we must break the yielding to catch all exceptions.
+                return parser.ParseToArray(input);
             }
             catch
             {
@@ -77,20 +80,12 @@ namespace Core.Extensions.ParserRelated
             }
         }
 
-        public static T[] ParseListToArrayOrEmpty<T>(
-            this IParser<T> parser,
-            string input,
-            string separator = ",")
-        {
-            return parser.ParseListOrFallback(input, Array.Empty<T>(), separator).ToArray();
-        }
-
-
-        public static IEnumerable<T> ParseList<T>(this IParser<T> parser, string input, string separator = ",")
+        public static T[] ParseToArray<T>(this IParser<T> parser, string input, string separator = ",")
         {
             return input
                 .Split(separator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                .Select(parser.Parse);
+                .Select(parser.Parse)
+                .ToArray();
         }
 
         public static T ParseOrDefault<T>(this IParser<T> parser, string input) where T: struct

@@ -33,7 +33,7 @@ namespace Core.Parser.Special
 
         public IGeoCircle Parse(string input)
         {
-            var values = _doubleParser.ParseListToArrayOrEmpty(input);
+            var values = _doubleParser.ParseToArrayOrEmpty(input);
             switch (values.Length)
             {
                 case 2:

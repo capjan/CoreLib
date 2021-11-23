@@ -11,7 +11,7 @@ namespace Core.Test.TextRelated
         [Fact]
         public void BasicTextPositionTest()
         {
-            var pos1 = (ITextPosition) new TextPosition();
+            var pos1 = TextPosition.Start;
             Assert.Equal(1,pos1.LineNumber);
             Assert.Equal(1, pos1.ColumnNumber);
 
@@ -31,11 +31,11 @@ namespace Core.Test.TextRelated
         [Fact]
         public void BasicTextPositionOperatorTest()
         {
-            var pos1 = (ITextPosition) new TextPosition();
+            var pos1 = TextPosition.Start;
             Assert.Equal(1,pos1.LineNumber);
             Assert.Equal(1, pos1.ColumnNumber);
 
-            var pos2 = (ITextPosition) new TextPosition();
+            var pos2 = new TextPosition(1, 1);
             Assert.Equal(1,pos2.LineNumber);
             Assert.Equal(1, pos2.ColumnNumber);
 

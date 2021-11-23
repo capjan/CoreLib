@@ -35,7 +35,7 @@ namespace Core.Parser.Special
             _input        = input;
             _autoSkipChars = autoSkipChars ?? new []{'\r'};
             Offset = offset;
-            TextPosition = textPosition ?? new TextPosition();
+            TextPosition = textPosition ?? new TextPosition(1,1);
         }
 
         public bool TryReadChar(out char ch)

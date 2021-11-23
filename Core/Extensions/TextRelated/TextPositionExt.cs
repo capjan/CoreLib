@@ -7,7 +7,7 @@ namespace Core.Extensions.TextRelated
     {
         public static ITextPosition NextLine(this ITextPosition value)
         {
-            return new TextPosition(value.LineNumber+1);
+            return new TextPosition(value.LineNumber+1, 1);
         }
 
         public static ITextPosition NextColumn(this ITextPosition value)

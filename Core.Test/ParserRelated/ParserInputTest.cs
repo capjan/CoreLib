@@ -16,7 +16,7 @@ namespace Core.Test.ParserRelated
                 Assert.Equal(0, input.LookaheadCount);
                 Assert.Equal(0, input.Offset);
 
-                var pos1 = new TextPosition();
+                var pos1 = TextPosition.Start;
 
                 // lookahead 1
                 Assert.Equal(pos1, input.TextPosition);
@@ -69,7 +69,7 @@ namespace Core.Test.ParserRelated
                 Assert.Equal(0, input.LookaheadCount);
                 Assert.Equal(0, input.Offset);
 
-                var pos1 = new TextPosition();
+                var pos1 = TextPosition.Start;
 
                 // lookahead 1
                 Assert.Equal(pos1, input.TextPosition);

@@ -20,7 +20,7 @@ namespace Core.Test.ParserRelated
             Assert.True(parser.ParseOrDefault("1"));
             Assert.True(parser.ParseOrDefault("y"));
             Assert.True(parser.ParseOrDefault("j"));
-            Assert.True(parser.ParseOrDefault(""));
+            Assert.True(parser.ParseOrFallback("", true));
 
             // must evaluate to false
             Assert.False(parser.ParseOrDefault("false"));

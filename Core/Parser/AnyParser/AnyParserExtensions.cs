@@ -26,28 +26,22 @@ namespace Core.Parser.AnyParser
             return concreteParser.ParseOrDefault(input);
         }
 
-        public static IEnumerable<T> ParseList<T>(this IAnyParser parser, string input, string separator = ",")
+        public static T[] ParseToArrayOrFallback<T>(this IAnyParser parser, string input, T[] fallback, string separator = ",")
         {
             var concreteParser = parser.Create<T>();
-            return concreteParser.ParseList(input, separator);
+            return concreteParser.ParseToArrayOrFallback(input, fallback, separator);
         }
 
-        public static IEnumerable<T> ParseListOrFallback<T>(this IAnyParser parser, string input, IEnumerable<T> fallback, string separator = ",")
+        public static T[] ParseToArrayOrEmpty<T>(this IAnyParser parser, string input, string separator = ",")
         {
             var concreteParser = parser.Create<T>();
-            return concreteParser.ParseListOrFallback(input, fallback, separator);
+            return concreteParser.ParseToArrayOrEmpty(input, separator);
         }
 
-        public static IEnumerable<T> ParseListOrEmpty<T>(this IAnyParser parser, string input, string separator = ",")
+        public static T[] ParseToArray<T>(this IAnyParser parser, string input, string separator = ",")
         {
             var concreteParser = parser.Create<T>();
-            return concreteParser.ParseListOrEmpty(input, separator);
-        }
-
-        public static T[] ParseListToArray<T>(this IAnyParser parser, string input, string separator = ",")
-        {
-            var concreteParser = parser.Create<T>();
-            return concreteParser.ParseListToArrayOrEmpty(input, separator);
+            return concreteParser.ParseToArray(input, separator);
         }
     }
 }
