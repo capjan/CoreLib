@@ -12,7 +12,8 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
     # Setup of multiple .NET versions at the same time seams to be broken
-    #
+    # The multiple versions approach shown at https://github.com/actions/setup-dotnet fails, so I decided to
+    # fall back to 2 separate installation runs.
     - name: Setup .NET 6
       uses: actions/setup-dotnet@v1
       with:
