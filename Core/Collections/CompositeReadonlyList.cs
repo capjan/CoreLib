@@ -46,9 +46,10 @@ namespace Core.Collections
 
             #endregion
 
-            public T Current { get; private set; }
 
-            object IEnumerator.Current => Current;
+            public T Current => _list[_i];
+
+           // object IEnumerator.Current => Current;
 
             public CompositeReadOnlyListEnumerator(CompositeReadOnlyList<T> list)
             {
@@ -58,15 +59,15 @@ namespace Core.Collections
             public bool MoveNext()
             {
                 ++_i;
-                if (_i >= _list.Count) return false;
-                Current = _list[_i];
-                return true;
+                return _i < _list.Count;
             }
 
             public void Reset()
             {
                 _i = -1;
             }
+
+            object? IEnumerator.Current => _list[_i];
 
             public void Dispose()
             {

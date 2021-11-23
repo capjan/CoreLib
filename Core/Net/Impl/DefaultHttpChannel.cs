@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using Core.Extensions.NetRelated;
 
 namespace Core.Net.Impl
@@ -8,9 +9,9 @@ namespace Core.Net.Impl
     public class DefaultHttpChannel : IHttpChannel
     {
 
-        public HttpWebRequest CreateRequest(string url)
+        public HttpRequestMessage CreateRequest(string url)
         {
-            return WebRequest.CreateHttp(url);
+            return new HttpRequestMessage(HttpMethod.Get, url);
         }
 
         public void StreamResponse(HttpWebRequest request, Action<HttpWebResponse, Stream> streamCallback)
@@ -20,9 +21,9 @@ namespace Core.Net.Impl
 
         public T StreamResponseTo<T>(HttpWebRequest request, Func<HttpWebResponse, Stream, T> streamCallback)
         {
-            T result = default;
+            T? result = default;
             request.HandleResponseStream((response, stream) => { result = streamCallback(response, stream); });
-            return result;
+            return result!;
         }
     }
 }

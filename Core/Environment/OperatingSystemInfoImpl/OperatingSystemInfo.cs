@@ -35,7 +35,7 @@ namespace Core.Environment.OperatingSystemInfoImpl
 
         public OperatingSystemInfo(IOperatingSystemResolver? operatingSystemResolver = default, IOperatingSystemDetailsResolver? detailsResolver = default)
         {
-            operatingSystemResolver = operatingSystemResolver ?? new OperatingSystemResolver();
+            operatingSystemResolver ??= new OperatingSystemResolver();
             Platform         = operatingSystemResolver.Detect();
             _detailsResolver = InitializeDetailsResolver(detailsResolver, Platform);
         }
@@ -60,11 +60,11 @@ namespace Core.Environment.OperatingSystemInfoImpl
             return sb.ToString();
         }
 
-        private static Lazy<IOperatingSystemDetailsResolver> InitializeDetailsResolver(IOperatingSystemDetailsResolver givenResolver, OperatingSystemKind operatingPlatform)
+        private static Lazy<IOperatingSystemDetailsResolver> InitializeDetailsResolver(IOperatingSystemDetailsResolver? givenResolver, OperatingSystemKind operatingPlatform)
         {
             if (givenResolver != null)
                 return new Lazy<IOperatingSystemDetailsResolver>(() => givenResolver);
-            
+
             switch (operatingPlatform)
             {
                 case OperatingSystemKind.MacOS:
@@ -78,7 +78,7 @@ namespace Core.Environment.OperatingSystemInfoImpl
                 default:
                     return new Lazy<IOperatingSystemDetailsResolver>(() => new NullOperatingSystemDetailsResolver());
             }
-            
+
         }
     }
 }

@@ -40,14 +40,12 @@ namespace Core.Test.LinqRelated
         [Fact]
         public void TestMapper()
         {
-
             var dumper = new PropertyDumper<Person>();
             var dump1 = dumper.Dump(p=>p.Name);
             var dump2 = dumper.Dump(p=>p.Age);
 
             Assert.Equal("String Name", dump1);
             Assert.Equal("Int32 Age", dump2);
-
         }
     }
 }

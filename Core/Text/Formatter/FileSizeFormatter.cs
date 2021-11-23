@@ -22,7 +22,7 @@ namespace Core.Text.Formatter
             set => _numberFormatter.Format = value;
         }
 
-        public IFormatProvider FormatProvider {
+        public IFormatProvider? FormatProvider {
             get => _numberFormatter.FormatProvider;
             set => _numberFormatter.FormatProvider = value;
         }

@@ -5,13 +5,17 @@ namespace Core.Converters.Basic
 {
     public class IntegerConverter: IConverter<string, int>
     {
-        private const string RegexPattern = @"(?<number>-?\d+)";
+        private const string RegexPattern = @"^\s*(?<number>-?[\d\s]+)\s*$";
 
         public int Convert(string input)
         {
             var m = Regex.Match(input, RegexPattern);
             if (!m.Success) throw new ArgumentException($"input \"{input}\"can't be converted to int", nameof(input));
-            return int.Parse(m.Groups["number"].Value);
+
+            var usedValue = m.Groups["number"].Value;
+            usedValue = Regex.Replace(usedValue, @"\s", ""); // removing all whitespaces
+
+            return int.Parse(usedValue);
         }
     }
 }

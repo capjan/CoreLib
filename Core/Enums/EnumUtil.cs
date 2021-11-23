@@ -18,10 +18,10 @@ namespace Core.Enums
         {
             return Enum.GetValues(typeof(T))
                        .Cast<T>()
-                       .Select(enumValue => {
-                           var enumName = Enum.GetName(typeof(T), enumValue);
-                           return new EnumInfo<T>(enumName, enumValue);
-                       });
+                       .Select(enumValue => new EnumInfo<T>(
+                           Enum.GetName(typeof(T), enumValue) ?? throw new InvalidOperationException("failed to get enum name"),
+                           enumValue)
+                       );
         }
     }
 
@@ -35,7 +35,7 @@ namespace Core.Enums
         /// Name of the Enum Value
         /// </summary>
         public string Name  { get; }
-        
+
         /// <summary>
         /// Value
         /// </summary>

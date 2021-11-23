@@ -8,7 +8,7 @@ namespace Core.Logging
     {
         public static object SyncLock = new object();
 
-        public static event Action<LogEventArgs> OnLog;
+        public static event Action<LogEventArgs>? OnLog;
 
         internal static void Trace(
             string message,
@@ -47,7 +47,7 @@ namespace Core.Logging
             {
                 OnLog?.Invoke(new LogEventArgs(LogLevel.Info, message, callerClassFullName, callerFilePath, callerMemberName, callerLineNumber));
             }
-            
+
         }
 
         internal static void Warning(

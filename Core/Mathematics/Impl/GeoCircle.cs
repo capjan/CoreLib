@@ -1,7 +1,11 @@
-﻿namespace Core.Mathematics.Impl
+﻿using Core.Enums;
+
+namespace Core.Mathematics.Impl
 {
-    class GeoCircle: GeoLocation, IGeoCircle
+    public class GeoCircle: GeoLocation, IGeoCircle
     {
+        public static IGeoCircle Empty = new GeoCircle(0, 0, new GeoCoordinate(GeoCoordinateType.Latitude, false, 0,0,0), new GeoCoordinate(GeoCoordinateType.Longitude, false, 0,0,0), 0, 0,0,0,0);
+
         public double Radius { get; }
         public double MinLatitude { get; }
         public double MaxLatitude { get; }
@@ -16,6 +20,6 @@
             MinLongitude = minLongitude;
             MaxLongitude = maxLongitude;
         }
-     
+
     }
 }

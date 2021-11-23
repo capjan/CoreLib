@@ -24,7 +24,7 @@ namespace Core.Logging
         public string CallerFilePath { get; }
         public string CallerMemberName { get; }
         public int CallerLineNumber { get; }
-        public Exception Exception { get; }
+        public Exception? Exception { get; }
 
     }
 }

@@ -11,7 +11,7 @@ namespace Core.Logging.Logger
 
         public static ILogger Create(Type type)
         {
-            var className = type.FullName;
+            var className = type.FullName ?? throw new InvalidOperationException("fullname must not be null");
             return new TypeLogger(className);
         }
 

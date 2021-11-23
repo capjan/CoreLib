@@ -1,4 +1,5 @@
-﻿using Core.Parser.Basic;
+﻿using Core.Extensions.ParserRelated;
+using Core.Parser.Basic;
 using Xunit;
 // ReSharper disable StringLiteralTypo
 
@@ -12,24 +13,24 @@ namespace Core.Test.ParserRelated
             var parser = new BoolParser();
 
             // must evaluate to true
-            Assert.True(parser.ParseOrFallback("true", default));
-            Assert.True(parser.ParseOrFallback("t", default));
-            Assert.True(parser.ParseOrFallback("yes",default));
-            Assert.True(parser.ParseOrFallback("ja",default));
-            Assert.True(parser.ParseOrFallback("1",default));
-            Assert.True(parser.ParseOrFallback("y",default));
-            Assert.True(parser.ParseOrFallback("j",default));
-            Assert.True(parser.ParseOrFallback("", true));
+            Assert.True(parser.ParseOrDefault("true"));
+            Assert.True(parser.ParseOrDefault("t"));
+            Assert.True(parser.ParseOrDefault("yes"));
+            Assert.True(parser.ParseOrDefault("ja"));
+            Assert.True(parser.ParseOrDefault("1"));
+            Assert.True(parser.ParseOrDefault("y"));
+            Assert.True(parser.ParseOrDefault("j"));
+            Assert.True(parser.ParseOrDefault(""));
 
             // must evaluate to false
-            Assert.False(parser.ParseOrFallback("false", default));
-            Assert.False(parser.ParseOrFallback("False", default));
-            Assert.False(parser.ParseOrFallback("FALSE", default));
-            Assert.False(parser.ParseOrFallback("F", default));
-            Assert.False(parser.ParseOrFallback("No", default));
-            Assert.False(parser.ParseOrFallback("Nein", default));
-            Assert.False(parser.ParseOrFallback("N", default));
-            Assert.False(parser.ParseOrFallback("", default));
+            Assert.False(parser.ParseOrDefault("false"));
+            Assert.False(parser.ParseOrDefault("False"));
+            Assert.False(parser.ParseOrDefault("FALSE"));
+            Assert.False(parser.ParseOrDefault("F"));
+            Assert.False(parser.ParseOrDefault("No"));
+            Assert.False(parser.ParseOrDefault("Nein"));
+            Assert.False(parser.ParseOrDefault("N"));
+            Assert.False(parser.ParseOrDefault(""));
 
         }
 

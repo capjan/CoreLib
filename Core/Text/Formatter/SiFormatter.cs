@@ -37,7 +37,7 @@ namespace Core.Text.Formatter
             }
 
             var scaled  = value * Convert.ToDecimal(Math.Pow(1000, -degree));
-           
+
             if (SignificantDecimalPlaces.HasValue)
             {
                 switch (ShortenStrategy)
@@ -51,7 +51,7 @@ namespace Core.Text.Formatter
                         break;
                 }
             }
-                
+
 
             char? prefix = null;
             switch (Math.Sign(degree))
@@ -67,7 +67,7 @@ namespace Core.Text.Formatter
         private void WriteScaledValue(TextWriter writer, string valueStr, char? prefix)
         {
             writer.Write(valueStr);
-            if (!string.IsNullOrEmpty(Delimiter) && (prefix != null || Unit != null))
+            if (!string.IsNullOrEmpty(Delimiter) && (prefix != null || !string.IsNullOrWhiteSpace(Unit)))
                 writer.Write(Delimiter);
             writer.Write(prefix);
             writer.Write(Unit);
@@ -82,10 +82,10 @@ namespace Core.Text.Formatter
         }
 
         public string                Format                   { get; set; } = "0.###";
-        public IFormatProvider       FormatProvider           { get; set; }
+        public IFormatProvider?       FormatProvider           { get; set; }
         public string                Delimiter                { get; set; } = " ";
         public int?                  ForcedDegree             { get; set; }
-        public string                Unit                     { get; set; }
+        public string Unit { get; set; } = "";
         public int?                  SignificantDecimalPlaces { get; set; }
         public NumberShortenStrategy ShortenStrategy          { get; set; }
     }

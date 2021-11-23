@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Core.Converters.Basic
 {
@@ -6,6 +7,7 @@ namespace Core.Converters.Basic
     {
         public bool Convert(string input)
         {
+            input = Regex.Replace(input, @"\s", "");
             switch (input.ToLower())
             {
                 // ReSharper disable StringLiteralTypo

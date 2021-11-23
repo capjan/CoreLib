@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Title>CoreLib</Title>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
     <PackageId>Cap.Core</PackageId>
     <Authors>Jan Ruhlaender</Authors>
     <Product>CoreLib</Product>

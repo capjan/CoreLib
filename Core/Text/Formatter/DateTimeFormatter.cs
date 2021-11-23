@@ -29,7 +29,7 @@ namespace Core.Text.Formatter
             writer.Write(value.ToString(Format, FormatProvider));
         }
 
-        public IFormatProvider FormatProvider { get; set; }
+        public IFormatProvider? FormatProvider { get; set; }
         public bool UniversalTime { get; set; }
         public string Format { get; set; }
     }

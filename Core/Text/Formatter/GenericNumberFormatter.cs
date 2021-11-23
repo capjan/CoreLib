@@ -17,9 +17,9 @@ namespace Core.Text.Formatter
             if (!typeChecker.IsValid())
                 throw new ArgumentException("the given generic type is not a number type");
         }
-      
+
         public string Format { get; set; } = "g";
-        public IFormatProvider FormatProvider { get; set; }
+        public IFormatProvider? FormatProvider { get; set; }
 
         public void Write(T value, TextWriter writer)
         {

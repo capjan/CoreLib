@@ -10,7 +10,7 @@ namespace Core.Extensions.NetRelated
         {
             var header = response.Headers;
             var keys   = response.Headers.AllKeys;
-            return keys.ToDictionary(key => key, key => header.Get(key));
+            return keys.ToDictionary(key => key, key => header.Get(key) ?? "");
         }
     }
 }

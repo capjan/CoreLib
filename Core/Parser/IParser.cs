@@ -1,17 +1,19 @@
 ﻿namespace Core.Parser
 {
     /// <summary>
-    /// Generic parser to parse a string to a given output type. 
+    /// Provides a interface for parsing a string to a given output type.
     /// </summary>
     /// <typeparam name="T">Output Type</typeparam>
-    public interface IParser<T>
+    /// <remarks>
+    /// In fact a parser is often just a special case of an IConverter, where the input type is fixed to string.
+    /// </remarks>
+    public interface IParser<out T>
     {
         /// <summary>
-        /// Parses the given input string to the given output Type. If the input can't be parsed the given fallback value is returned.
+        /// Parses the given input string to the given output type. Throws an exception if the parsing is not possible
         /// </summary>
-        /// <param name="input"></param>
-        /// <param name="fallback"></param>
-        /// <returns></returns>
-        T ParseOrFallback(string input, T fallback);
+        /// <param name="input">string representation of the type</param>
+        /// <returns>The parsed object</returns>
+        T Parse(string input);
     }
 }

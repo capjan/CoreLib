@@ -58,10 +58,10 @@ namespace Core.Diagnostics.Impl
 
         private void DataReceived(object sender, DataReceivedEventArgs e)
         {
-            if (e.Data != null) _readDataCallback(e.Data);
+            if (e.Data != null && _readDataCallback != null) _readDataCallback(e.Data);
         }
 
-        private          Action<string>   _readDataCallback;
+        private          Action<string>?   _readDataCallback;
         private readonly ProcessStartInfo _psi;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using System;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Core.Extensions.LinqRelated
@@ -8,7 +9,7 @@ namespace Core.Extensions.LinqRelated
         public static MemberInfo GetMember(this LambdaExpression expression)
         {
             var memberExp = RemoveUnary(expression.Body) as MemberExpression;
-            return memberExp?.Member;
+            return memberExp!.Member;
         }
 
         private static Expression RemoveUnary(Expression toUnwrap)

@@ -13,9 +13,9 @@ namespace Core.Extensions.ReflectionRelated
             return result ?? throw new InvalidOperationException($"attribute {nameof(type.Name)} is not present");
         }
 
-        public static bool TryGetAttribute<T>(this PropertyInfo info, out T attribute) where T : Attribute
+        public static bool TryGetAttribute<T>(this PropertyInfo info, out T attribute) where T : Attribute, new()
         {
-            return new Tryify<T>().TryInvoke(info.GetAttribute<T>, out attribute);
+            return new Tryify<T>().TryInvoke(info.GetAttribute<T>, out attribute, new T());
         }
     }
 }

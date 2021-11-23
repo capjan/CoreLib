@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using Core.Extensions.ConverterRelated;
+using Core.Extensions.ParserRelated;
 using Core.Parser;
 using Core.Parser.Basic;
 
@@ -7,10 +9,10 @@ namespace Core.Converters.Basic
 {
     public class DateTimeConverter: IConverter<string, DateTime>
     {
-        private readonly IParser<int> _intParser;
-        public DateTimeConverter(IParser<int>? intParser = default)
+        private readonly IConverter<string, int> _intConverter;
+        public DateTimeConverter(IConverter<string, int>? intConverter = default)
         {
-            _intParser = intParser ?? new IntegerParser();
+            _intConverter = intConverter ?? new IntegerConverter();
         }
 
         private const string RegexPattern =
@@ -23,15 +25,15 @@ namespace Core.Converters.Basic
             if (!m.Success)
                 throw new ArgumentException($"value of {nameof(input)} ({input}) can't be converted to DateTime");
 
-            var year    = _intParser.ParseOrFallback(m.Groups["year"].Value, 0);
-            var month   = _intParser.ParseOrFallback(m.Groups["month"].Value, 0);
-            var days    = _intParser.ParseOrFallback(m.Groups["days"].Value, 0);
-            var hours   = _intParser.ParseOrFallback(m.Groups["hours"].Value, 0);
-            var minutes = _intParser.ParseOrFallback(m.Groups["minutes"].Value, 0);
+            var year    = _intConverter.ConvertOrFallback(m.Groups["year"].Value, 0);
+            var month   = _intConverter.ConvertOrFallback(m.Groups["month"].Value, 0);
+            var days    = _intConverter.ConvertOrFallback(m.Groups["days"].Value, 0);
+            var hours   = _intConverter.ConvertOrFallback(m.Groups["hours"].Value, 0);
+            var minutes = _intConverter.ConvertOrFallback(m.Groups["minutes"].Value, 0);
 
-            var seconds         = _intParser.ParseOrFallback(m.Groups["seconds"].Value, 0);
+            var seconds         = _intConverter.ConvertOrFallback(m.Groups["seconds"].Value, 0);
             var millisecondsStr = m.Groups["milliseconds"].Value;
-            var milliseconds    = _intParser.ParseOrFallback(millisecondsStr, 0);
+            var milliseconds    = _intConverter.ConvertOrFallback(millisecondsStr, 0);
             var utcSign = m.Groups["utc_sign"].Success;
             switch (millisecondsStr.Length)
             {

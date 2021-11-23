@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
+using System.Text.Unicode;
 using Core.Enums;
 using Core.Extensions.TextRelated;
 using Core.Security.Cryptography.Security;
@@ -17,8 +19,8 @@ namespace Core.Extensions.SecurityRelated
             switch (hashType)
             {
                 case HashType.CRC32: return new CRC32HashProvider();
-                case HashType.MD5: return new MD5CryptoServiceProvider();
-                case HashType.SHA1: return new SHA1CryptoServiceProvider();
+                case HashType.MD5: return MD5.Create();
+                case HashType.SHA1: return SHA1.Create();
                 default: throw new ArgumentException($"unsupported hash type {hashType}");
             }
         }
@@ -68,13 +70,28 @@ namespace Core.Extensions.SecurityRelated
 
         public static string CalcMD5(this string value)
         {
-            return value.CalcChecksum<MD5CryptoServiceProvider>().ToHexString();
+            return MD5.Create().ComputeChecksum(value);
         }
 
         public static string CalcSHA1(this string value)
         {
-            return value.CalcChecksum<SHA1CryptoServiceProvider>().ToHexString();
+            return SHA1.Create().ComputeChecksum(value);
         }
 
+
+        public static string ComputeChecksum(this HashAlgorithm algorithm, string input)
+        {
+            using var ms = new MemoryStream();
+            var inputBytes = Encoding.UTF8.GetBytes(input);
+            ms.Write(inputBytes, 0, inputBytes.Length);
+            ms.Seek(0, SeekOrigin.Begin);
+            return algorithm.ComputeChecksum(ms);
+        }
+
+        public static string ComputeChecksum(this HashAlgorithm algorithm, Stream inputStream)
+        {
+            var hashData = algorithm.ComputeHash(inputStream);
+            return hashData.ToHexString();
+        }
     }
 }

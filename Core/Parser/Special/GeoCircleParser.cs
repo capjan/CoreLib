@@ -1,6 +1,8 @@
 ﻿using System;
+using Core.Extensions.ParserRelated;
 using Core.Mathematics;
 using Core.Mathematics.Impl;
+using Core.Parser.Basic;
 
 namespace Core.Parser.Special
 {
@@ -11,10 +13,10 @@ namespace Core.Parser.Special
     {
         // todo: is it possible to define a good default value?
         public const double DefaultFallbackRadius = 10000;
-        
+
         private readonly IGeoFactory _factory;
         private readonly double _fallbackRadius;
-        private readonly IParser<double[]> _doubleArrayParser;
+        private readonly IParser<double> _doubleParser;
 
         /// <summary>
         /// Creates a new parser instance
@@ -22,41 +24,25 @@ namespace Core.Parser.Special
         /// <param name="fallbackRadius">fallback radius</param>
         /// <param name="factory">used factory to create geoCircles. ignore or set this value to default or null to use the default factory.</param>
         /// <param name="doubleArrayParser">used parser for the input values. set default or null to use the default parser.</param>
-        public GeoCircleParser(double fallbackRadius, IGeoFactory? factory = default, IParser<double[]>? doubleArrayParser = default)
+        public GeoCircleParser(double fallbackRadius = DefaultFallbackRadius, IGeoFactory? factory = default, IParser<double>? doubleArrayParser = default)
         {
             _fallbackRadius = fallbackRadius;
-            _doubleArrayParser = doubleArrayParser ?? new DoubleArrayParser();
+            _doubleParser = doubleArrayParser ?? new DoubleParser();
             _factory = factory ?? new GeoFactory();
         }
 
-        /// <summary>
-        /// Returns the parsed value or the given fallback if parsing is not possible or failed.
-        /// </summary>
-        /// <param name="input"></param>
-        /// <param name="fallback"></param>
-        /// <returns></returns>
-        public IGeoCircle ParseOrFallback(string input, IGeoCircle fallback)
+        public IGeoCircle Parse(string input)
         {
-            try
+            var values = _doubleParser.ParseListToArrayOrEmpty(input);
+            switch (values.Length)
             {
-                var values = _doubleArrayParser.ParseOrFallback(input, Array.Empty<double>());
-                if (values == null) return fallback;
-                switch (values.Length)
-                {
-                    case 2:
-                        return _factory.CreateCircle(values[0], values[1], _fallbackRadius);
-                    case 3:
-                        return _factory.CreateCircle(values[0], values[1], values[2]);
-                    default:
-                        return fallback;
-                }
+                case 2:
+                    return _factory.CreateCircle(values[0], values[1], _fallbackRadius);
+                case 3:
+                    return _factory.CreateCircle(values[0], values[1], values[2]);
+                default:
+                    throw new InvalidOperationException("expected two or 3 entries as input");
             }
-            catch (Exception)
-            {
-                return fallback;
-            }
-
-
         }
     }
 }

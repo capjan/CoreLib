@@ -1,9 +1,28 @@
 ﻿using System;
+using System.Net.Http.Headers;
 
 namespace Core.Text.Impl
 {
-    public class TextPosition : ITextPosition
+
+
+    public readonly struct TextPosition : ITextPosition
     {
+        private class EmptyTextPosition : ITextPosition
+        {
+            public bool Equals(ITextPosition? other)
+            {
+                if (other == null) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return LineNumber == other.LineNumber && ColumnNumber == other.ColumnNumber;
+            }
+
+            public int LineNumber => 0;
+            public int ColumnNumber => 0;
+        }
+
+        public static ITextPosition Empty = new EmptyTextPosition();
+        public static ITextPosition Start = new TextPosition();
+
         public TextPosition(int lineNumber = 1, int columnNumber = 1)
         {
             if (lineNumber <= 0) throw new ArgumentException("line number must be 1 or greater");
@@ -13,18 +32,14 @@ namespace Core.Text.Impl
             ColumnNumber = columnNumber;
         }
 
-        public int LineNumber { get; } 
+        public int LineNumber { get; }
         public int ColumnNumber { get; }
 
-        protected bool Equals(TextPosition other)
-        {
-            return LineNumber == other.LineNumber && ColumnNumber == other.ColumnNumber;
-        }
 
         public bool Equals(ITextPosition? other)
         {
             if (other == null) return false;
-            return ReferenceEquals(this, other) || ColumnNumber == other.ColumnNumber && LineNumber == other.LineNumber;
+            return ColumnNumber == other.ColumnNumber && LineNumber == other.LineNumber;
         }
 
         public override int GetHashCode()

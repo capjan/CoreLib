@@ -13,7 +13,7 @@ namespace Core.Parser.Special
         private class CharWithPositionInfo
         {
             public int OffsetAfterRead;
-            public ITextPosition PositionAfterRead;
+            public ITextPosition PositionAfterRead = Text.Impl.TextPosition.Start;
             public char Value;
         }
 
@@ -30,7 +30,7 @@ namespace Core.Parser.Special
         /// <param name="autoSkipChars">array of characters that are automatically skipped. default: new int[] {'\r'}</param>
         /// <param name="offset">initial offset</param>
         /// <param name="textPosition">initial text position</param>
-        public ParserInput(TextReader input, char[] autoSkipChars = default, int offset = 0, ITextPosition textPosition = default)
+        public ParserInput(TextReader input, char[]? autoSkipChars = default, int offset = 0, ITextPosition? textPosition = default)
         {
             _input        = input;
             _autoSkipChars = autoSkipChars ?? new []{'\r'};
@@ -52,8 +52,9 @@ namespace Core.Parser.Special
 
             if (TryGetNextCharFromInput(out var chInfo))
             {
-                ch = chInfo.Value;
-                UpdateOffsetAndPosition(chInfo);
+                var usedInfo = chInfo!;
+                ch = usedInfo.Value;
+                UpdateOffsetAndPosition(usedInfo);
                 return true;
             }
 
@@ -101,9 +102,10 @@ namespace Core.Parser.Special
 
             if (TryGetNextCharFromInput(out var chInfo))
             {
-                _peekedChars.Add(chInfo);
+                var usedInfo = chInfo!;
+                _peekedChars.Add(usedInfo);
                 ++LookaheadCount;
-                ch = chInfo.Value;
+                ch = usedInfo.Value;
                 return true;
             }
 
@@ -116,7 +118,7 @@ namespace Core.Parser.Special
             _input?.Dispose();
         }
 
-        private CharWithPositionInfo GetNextCharFromInput()
+        private CharWithPositionInfo? GetNextCharFromInput()
         {
             var position = TextPosition;
             var offset = Offset;
@@ -143,7 +145,7 @@ namespace Core.Parser.Special
             return new CharWithPositionInfo {OffsetAfterRead = offset, PositionAfterRead = position, Value = readChar};
         }
 
-        private bool TryGetNextCharFromInput(out CharWithPositionInfo charInfo)
+        private bool TryGetNextCharFromInput(out CharWithPositionInfo? charInfo)
         {
             charInfo = GetNextCharFromInput();
             return charInfo != null;

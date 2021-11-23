@@ -26,7 +26,7 @@ namespace Core.Text.Formatter
             _nullPlaceholder = nullPlaceholder;
             _separator       = separator;
             _groupLength     = groupLength;
-            _itemFormatter = itemFormatter ?? new LambdaFormatter<T>(v => v.ToString());
+            _itemFormatter = itemFormatter ?? new LambdaFormatter<T>(v => v?.ToString() ?? "");
             _nullPlaceholder = nullPlaceholder ?? "";
         }
 

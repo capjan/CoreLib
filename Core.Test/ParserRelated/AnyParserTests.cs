@@ -1,274 +1,117 @@
-﻿using System;
-using System.Linq;
-using System.Numerics;
-using Core.Enums;
-using Core.Mathematics;
-using Core.Parser;
-using Core.Parser.Basic;
-using Core.Parser.Constants;
-using Core.Parser.Special;
+using System;
+using System.Globalization;
+using Core.Parser.AnyParser;
 using Xunit;
 
 namespace Core.Test.ParserRelated
 {
     public class AnyParserTests
     {
-        [Fact]
-        public void ParseOrFallback_Int()
+        [Theory]
+        [InlineData("1", 1)]
+        [InlineData("123", 123)]
+        [InlineData("739", 739)]
+        [InlineData("852 ", 852)]
+        [InlineData(" 12 ", 12)]
+        public void Parse_Int(string input, int expected)
         {
-            const string stringValue = "1";
             var sut = CreateSut();
-            var intParser = new IntegerParser();
 
-            var expectedResult = intParser.ParseOrFallback(stringValue, 0);
-            var result = sut.ParseOrFallback<int>(stringValue);
-
-            Assert.Equal(expectedResult, result);
-            
-            var fallback = default(int);
-            result = sut.ParseOrFallback<int>("random");
-            Assert.Equal(fallback, result);
+            var actual = sut.Parse<int>(input);
+            Assert.Equal(expected, actual);
         }
-        
-        [Fact]
-        public void ParseOrFallback_Double()
+
+        [Theory]
+        [InlineData("1", 1, 2)]
+        [InlineData("Nonsense", 123, 123)]
+        [InlineData("", 85, 85)]
+        [InlineData("741", 741, 963)]
+        [InlineData("000", 0, 963)]
+        [InlineData("0001", 1, 963)]
+        [InlineData("Hallo0001", 963, 963)]
+        [InlineData("123 456", 123456, 741)] // We allow spaces as separators in numbers
+        public void ParseOrFallback_Int(string input, int expected, int fallback)
         {
-            const string stringValue = "1.56";
             var sut = CreateSut();
-            var doubleParser = new DoubleParser();
 
-            var expectedResult = doubleParser.ParseOrFallback(stringValue, 0);
-            var result = sut.ParseOrFallback<double>(stringValue);
-
-            Assert.Equal(expectedResult, result);
-            
-            var fallback = default(double);
-            result = sut.ParseOrFallback<double>("random");
-            Assert.Equal(fallback, result);
+            var actual = sut.ParseOrFallback<int>(input, fallback);
+            Assert.Equal(expected, actual);
         }
-        
-        [Fact]
-        public void ParseOrFallback_DateTime()
+
+        [Theory]
+        [InlineData("1", 1.0, 2.0)]
+        [InlineData("Nonsense", 123.0, 123.0)]
+        [InlineData("", 8.5, 8.5)]
+        [InlineData("74.1", 74.1, 96.3)]
+        [InlineData("74,1", 74.1, 96.3)]
+        [InlineData("7 4,1", 74.1, 96.3)]
+        [InlineData("000", 0.0, 9.63)]
+        [InlineData("0001", 1.0, 9.63)]
+        [InlineData("Hallo0001", 96.3, 96.3)]
+        [InlineData("123 456", 123456.0, 7.41)] // We allow spaces as separators in numbers
+        public void ParseOrFallback_Double(string input, double expected, double fallback)
         {
-            const string stringValue = "2021-09-24T15:04:56.000Z";
             var sut = CreateSut();
-            var dateTimeParser = new DateTimeParser();
 
-            var expectedResult = dateTimeParser.ParseOrFallback(stringValue, default);
-            var result = sut.ParseOrFallback<DateTime>(stringValue);
-
-            Assert.Equal(expectedResult, result);
-            
-            var fallback = default(DateTime);
-            result = sut.ParseOrFallback<DateTime>("random");
-            Assert.Equal(fallback, result);
+            var actual = sut.ParseOrFallback(input, fallback);
+            Assert.Equal(expected, actual);
         }
-        
-        [Fact]
-        public void ParseOrFallback_Bool()
+
+        [Theory]
+        [InlineData("1", 1.0)]
+        [InlineData("8.5  ", 8.5)]
+        [InlineData("74.1 ", 74.1)]
+        [InlineData("74,1", 74.1)]
+        [InlineData("7 4,1", 74.1)]
+        [InlineData("000", 0.0)]
+        [InlineData(" 0001", 1.0)]
+        [InlineData("123 456", 123456.0)] // We allow spaces as separators in numbers
+        public void Parse_Double(string input, double expected)
         {
-            const string stringValue = "yes";
             var sut = CreateSut();
-            var boolParser = new BoolParser();
 
-            var expectedResult = boolParser.ParseOrFallback(stringValue, default);
-            var result = sut.ParseOrFallback<bool>(stringValue);
-
-            Assert.Equal(expectedResult, result);
-            
-            var fallback = default(bool);
-            result = sut.ParseOrFallback<bool>("random");
-            Assert.Equal(fallback, result);
+            var actual = sut.Parse<double>(input);
+            Assert.Equal(expected, actual);
         }
-        
-        [Fact]
-        public void ParseOrFallback_NullableInt()
+
+
+        [Theory]
+        [InlineData("2021-09-24T15:04:56.000Z", "2021-09-24T15:04:56.000Z", "1986-04-24T15:16:56.421Z")]
+        [InlineData("Nonsense", "2021-09-24T15:04:56.000Z", "2021-09-24T15:04:56.000Z")]
+        public void ParseOrFallback_DateTime(string input, string expectedString, string fallbackString)
         {
-            const string stringValue = "2";
             var sut = CreateSut();
-            var optionalIntParser = new OptionalIntParser();
 
-            var expectedResult =optionalIntParser.ParseOrFallback(stringValue);
-            var result = sut.ParseOrFallback<int?>(stringValue);
+            var expected = DateTime.Parse(expectedString, null, DateTimeStyles.AssumeUniversal).ToUniversalTime();
+            var fallback = DateTime.Parse(fallbackString, null, DateTimeStyles.AssumeUniversal).ToUniversalTime();
 
-            Assert.Equal(expectedResult, result);
-            
-            var fallback = default(int?);
-            result = sut.ParseOrFallback<int?>("random");
-            Assert.Equal(fallback, result);
+            var actual = sut.ParseOrFallback(input, fallback);
+
+            Assert.Equal(expected, actual);
         }
-        
-        [Fact]
-        public void ParseOrFallback_NullableDouble()
+
+        [Theory]
+        [InlineData("true", true, false)]
+        [InlineData("TRUE", true, false)]
+        [InlineData("True", true, false)]
+        [InlineData("TRUe", true, false)]
+        [InlineData("yes", true, false)]
+        [InlineData("1", true, false)]
+        [InlineData(" TRUe ", true, false)]
+        [InlineData("false", false, true)]
+        [InlineData("False", false, true)]
+        [InlineData("NO", false, true)]
+        [InlineData("0", false, true)]
+        public void ParseOrFallback_Bool(string input, bool expected, bool fallback)
         {
-            const string stringValue = "1.56";
             var sut = CreateSut();
-            var optionalDoubleParser = new OptionalDoubleParser();
-
-            var expectedResult = optionalDoubleParser.ParseOrFallback(stringValue);
-            var result = sut.ParseOrFallback<double?>(stringValue);
-
-            Assert.Equal(expectedResult, result);
-            
-            var fallback = default(double?);
-            result = sut.ParseOrFallback<double?>("random");
-            Assert.Equal(fallback, result);
-        }
-        
-        [Fact]
-        public void ParseOrFallback_NullableDateTime()
-        {
-            const string stringValue = "2021-09-24T15:04:56.000Z";
-            var sut = CreateSut();
-            var optionalDateTimeParser = new OptionalDateTimeParser();
-
-            var expectedResult = optionalDateTimeParser.ParseOrFallback(stringValue);
-            var result = sut.ParseOrFallback<DateTime?>(stringValue);
-
-            Assert.Equal(expectedResult, result);
-            
-            var fallback = default(DateTime?);
-            result = sut.ParseOrFallback<DateTime?>("random");
-            Assert.Equal(fallback, result);
-        }
-        
-        [Fact]
-        public void ParseOrFallback_NullableBool()
-        {
-            const string stringValue = "yes";
-            var sut = CreateSut();
-            var optionalBoolParser = new OptionalBoolParser();
-
-            var expectedResult = optionalBoolParser.ParseOrFallback(stringValue);
-            var result = sut.ParseOrFallback<bool?>(stringValue);
-
-            Assert.Equal(expectedResult, result);
-
-            var fallback = default(bool?);
-            result = sut.ParseOrFallback<bool?>("random");
-            Assert.Equal(fallback, result);
-        }
-        
-                [Fact]
-        public void ParseOrFallback_IntArray()
-        {
-            const string stringValue = "1, 2";
-            var sut = CreateSut();
-            var intArrayParser = new IntArrayParser();
-
-            var expectedResult = intArrayParser.ParseOrFallback(stringValue);
-            var result = sut.ParseOrFallback<int[]>(stringValue);
-
-            Assert.True(result.All(x => expectedResult.Contains(x)));
-
-            var fallback = default(int[]);
-            result = sut.ParseOrFallback<int[]>("random");
-            Assert.Equal(fallback, result);
+            var actual = sut.ParseOrFallback(input, fallback);
+            Assert.Equal(expected, actual);
         }
 
-        [Fact]
-        public void ParseOrFallback_DoubleArray()
-        {
-            const string stringValue = "1.123, 2.321";
-            var sut = CreateSut();
-            var doubleArrayParser = new DoubleArrayParser();
-
-            var expectedResult = doubleArrayParser.ParseOrFallback(stringValue);
-            var result = sut.ParseOrFallback<double[]>(stringValue);
-
-            Assert.True(result.All(x => expectedResult.Contains(x)));
-
-            var fallback = default(double[]);
-            result = sut.ParseOrFallback<double[]>("random");
-            Assert.Equal(fallback, result);
-        }
-
-        [Fact]
-        public void ParseOrFallback_DatabaseType()
-        {
-            const string stringValue = "SQLServer";
-            var sut = CreateSut();
-            var databaseTypeParser = new DatabaseTypeParser();
-
-            var expectedResult = databaseTypeParser.ParseOrFallback(stringValue, default);
-            var result = sut.ParseOrFallback<DatabaseType>(stringValue);
-
-            Assert.Equal(expectedResult, result);
-
-            var fallback = default(DatabaseType);
-            result = sut.ParseOrFallback<DatabaseType>("random");
-            Assert.Equal(fallback, result);
-        }
-        [Fact]
-        public void ParseOrFallback_GeoCircle()
-        {
-            const string stringValue = "54.396034, 10.179827, 5000";
-            var sut = CreateSut();
-            IParser<IGeoCircle> geoCircleParser = new GeoCircleParser(0);
-
-            var expectedResult = geoCircleParser.ParseOrFallback(stringValue);
-            var result = sut.ParseOrFallback<IGeoCircle>(stringValue);
-
-            Assert.Equal(expectedResult.Latitude, result.Latitude);
-            Assert.Equal(expectedResult.Longitude, result.Longitude);
-            Assert.Equal(expectedResult.Radius, result.Radius);
-
-            var fallback = default(IGeoCircle);
-            result = sut.ParseOrFallback<IGeoCircle>("random");
-            Assert.Equal(fallback, result);
-        }
-        
-        
-        [Fact]
-        public void ParseOrFallback_OptionalDatabaseType()
-        {
-            const string stringValue = "SQLServer";
-            var sut = CreateSut();
-            var databaseTypeParser = new OptionalDatabaseTypeParser();
-
-            var expectedResult = databaseTypeParser.ParseOrFallback(stringValue);
-            var result = sut.ParseOrFallback<DatabaseType?>(stringValue);
-
-            Assert.Equal(expectedResult, result);
-
-            var fallback = default(DatabaseType?);
-            result = sut.ParseOrFallback<DatabaseType?>("random");
-            Assert.Equal(fallback, result);
-        }
-        
-        [Fact]
-        public void ParseOrFallback_NotImplemented_throwException()
-        {
-            try
-            {
-                const string stringValue = "random";
-                var sut = CreateSut();
-                sut.ParseOrFallback<BigInteger>(stringValue);
-            }
-            catch (Exception e)
-            {
-                Assert.NotNull(e);
-            }
-        }
-   
-        [Fact]
-        public void ParseOrFallback_CanNotResolveParser_throwException()
-        {
-            try
-            {
-                const string stringValue = "1";
-                var sut = new AnyParser(0, new AnyParser(), new AnySpecialParser(), new[] {KnownDataTypes.Int},
-                    new[] {KnownDataTypes.Int});
-                sut.ParseOrFallback<int>(stringValue);
-            }
-            catch (Exception e)
-            {
-                Assert.NotNull(e);
-            }
-        }
         private static IAnyParser CreateSut()
         {
-            return new AnyParser();
+            return new CoreAnyParser();
         }
     }
 }

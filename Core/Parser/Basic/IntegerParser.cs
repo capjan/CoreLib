@@ -8,9 +8,4 @@ namespace Core.Parser.Basic
         public IntegerParser(IConverter<string, int>? converter = default) : base(converter ?? new IntegerConverter()) { }
     }
 
-    public class OptionalIntParser: AbstractNullableParser<int>
-    {
-        public OptionalIntParser(IConverter<string, int>? converter = default) : base(converter ?? new IntegerConverter()) { }
-    }
-    
 }

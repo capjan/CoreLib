@@ -1,3 +1,4 @@
+using Core.Extensions.ParserRelated;
 using Core.Parser.Basic;
 using Xunit;
 
@@ -14,7 +15,7 @@ namespace Core.Test.ParserRelated
         public void BasicTest(int expected, string input)
         {
             var sut = new IntegerParser();
-            Assert.Equal(expected, sut.ParseOrFallback(input, default));
+            Assert.Equal(expected, sut.ParseOrDefault(input));
         }
 
     }

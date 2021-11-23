@@ -25,11 +25,12 @@ namespace Core.Net.Impl
         /// </summary>
         /// <param name="contentType"></param>
         /// <param name="contentLength"></param>
-        public HttpHeader(string contentType, long contentLength)
+        public HttpHeader(string contentType, long contentLength) : this( new Dictionary<string, string>()
         {
-            ContentType = contentType;
-            ContentLength =  contentLength >= 0 ? contentLength : (long?) null;            
-        }
+            { ContentTypeKey, contentType },
+            { ContentLengthKey, contentLength.ToString("D") }
+        })
+        { }
 
         public HttpHeader(IReadOnlyDictionary<string,string> headerDict)
         {
@@ -43,7 +44,7 @@ namespace Core.Net.Impl
 
             if (headerDict.TryGetValue(ContentLengthKey, out var lengthValue))
                 ContentLength = long.Parse(lengthValue);
-            
+
             if (headerDict.TryGetValue(ContentTypeKey, out var contentTypeValue))
                 ContentType = contentTypeValue;
 
@@ -69,27 +70,27 @@ namespace Core.Net.Impl
                 Status = statusValue;
         }
 
-        public bool AcceptRanges { get; }
+        public bool? AcceptRanges { get; }
 
-        public string Connection { get; }
+        public string? Connection { get; }
 
-        public string ContentType { get; }
-        
-        public string Status { get; }
-        
+        public string? ContentType { get; }
+
+        public string? Status { get; }
+
         public long? ContentLength { get; }
 
         public DateTime? CreatedAtUtc { get; }
 
-        public string Server { get; }
+        public string? Server { get; }
 
-        public string SetCookie { get; }
+        public string? SetCookie { get; }
 
-        public string EntityTag { get; }
+        public string? EntityTag { get; }
 
         public DateTime? LastModifiedUtc { get; }
 
-        public string Location { get; }
+        public string? Location { get; }
 
         public IReadOnlyDictionary<string,string> RawDictionary { get; }
 

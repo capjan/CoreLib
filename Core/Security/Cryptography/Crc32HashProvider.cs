@@ -11,7 +11,7 @@ namespace Core.Security.Cryptography
             public const uint DefaultPolynomial = 0xedb88320u;
             public const uint DefaultSeed       = 0xffffffffu;
 
-            private static uint[] _defaultTable;
+            private static uint[]? _defaultTable;
 
             public CRC32HashProvider()
                 : this(DefaultPolynomial, DefaultSeed) { }

@@ -8,7 +8,7 @@ namespace Core.Extensions.NetRelated
         public static bool TryResolve(this IPublicIpResolver resolver, out string result)
         {
             return new Tryify<string>()
-                .TryInvoke(resolver.Resolve, out result);
+                .TryInvoke(resolver.Resolve, out result, "");
         }
     }
 }
