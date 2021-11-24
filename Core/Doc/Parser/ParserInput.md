@@ -1,5 +1,7 @@
 ﻿# Parser Input
 
+[Home](../README.md) / [Parser](./README.md)
+
 It is easier to write a parser by hand when reading from a text source is 
 already cleanly abstracted.
 
