@@ -13,6 +13,6 @@
 * [Logging](./Logging.md) - Logging
 * [Mathematics](./Mathematics.md) - Mathematics
 * [Net](./Net.md) - Internet and Web
-* [Parser](./Parser.md) - Common Parser
+* [Parser](./Parser/README.md) - Common Parser
 * [Reflection](./Reflection.md) - Reflection utility classes
 * [Text](./Text.md) - Formatting and generating Text
