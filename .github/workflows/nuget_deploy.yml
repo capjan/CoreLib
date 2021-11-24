@@ -27,4 +27,4 @@ jobs:
         run: cd ./Core && dotnet pack -c Release
 
       - name: Publishing to NuGet
-        run: dotnet nuget push ./bin/Release/*.nupkg --api-key ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+        run: dotnet nuget push ./Core/bin/Release/*.nupkg --api-key ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
