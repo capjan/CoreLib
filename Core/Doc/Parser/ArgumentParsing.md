@@ -1,15 +1,15 @@
-# Argument Parsing for Command Line Tools
+# Argument Parsing
 
 [Home](../README.md) / [Parser](./README.md)
 
 ## Introduction
 
 - Parsing arguments is essential for a command line tools 
-- This library do not want to reinvent the wheel, so please use an existing solutions for that task
+- This library do not want to reinvent the wheel, so please use any of existing solutions
 
 ## CLI Parsing Solutions
 
-There are many well solutions out there. Just to name a few:
+There are many great solutions out there. Just to name a few:
 
 - [dotnet/CommandLine API](https://github.com/dotnet/command-line-api) - recommended solution from the [.NET Platform](https://github.com/dotnet) organization 
 - [commandlineparser/commandline Parser](https://github.com/commandlineparser/commandline)  - Command Line Parser Library for CLR and NetStandard
