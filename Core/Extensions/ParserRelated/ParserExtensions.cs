@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.InteropServices.ComTypes;
 using Core.Parser;
+using Core.Parser.Special;
 
 namespace Core.Extensions.ParserRelated
 {
@@ -36,6 +37,12 @@ namespace Core.Extensions.ParserRelated
                 return default;
             }
             return parser.Parse(input);
+        }
+
+        public static T Parse<T>(this IParser<T> parser, string input)
+        {
+            var parserInput = ParserInput.CreateFromString(input);
+            return parser.Parse(parserInput);
         }
 
         public static T[] ParseToArrayOrFallback<T>(

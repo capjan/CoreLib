@@ -31,9 +31,10 @@ namespace Core.Parser.Special
             _factory = factory ?? new GeoFactory();
         }
 
-        public IGeoCircle Parse(string input)
+        public IGeoCircle Parse(IParserInput input)
         {
-            var values = _doubleParser.ParseToArrayOrEmpty(input);
+            var inputAsString = input.ReadAll();
+            var values = _doubleParser.ParseToArrayOrEmpty(inputAsString);
             switch (values.Length)
             {
                 case 2:

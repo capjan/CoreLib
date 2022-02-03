@@ -12,8 +12,8 @@
         /// <summary>
         /// Parses the given input string to the given output type. Throws an exception if the parsing is not possible
         /// </summary>
-        /// <param name="input">string representation of the type</param>
+        /// <param name="input">parser input that reads the input stream of text</param>
         /// <returns>The parsed object</returns>
-        T Parse(string input);
+        T Parse(IParserInput input);
     }
 }

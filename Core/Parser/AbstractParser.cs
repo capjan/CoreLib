@@ -1,4 +1,5 @@
 ﻿using Core.Converters;
+using Core.Extensions.ParserRelated;
 
 namespace Core.Parser
 {
@@ -11,10 +12,12 @@ namespace Core.Parser
             _converter = converter;
         }
 
-        public T Parse(string input)
+        public T Parse(IParserInput input)
         {
-            return _converter.Convert(input);
+            var inputAsString = input.ReadAll();
+            return _converter.Convert(inputAsString);
         }
+
     }
 
 }
