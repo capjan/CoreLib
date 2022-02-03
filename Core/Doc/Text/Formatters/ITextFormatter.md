@@ -13,7 +13,7 @@
 ```c#
 public interface ITextFormatter<in T>
 {
-	void Write(T value, TextWriter writer);
+    void Write(T value, TextWriter writer);
 }
 ```
 
