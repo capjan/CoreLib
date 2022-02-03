@@ -11,7 +11,8 @@
 
 There are many great solutions out there. Just to name a few:
 
-- [dotnet/CommandLine API](https://github.com/dotnet/command-line-api) - recommended solution from the [.NET Platform](https://github.com/dotnet) organization 
+- [dotnet/CommandLine API](https://github.com/dotnet/command-line-api) - recommended solution from the [.NET Platform](https://github.com/dotnet) organization
+- [Spectre Console](https://spectreconsole.net) - Spectre.Console is a .NET Standard 2.0 library that makes it easier to create beautiful console applications
 - [commandlineparser/commandline Parser](https://github.com/commandlineparser/commandline)  - Command Line Parser Library for CLR and NetStandard
 - [natemcmaster/CommandLineUtils](https://github.com/natemcmaster/CommandLineUtils) - Command line parsing and utilities for .NET
 - [fclp/fluent-command-line-parser](https://github.com/fclp/fluent-command-line-parser) - A simple, strongly typed .NET C# command line parser library using a fluent easy to use interface.
