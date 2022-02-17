@@ -2,18 +2,17 @@
 using Core.Reflection;
 using Xunit;
 
-namespace Core.Test.ReflectionRelated
+namespace Core.Test.ReflectionRelated;
+
+public class AssemblyInfoTest
 {
-    public class AssemblyInfoTest
+    [Fact]
+    public void BasicTest()
     {
-        [Fact]
-        public void BasicTest()
-        {
-            var asmInfo = new AssemblyInfo(Assembly.GetExecutingAssembly());
-            Assert.Contains("Ruhlaender", asmInfo.Company);
-            Assert.Equal("Core.Test", asmInfo.Title);
-            Assert.NotNull(asmInfo.Copyright);
-            Assert.Contains("CoreLib", asmInfo.Product);
-        }
+        var asmInfo = new AssemblyInfo(Assembly.GetExecutingAssembly());
+        Assert.Contains("Ruhlaender", asmInfo.Company);
+        Assert.Equal("Core.Test", asmInfo.Title);
+        Assert.NotNull(asmInfo.Copyright);
+        Assert.Contains("CoreLib", asmInfo.Product);
     }
 }

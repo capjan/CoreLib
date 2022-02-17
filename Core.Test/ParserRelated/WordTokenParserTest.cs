@@ -2,21 +2,20 @@
 using Core.Parser.TokenParser;
 using Xunit;
 
-namespace Core.Test.ParserRelated
-{
-    public class WordTokenParserTest
-    {
+namespace Core.Test.ParserRelated;
 
-        [Fact]
-        public void BasicTest()
+public class WordTokenParserTest
+{
+
+    [Fact]
+    public void BasicTest()
+    {
+        using (var input = ParserInput.CreateFromString("Hello World"))
         {
-            using (var input = ParserInput.CreateFromString("Hello World"))
-            {
-                var parser = new WordTokenParser();
-                Assert.Equal("Hello", parser.Parse(input));
-                input.TryReadChar(out _);
-                Assert.Equal("World", parser.Parse(input));
-            }
+            var parser = new WordTokenParser();
+            Assert.Equal("Hello", parser.Parse(input));
+            input.TryReadChar(out _);
+            Assert.Equal("World", parser.Parse(input));
         }
     }
 }

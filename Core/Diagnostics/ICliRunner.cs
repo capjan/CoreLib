@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace Core.Diagnostics
+namespace Core.Diagnostics;
+
+public interface ICliRunner
 {
-    public interface ICliRunner
-    {
-        string Arguments { get; set; }
+    string Arguments { get; set; }
         
-        string ReadToEnd();
-        void   ReadLines(Action<string> callback);
-    }
+    string ReadToEnd();
+    void   ReadLines(Action<string> callback);
 }

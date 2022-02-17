@@ -1,17 +1,16 @@
 ﻿using Core.Extensions.MathematicsRelated;
 using Xunit;
 
-namespace Core.Test.MathematicsRelated
+namespace Core.Test.MathematicsRelated;
+
+public class NumberRelated
 {
-    public class NumberRelated
+    [Fact]
+    public void DoubleTest()
     {
-        [Fact]
-        public void DoubleTest()
-        {
-            const double value = 2.73;
-            var detail = value.Details();
-            Assert.Equal(2, detail.IntegralPart);
-            Assert.Equal(0.73, detail.FractionPart);
-        }
+        const double value = 2.73;
+        var detail = value.Details();
+        Assert.Equal(2, detail.IntegralPart);
+        Assert.Equal(0.73, detail.FractionPart);
     }
 }

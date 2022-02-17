@@ -2,106 +2,105 @@
 using System.IO;
 using Core.Logging.Logger;
 
-namespace Core.IO.Impl
+namespace Core.IO.Impl;
+
+public class DefaultTempUtil : ITempUtil
 {
-    public class DefaultTempUtil : ITempUtil
+    private readonly ILogger _log = Logger.Create<DefaultTempUtil>();
+
+    private readonly string _rootPath;
+    private readonly IPathNameGenerator _dirNameGen;
+    private readonly IPathNameGenerator _pathNameGen;
+    private readonly IFileUtil _fileUtil;
+    private readonly IDirectoryUtil _directoryUtil;
+
+    /// <inheritdoc cref="ITempUtil.GetTempDirectory"/>
+    public string GetTempDirectory()
     {
-        private readonly ILogger _log = Logger.Create<DefaultTempUtil>();
+        return Path.GetTempPath();
+    }
 
-        private readonly string _rootPath;
-        private readonly IPathNameGenerator _dirNameGen;
-        private readonly IPathNameGenerator _pathNameGen;
-        private readonly IFileUtil _fileUtil;
-        private readonly IDirectoryUtil _directoryUtil;
+    public DefaultTempUtil(
+        string? defaultRootPath = null,
+        IPathNameGenerator? dirNameGen = null, 
+        IPathNameGenerator? fileNameGen = null,
+        IFileUtil? fileUtil = default,
+        IDirectoryUtil? directoryUtil = null)
+    {
+        _rootPath = defaultRootPath ?? Path.GetTempPath();
+        _directoryUtil = directoryUtil ?? new DefaultDirectoryUtil();
+        _dirNameGen = dirNameGen ?? new DefaultPathNameGenerator();;
+        _pathNameGen = fileNameGen ?? new DefaultPathNameGenerator();
+        _fileUtil = fileUtil ?? new DefaultFileUtil();
+        _directoryUtil = directoryUtil ?? new DefaultDirectoryUtil();
+    }
 
-        /// <inheritdoc cref="ITempUtil.GetTempDirectory"/>
-        public string GetTempDirectory()
+    public string CreateDir(string? parentDirectory = default)
+    {
+        parentDirectory = parentDirectory ?? _rootPath;
+        var result = _dirNameGen.Generate(parentDirectory);
+        _directoryUtil.EnsureExistence(result);
+        return result;
+    }
+
+    public string CreateFile(string? parentDirectory = default)
+    {
+        parentDirectory = parentDirectory ?? _rootPath;
+        var tempFileName = _pathNameGen.Generate(parentDirectory);
+        _fileUtil.Touch(tempFileName);
+        return tempFileName;
+    }
+
+    public void UseDir(Action<string> action)
+    {
+        UseDir(_rootPath, action);
+    }
+
+    public void UseDir(string parentDirectory, Action<string> action)
+    {
+        var tempDirPath = CreateDir(parentDirectory);
+        try
         {
-            return Path.GetTempPath();
+            action(tempDirPath);
         }
-
-        public DefaultTempUtil(
-            string? defaultRootPath = null,
-            IPathNameGenerator? dirNameGen = null, 
-            IPathNameGenerator? fileNameGen = null,
-            IFileUtil? fileUtil = default,
-            IDirectoryUtil? directoryUtil = null)
+        catch (Exception e)
         {
-            _rootPath = defaultRootPath ?? Path.GetTempPath();
-            _directoryUtil = directoryUtil ?? new DefaultDirectoryUtil();
-            _dirNameGen = dirNameGen ?? new DefaultPathNameGenerator();;
-            _pathNameGen = fileNameGen ?? new DefaultPathNameGenerator();
-            _fileUtil = fileUtil ?? new DefaultFileUtil();
-            _directoryUtil = directoryUtil ?? new DefaultDirectoryUtil();
+            _log.Error("unexpected exception while using a temp directory", e);
         }
-
-        public string CreateDir(string? parentDirectory = default)
+        finally
         {
-            parentDirectory = parentDirectory ?? _rootPath;
-            var result = _dirNameGen.Generate(parentDirectory);
-            _directoryUtil.EnsureExistence(result);
-            return result;
-        }
+            Directory.Delete(tempDirPath);
+        }    
+    }
 
-        public string CreateFile(string? parentDirectory = default)
-        {
-            parentDirectory = parentDirectory ?? _rootPath;
-            var tempFileName = _pathNameGen.Generate(parentDirectory);
-            _fileUtil.Touch(tempFileName);
-            return tempFileName;
-        }
+    public void UseFile(Action<string> action)
+    {
+        UseFile(_rootPath, action);
+    }
 
-        public void UseDir(Action<string> action)
+    public void UseFile(string parentDirectory, Action<string> action)
+    {
+        var tempFileName = CreateFile(parentDirectory);
+        try
         {
-            UseDir(_rootPath, action);
+            action(tempFileName);
         }
+        catch (Exception e)
+        {
+            _log.Error("unexpected exception while using a temp file", e);
+        }
+        finally
+        {
+            _fileUtil.Delete(tempFileName);
+        } 
+    }
 
-        public void UseDir(string parentDirectory, Action<string> action)
-        {
-            var tempDirPath = CreateDir(parentDirectory);
-            try
-            {
-                action(tempDirPath);
-            }
-            catch (Exception e)
-            {
-                _log.Error("unexpected exception while using a temp directory", e);
-            }
-            finally
-            {
-                Directory.Delete(tempDirPath);
-            }    
-        }
-
-        public void UseFile(Action<string> action)
-        {
-            UseFile(_rootPath, action);
-        }
-
-        public void UseFile(string parentDirectory, Action<string> action)
-        {
-            var tempFileName = CreateFile(parentDirectory);
-            try
-            {
-                action(tempFileName);
-            }
-            catch (Exception e)
-            {
-                _log.Error("unexpected exception while using a temp file", e);
-            }
-            finally
-            {
-                _fileUtil.Delete(tempFileName);
-            } 
-        }
-
-        /// <summary>
-        /// creates a temporary directory and a temporary file in that directory and exposes them for usage in the specified lamda block
-        /// </summary>
-        /// <param name="action"></param>
-        public void UseFile(Action<string, string> action)
-        {
-            UseDir(directoryPath=>UseFile(directoryPath, filePath=>action(directoryPath, filePath)));
-        }
+    /// <summary>
+    /// creates a temporary directory and a temporary file in that directory and exposes them for usage in the specified lamda block
+    /// </summary>
+    /// <param name="action"></param>
+    public void UseFile(Action<string, string> action)
+    {
+        UseDir(directoryPath=>UseFile(directoryPath, filePath=>action(directoryPath, filePath)));
     }
 }

@@ -1,14 +1,13 @@
 using System;
 
-namespace Core.Extensions.MathematicsRelated
+namespace Core.Extensions.MathematicsRelated;
+
+public static class DecimalExt
 {
-    public static class DecimalExt
+    public static decimal TruncateAfterDecimalPlace(this decimal value, int decimalPlace)
     {
-        public static decimal TruncateAfterDecimalPlace(this decimal value, int decimalPlace)
-        {
-            var step = (decimal)Math.Pow(10, decimalPlace);
-            var tmp  = Math.Truncate(step * value);
-            return tmp / step;
-        }
+        var step = (decimal)Math.Pow(10, decimalPlace);
+        var tmp  = Math.Truncate(step * value);
+        return tmp / step;
     }
 }

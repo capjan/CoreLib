@@ -1,17 +1,16 @@
 ﻿using Core.Environment;
 using Xunit;
 
-namespace Core.Test.EnvironmentRelated
-{
-    public class AppInfoTest
-    {
+namespace Core.Test.EnvironmentRelated;
 
-        [Fact]
-        public void BasicTest()
-        {
-            var info = new AppInfo();
-            var appFolder = info.ApplicationFolder;
-            Assert.NotEmpty(appFolder);
-        }
+public class AppInfoTest
+{
+
+    [Fact]
+    public void BasicTest()
+    {
+        var info = new AppInfo();
+        var appFolder = info.ApplicationFolder;
+        Assert.NotEmpty(appFolder);
     }
 }

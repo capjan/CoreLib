@@ -1,16 +1,15 @@
 using Core.Enums;
 
-namespace Core.Mathematics
+namespace Core.Mathematics;
+
+/// <summary>
+/// DMS Geo Coordinate (Degree, Minutes, Seconds) 
+/// </summary>
+public interface IGeoCoordinate
 {
-    /// <summary>
-    /// DMS Geo Coordinate (Degree, Minutes, Seconds) 
-    /// </summary>
-    public interface IGeoCoordinate
-    {
-        GeoCoordinateType Type         { get; }
-        bool              IsNegative   { get; }
-        int               Degrees      { get; }
-        int               Minutes      { get; }
-        double            Seconds      { get; }
-    }
+    GeoCoordinateType Type         { get; }
+    bool              IsNegative   { get; }
+    int               Degrees      { get; }
+    int               Minutes      { get; }
+    double            Seconds      { get; }
 }

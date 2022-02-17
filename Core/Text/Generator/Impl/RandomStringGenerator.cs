@@ -1,24 +1,23 @@
-﻿namespace Core.Text.Generator.Impl
+﻿namespace Core.Text.Generator.Impl;
+
+public class RandomStringGenerator : IRandomStringGenerator
 {
-    public class RandomStringGenerator : IRandomStringGenerator
+    private readonly IRandomCharGenerator _randomCharGenerator;
+
+    public RandomStringGenerator(
+        IRandomCharGenerator? randomCharGenerator = default)
     {
-        private readonly IRandomCharGenerator _randomCharGenerator;
+        _randomCharGenerator = randomCharGenerator ?? new RandomCharGenerator();
+    }
 
-        public RandomStringGenerator(
-            IRandomCharGenerator? randomCharGenerator = default)
+    public string CreateAlphanumericString(int length)
+    {
+        var stringChars = new char[length];
+        stringChars[0] = _randomCharGenerator.NextLetter();
+        for (var i = 1; i < stringChars.Length; i++)
         {
-            _randomCharGenerator = randomCharGenerator ?? new RandomCharGenerator();
+            stringChars[i] = _randomCharGenerator.NextAlphaNumeric();
         }
-
-        public string CreateAlphanumericString(int length)
-        {
-            var stringChars = new char[length];
-            stringChars[0] = _randomCharGenerator.NextLetter();
-            for (var i = 1; i < stringChars.Length; i++)
-            {
-                stringChars[i] = _randomCharGenerator.NextAlphaNumeric();
-            }
-            return new string(stringChars);
-        }
+        return new string(stringChars);
     }
 }

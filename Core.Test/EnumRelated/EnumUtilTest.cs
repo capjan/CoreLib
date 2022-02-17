@@ -2,16 +2,15 @@
 using Core.Enums;
 using Xunit;
 
-namespace Core.Test.EnumRelated
+namespace Core.Test.EnumRelated;
+
+public class EnumUtilTest
 {
-    public class EnumUtilTest
+    [Fact]
+    public void BasicTest()
     {
-        [Fact]
-        public void BasicTest()
-        {
-            var info = EnumUtil.List<System.Environment.SpecialFolder>().OrderBy(i=>i.Name).ToArray();
-            Assert.Equal("AdminTools", info[0].Name);
+        var info = EnumUtil.List<System.Environment.SpecialFolder>().OrderBy(i=>i.Name).ToArray();
+        Assert.Equal("AdminTools", info[0].Name);
             
-        }
     }
 }

@@ -1,7 +1,6 @@
-﻿namespace Core.Net
+﻿namespace Core.Net;
+
+public interface IUrlEncoder
 {
-    public interface IUrlEncoder
-    {
-        string Encode(string value);
-    }
+    string Encode(string value);
 }

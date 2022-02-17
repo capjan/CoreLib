@@ -1,12 +1,11 @@
 ﻿using Core.Enums;
 
-namespace Core.Localization
+namespace Core.Localization;
+
+public interface ITimePartLocalization
 {
-    public interface ITimePartLocalization
-    {
-        TimePart Part { get; }
-        string Singular { get; }
-        string Plural { get; }
-        string Abbreviation { get; }
-    }
+    TimePart Part { get; }
+    string Singular { get; }
+    string Plural { get; }
+    string Abbreviation { get; }
 }

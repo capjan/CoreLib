@@ -1,10 +1,9 @@
-namespace Core.Mathematics
+namespace Core.Mathematics;
+
+public interface IGeoLocation
 {
-    public interface IGeoLocation
-    {
-        double        Longitude    { get; }
-        double        Latitude     { get; }
-        IGeoCoordinate LongitudeDMS { get; }
-        IGeoCoordinate LatitudeDMS  { get; }
-    }
+    double        Longitude    { get; }
+    double        Latitude     { get; }
+    IGeoCoordinate LongitudeDMS { get; }
+    IGeoCoordinate LatitudeDMS  { get; }
 }

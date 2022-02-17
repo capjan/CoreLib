@@ -2,15 +2,14 @@
 using System.Linq;
 using System.Net;
 
-namespace Core.Extensions.NetRelated
+namespace Core.Extensions.NetRelated;
+
+public static class WebResponseExt
 {
-    public static class WebResponseExt
+    public static Dictionary<string, string> CreateHeaderDictionary(this WebResponse response)
     {
-        public static Dictionary<string, string> CreateHeaderDictionary(this WebResponse response)
-        {
-            var header = response.Headers;
-            var keys   = response.Headers.AllKeys;
-            return keys.ToDictionary(key => key, key => header.Get(key) ?? "");
-        }
+        var header = response.Headers;
+        var keys   = response.Headers.AllKeys;
+        return keys.ToDictionary(key => key, key => header.Get(key) ?? "");
     }
 }

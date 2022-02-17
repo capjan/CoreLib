@@ -1,7 +1,6 @@
-﻿namespace Core.IO
+﻿namespace Core.IO;
+
+public interface IDirectoryUtil
 {
-    public interface IDirectoryUtil
-    {
-        void EnsureExistence(string dirPath);
-    }
+    void EnsureExistence(string dirPath);
 }

@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace Core.Text.Formatter
+namespace Core.Text.Formatter;
+
+public interface IDateTimeFormatter : IFormattableTextFormatter<DateTime>
 {
-    public interface IDateTimeFormatter : IFormattableTextFormatter<DateTime>
-    {
-        bool UniversalTime { get; set; }
-    }
+    bool UniversalTime { get; set; }
 }

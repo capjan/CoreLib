@@ -1,8 +1,7 @@
-﻿namespace Core.Text.Formatter
+﻿namespace Core.Text.Formatter;
+
+public interface IHexFormatter<in T> : ITextFormatter<T>
 {
-    public interface IHexFormatter<in T> : ITextFormatter<T>
-    {
-        bool UpperCase { get; set; }
-        int? Precision { get; set; }
-    }
+    bool UpperCase { get; set; }
+    int? Precision { get; set; }
 }

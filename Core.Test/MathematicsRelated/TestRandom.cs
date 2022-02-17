@@ -1,56 +1,55 @@
 ﻿using Core.Mathematics.Impl;
 using Xunit;
 
-namespace Core.Test.MathematicsRelated
+namespace Core.Test.MathematicsRelated;
+
+public class TestRandom
 {
-    public class TestRandom
+    [Fact]
+    public void BasicRandomTest()
     {
-        [Fact]
-        public void BasicRandomTest()
-        {
-            var random = new DefaultRandom(12345);
-            var next = random.Next();
-            Assert.Equal(143337951, next);
-            next = random.Next();
-            Assert.Equal(150666398, next);
-            next = random.Next();
-            Assert.Equal(1663795458, next);
-        }
+        var random = new DefaultRandom(12345);
+        var next = random.Next();
+        Assert.Equal(143337951, next);
+        next = random.Next();
+        Assert.Equal(150666398, next);
+        next = random.Next();
+        Assert.Equal(1663795458, next);
+    }
 
-        [Fact]
-        public void RandomMaxValueTest()
+    [Fact]
+    public void RandomMaxValueTest()
+    {
+        var random = new DefaultRandom();
+        for (var i = 0; i < 1000; i++)
         {
-            var random = new DefaultRandom();
-            for (var i = 0; i < 1000; i++)
-            {
-                var next = random.Next(10);
-                Assert.InRange(next, 0,10);
-            }            
-        }
+            var next = random.Next(10);
+            Assert.InRange(next, 0,10);
+        }            
+    }
 
-        [Fact]
-        public void RandomMinMaxValueTest()
+    [Fact]
+    public void RandomMinMaxValueTest()
+    {
+        var random = new DefaultRandom();
+        for (var i = 0; i < 1000; i++)
         {
-            var random = new DefaultRandom();
-            for (var i = 0; i < 1000; i++)
-            {
-                var next = random.Next(10, 20);
-                Assert.InRange(next, 10,20);
-            }            
-        }
+            var next = random.Next(10, 20);
+            Assert.InRange(next, 10,20);
+        }            
+    }
 
-        [Fact]
-        public void RandomMinMaxValueTest2()
+    [Fact]
+    public void RandomMinMaxValueTest2()
+    {
+        var random = new DefaultRandom();
+        var hitCount = new int[4];
+        for (var i = 0; i < 1000; i++)
         {
-            var random = new DefaultRandom();
-            var hitCount = new int[4];
-            for (var i = 0; i < 1000; i++)
-            {
-                var next = random.Next(0, 3);
-                hitCount[next]++;
-            }
-            Assert.True(hitCount[0] > 0);
-            Assert.True(hitCount[3] > 0);
+            var next = random.Next(0, 3);
+            hitCount[next]++;
         }
+        Assert.True(hitCount[0] > 0);
+        Assert.True(hitCount[3] > 0);
     }
 }

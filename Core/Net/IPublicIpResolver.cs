@@ -1,7 +1,6 @@
-﻿namespace Core.Net
+﻿namespace Core.Net;
+
+public interface IPublicIpResolver
 {
-    public interface IPublicIpResolver
-    {
-        string Resolve();
-    }
+    string Resolve();
 }

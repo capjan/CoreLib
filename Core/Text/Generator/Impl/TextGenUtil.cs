@@ -1,18 +1,17 @@
-﻿namespace Core.Text.Generator.Impl
-{
-    public class TextGenUtil : ITextGenUtil
-    {
-        public TextGenUtil(
-            IRandomStringGenerator? randomStringGenerator = default)
-        {
-            _randomStringGenerator = randomStringGenerator ?? new RandomStringGenerator();
-        }
-        public string CreateAlphanumericString(int length)
-        {
-            return _randomStringGenerator.CreateAlphanumericString(length);
-        }
+﻿namespace Core.Text.Generator.Impl;
 
-        private readonly IRandomStringGenerator _randomStringGenerator;
-        
+public class TextGenUtil : ITextGenUtil
+{
+    public TextGenUtil(
+        IRandomStringGenerator? randomStringGenerator = default)
+    {
+        _randomStringGenerator = randomStringGenerator ?? new RandomStringGenerator();
     }
+    public string CreateAlphanumericString(int length)
+    {
+        return _randomStringGenerator.CreateAlphanumericString(length);
+    }
+
+    private readonly IRandomStringGenerator _randomStringGenerator;
+        
 }

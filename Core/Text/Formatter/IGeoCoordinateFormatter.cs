@@ -1,8 +1,7 @@
 using Core.Mathematics;
 
-namespace Core.Text.Formatter
+namespace Core.Text.Formatter;
+
+public interface IGeoCoordinateFormatter : ITextFormatter<IGeoCoordinate>
 {
-    public interface IGeoCoordinateFormatter : ITextFormatter<IGeoCoordinate>
-    {
-    }
 }

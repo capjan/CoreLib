@@ -1,13 +1,12 @@
-﻿namespace Core.Text.Generator
+﻿namespace Core.Text.Generator;
+
+public interface IRandomCharGenerator
 {
-    public interface IRandomCharGenerator
-    {
-        char NextUpperCaseLetter();
-        char NextLowerCaseLetter();
-        char NextLetter();
-        char NextDigit();
-        char NextAlphaNumeric();
-        char NextChar();
-        char NextHexChar();
-    }
+    char NextUpperCaseLetter();
+    char NextLowerCaseLetter();
+    char NextLetter();
+    char NextDigit();
+    char NextAlphaNumeric();
+    char NextChar();
+    char NextHexChar();
 }

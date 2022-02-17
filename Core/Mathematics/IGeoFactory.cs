@@ -1,8 +1,7 @@
-namespace Core.Mathematics
+namespace Core.Mathematics;
+
+public interface IGeoFactory
 {
-    public interface IGeoFactory
-    {
-        IGeoLocation CreateLocation(double latitude, double longitude);
-        IGeoCircle CreateCircle(double latitude, double longitude, double radius);
-    }
+    IGeoLocation CreateLocation(double latitude, double longitude);
+    IGeoCircle CreateCircle(double latitude, double longitude, double radius);
 }

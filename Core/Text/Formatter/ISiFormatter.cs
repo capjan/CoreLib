@@ -1,36 +1,35 @@
 using Core.Enums;
 
-namespace Core.Text.Formatter
+namespace Core.Text.Formatter;
+
+/// <summary>
+/// Formats a given number to a formatted string representation with si-prefix. e.g. 1000 => 1 k
+/// </summary>
+public interface ISiFormatter : IFormattableTextFormatter<decimal>
 {
     /// <summary>
-    /// Formats a given number to a formatted string representation with si-prefix. e.g. 1000 => 1 k
+    /// content between number and si-prefix unit. Defaults to a single space 
     /// </summary>
-    public interface ISiFormatter : IFormattableTextFormatter<decimal>
-    {
-        /// <summary>
-        /// content between number and si-prefix unit. Defaults to a single space 
-        /// </summary>
-        string Delimiter { get; set; }
+    string Delimiter { get; set; }
         
-        /// <summary>
-        /// Forced scale degree. Defaults to null (auto scale degree). Value examples: null = auto, 1 = kilo, 2 = Mega, 3 = Giga, 4 = Terra, -1 = Milli
-        /// </summary>
-        int? ForcedDegree { get; set; }
+    /// <summary>
+    /// Forced scale degree. Defaults to null (auto scale degree). Value examples: null = auto, 1 = kilo, 2 = Mega, 3 = Giga, 4 = Terra, -1 = Milli
+    /// </summary>
+    int? ForcedDegree { get; set; }
         
-        /// <summary>
-        /// Optional unit postfix. Defaults to null
-        /// </summary>
-        string Unit { get; set; }
+    /// <summary>
+    /// Optional unit postfix. Defaults to null
+    /// </summary>
+    string Unit { get; set; }
         
-        /// <summary>
-        /// Limits the count of significant decimal places. All non significant decimal places are removed and the remaining number is shortened by the given strategy.
-        /// </summary>
-        int? SignificantDecimalPlaces { get; set; }
+    /// <summary>
+    /// Limits the count of significant decimal places. All non significant decimal places are removed and the remaining number is shortened by the given strategy.
+    /// </summary>
+    int? SignificantDecimalPlaces { get; set; }
 
-        /// <summary>
-        /// Specifies how a shortened number (limited by significant decimal places) is shortened. It's defaults to truncate.
-        /// </summary>
-        NumberShortenStrategy ShortenStrategy { get; set; }
+    /// <summary>
+    /// Specifies how a shortened number (limited by significant decimal places) is shortened. It's defaults to truncate.
+    /// </summary>
+    NumberShortenStrategy ShortenStrategy { get; set; }
 
-    }
 }

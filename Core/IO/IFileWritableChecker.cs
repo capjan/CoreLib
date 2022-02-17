@@ -1,7 +1,6 @@
-﻿namespace Core.IO
+﻿namespace Core.IO;
+
+public interface IFileWritableChecker
 {
-    public interface IFileWritableChecker
-    {
-        bool Check(string filePath);
-    }
+    bool Check(string filePath);
 }

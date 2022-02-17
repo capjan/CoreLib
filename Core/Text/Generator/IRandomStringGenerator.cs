@@ -1,7 +1,6 @@
-﻿namespace Core.Text.Generator
+﻿namespace Core.Text.Generator;
+
+public interface IRandomStringGenerator
 {
-    public interface IRandomStringGenerator
-    {
-        string CreateAlphanumericString(int length);
-    }
+    string CreateAlphanumericString(int length);
 }

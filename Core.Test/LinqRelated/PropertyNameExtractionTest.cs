@@ -3,49 +3,48 @@ using System.Linq.Expressions;
 using Core.Extensions.LinqRelated;
 using Xunit;
 
-namespace Core.Test.LinqRelated
+namespace Core.Test.LinqRelated;
+
+public class PropertyNameExtractionTest
 {
-    public class PropertyNameExtractionTest
+    private class Person
     {
-        private class Person
+        public Person(string name, int age)
         {
-            public Person(string name, int age)
-            {
-                Name = name;
-                Age = age;
-            }
-
-            public Person()
-            {
-                Name = "";
-                Age = 0;
-            }
-
-            public string Name { get; }
-            public int Age { get; }
+            Name = name;
+            Age = age;
         }
 
-        private class PropertyDumper<T>
+        public Person()
         {
-            public string Dump<TProperty>(Expression<Func<T, TProperty>> expression)
-            {
-                var memberInfo = expression.GetMember();
-                var name = memberInfo.Name;
-                var type = typeof(TProperty);
-
-                return $"{type.Name} {name}";
-            }
+            Name = "";
+            Age = 0;
         }
 
-        [Fact]
-        public void TestMapper()
-        {
-            var dumper = new PropertyDumper<Person>();
-            var dump1 = dumper.Dump(p=>p.Name);
-            var dump2 = dumper.Dump(p=>p.Age);
+        public string Name { get; }
+        public int Age { get; }
+    }
 
-            Assert.Equal("String Name", dump1);
-            Assert.Equal("Int32 Age", dump2);
+    private class PropertyDumper<T>
+    {
+        public string Dump<TProperty>(Expression<Func<T, TProperty>> expression)
+        {
+            var memberInfo = expression.GetMember();
+            var name = memberInfo.Name;
+            var type = typeof(TProperty);
+
+            return $"{type.Name} {name}";
         }
+    }
+
+    [Fact]
+    public void TestMapper()
+    {
+        var dumper = new PropertyDumper<Person>();
+        var dump1 = dumper.Dump(p=>p.Name);
+        var dump2 = dumper.Dump(p=>p.Age);
+
+        Assert.Equal("String Name", dump1);
+        Assert.Equal("Int32 Age", dump2);
     }
 }

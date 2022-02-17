@@ -1,7 +1,6 @@
-﻿namespace Core.Net
+﻿namespace Core.Net;
+
+public interface IDownloader
 {
-    public interface IDownloader
-    {
-        string DownloadToString(string url);
-    }
+    string DownloadToString(string url);
 }

@@ -1,9 +1,8 @@
-namespace Core.Enums
+namespace Core.Enums;
+
+public enum PathType
 {
-    public enum PathType
-    {
-        Unknown,
-        Windows,
-        UnixLike
-    }
+    Unknown,
+    Windows,
+    UnixLike
 }

@@ -1,23 +1,22 @@
 ﻿using System;
 
-namespace Core.Logging.Logger
+namespace Core.Logging.Logger;
+
+public static class Logger
 {
-    public static class Logger
+    public static ILogger Create(string typeFullName)
     {
-        public static ILogger Create(string typeFullName)
-        {
-            return new TypeLogger(typeFullName);
-        }
+        return new TypeLogger(typeFullName);
+    }
 
-        public static ILogger Create(Type type)
-        {
-            var className = type.FullName ?? throw new InvalidOperationException("fullname must not be null");
-            return new TypeLogger(className);
-        }
+    public static ILogger Create(Type type)
+    {
+        var className = type.FullName ?? throw new InvalidOperationException("fullname must not be null");
+        return new TypeLogger(className);
+    }
 
-        public static ILogger Create<T>() where T : class
-        {
-            return Create(typeof(T));
-        }
+    public static ILogger Create<T>() where T : class
+    {
+        return Create(typeof(T));
     }
 }

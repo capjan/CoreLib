@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <IsPackable>false</IsPackable>
-    <LangVersion>9</LangVersion>
+    <LangVersion>10</LangVersion>
     <Company>Jan Ruhlaender</Company>
     <Authors>Jan Ruhlaender</Authors>
-    <Copyright>©2021 Jan Ruhlaender</Copyright>
+    <Copyright>©2022 Jan Ruhlaender</Copyright>
     <Product>CoreLib Unit Tests</Product>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Nullable>enable</Nullable>

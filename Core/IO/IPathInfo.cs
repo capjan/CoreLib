@@ -1,12 +1,11 @@
 using Core.Enums;
 
-namespace Core.IO
+namespace Core.IO;
+
+public interface IPathInfo
 {
-    public interface IPathInfo
-    {
-        bool IsRooted { get; }
-        PathType Type { get; }
-        string Drive { get; }
-        string[] Parts { get; }
-    }
+    bool IsRooted { get; }
+    PathType Type { get; }
+    string Drive { get; }
+    string[] Parts { get; }
 }

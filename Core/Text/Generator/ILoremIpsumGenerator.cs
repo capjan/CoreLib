@@ -1,9 +1,8 @@
 ﻿using System.IO;
 
-namespace Core.Text.Generator
+namespace Core.Text.Generator;
+
+public interface ILoremIpsumGenerator
 {
-    public interface ILoremIpsumGenerator
-    {
-        void WriteText(int wordCount, TextWriter output);
-    }
+    void WriteText(int wordCount, TextWriter output);
 }

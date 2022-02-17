@@ -1,14 +1,13 @@
-﻿namespace Core.Enums
+﻿namespace Core.Enums;
+
+public enum TimePart
 {
-    public enum TimePart
-    {
-        Year,
-        Month,
-        Week,
-        Day,
-        Hour,
-        Minute,
-        Second,
-        Millisecond
-    }
+    Year,
+    Month,
+    Week,
+    Day,
+    Hour,
+    Minute,
+    Second,
+    Millisecond
 }

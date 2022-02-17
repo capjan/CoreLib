@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace Core.Text.Formatter
+namespace Core.Text.Formatter;
+
+public interface IFormattableTextFormatter<in T> : ITextFormatter<T>
 {
-    public interface IFormattableTextFormatter<in T> : ITextFormatter<T>
-    {
-        string          Format         { get; set; }
-        IFormatProvider? FormatProvider { get; set; }
-    }
+    string          Format         { get; set; }
+    IFormatProvider? FormatProvider { get; set; }
 }

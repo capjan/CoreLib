@@ -1,17 +1,16 @@
 ﻿using Core.Environment.OperatingSystemInfoImpl;
 using Xunit;
 
-namespace Core.Test.EnvironmentRelated
+namespace Core.Test.EnvironmentRelated;
+
+public class OperatingSystemInfoTest
 {
-    public class OperatingSystemInfoTest
+    [Fact]
+    public void BasicTest()
     {
-        [Fact]
-        public void BasicTest()
-        {
-            var osInfo = new OperatingSystemInfo();
-            Assert.NotEmpty(osInfo.Version);
-            Assert.NotEmpty(osInfo.Name);
-            Assert.NotEmpty(osInfo.Build);
-        }
+        var osInfo = new OperatingSystemInfo();
+        Assert.NotEmpty(osInfo.Version);
+        Assert.NotEmpty(osInfo.Name);
+        Assert.NotEmpty(osInfo.Build);
     }
 }

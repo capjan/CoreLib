@@ -1,13 +1,12 @@
-﻿namespace Core.Text.Generator
+﻿namespace Core.Text.Generator;
+
+public interface IAlphabet
 {
-    public interface IAlphabet
-    {
-        string Chars                     { get; }
-        int    IndexFirstUpperCaseLetter { get; }
-        int    IndexLastUppercaseLetter  { get; }
-        int    IndexFirstLowerCaseLetter { get; }
-        int    IndexLastLowerCaseLetter  { get; }
-        int    IndexFirstDigit           { get; }
-        int    IndexLastDigit            { get; }
-    }
+    string Chars                     { get; }
+    int    IndexFirstUpperCaseLetter { get; }
+    int    IndexLastUppercaseLetter  { get; }
+    int    IndexFirstLowerCaseLetter { get; }
+    int    IndexLastLowerCaseLetter  { get; }
+    int    IndexFirstDigit           { get; }
+    int    IndexLastDigit            { get; }
 }

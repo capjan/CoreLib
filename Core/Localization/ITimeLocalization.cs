@@ -1,9 +1,8 @@
 ﻿using Core.Enums;
 
-namespace Core.Localization
+namespace Core.Localization;
+
+public interface ITimeLocalization
 {
-    public interface ITimeLocalization
-    {
-        ITimePartLocalization GetPartLocalization(TimePart part);
-    }
+    ITimePartLocalization GetPartLocalization(TimePart part);
 }

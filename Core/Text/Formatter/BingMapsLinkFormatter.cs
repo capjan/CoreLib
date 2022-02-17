@@ -3,26 +3,24 @@ using System.IO;
 using Core.Mathematics;
 using Core.Net.Impl;
 
-namespace Core.Text.Formatter
+namespace Core.Text.Formatter;
+
+
+public class BingMapsLinkFormatter : ITextFormatter<IGeoLocation>
 {
-    // todo: remove that class and replace it
-    // PinName should be part of the formatting input
-    public class BingMapsLinkFormatter : ITextFormatter<IGeoLocation>
+
+    public string? PinName { get; set; }
+
+    public void Write(IGeoLocation value, TextWriter writer)
     {
-        
-        public string? PinName { get; set; }
+        var lat            = value.Latitude.ToString(CultureInfo.InvariantCulture);
+        var lon            = value.Longitude.ToString(CultureInfo.InvariantCulture);
 
-        public void Write(IGeoLocation value, TextWriter writer)
+        writer.Write($"https://bing.com/maps/default.aspx?cp={lat}~{lon}&lvl=16&dir=0&sty=a&sp=point.{lat}_{lon}");
+        if (!string.IsNullOrWhiteSpace(PinName))
         {
-            var lat            = value.Latitude.ToString(CultureInfo.InvariantCulture);
-            var lon            = value.Longitude.ToString(CultureInfo.InvariantCulture);
-
-            writer.Write($"https://bing.com/maps/default.aspx?cp={lat}~{lon}&lvl=16&dir=0&sty=a&sp=point.{lat}_{lon}");
-            if (!string.IsNullOrWhiteSpace(PinName))
-            {
-                var urlEncodedName = new DefaultUrlEncoder().Encode(PinName);
-                writer.Write($"_{urlEncodedName}");
-            }
+            var urlEncodedName = new DefaultUrlEncoder().Encode(PinName);
+            writer.Write($"_{urlEncodedName}");
         }
     }
 }
