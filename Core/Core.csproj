@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <Title>CoreLib</Title>
-    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>net5.0;net6.0;netstandard2.0</TargetFrameworks>
     <PackageId>Cap.Core</PackageId>
     <Authors>Jan Ruhlaender</Authors>
     <Product>CoreLib</Product>
     <Description>Intended to be used in every project to reuse as much code as possible for daily coding tasks.</Description>
     <Copyright>©2022 Jan Ruhlaender</Copyright>
     <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">false</GeneratePackageOnBuild>
-    <Version>8.2.0</Version>
+    <Version>9.0.0</Version>
     <LangVersion>10</LangVersion>
     <PackageProjectUrl>https://github.com/capjan/CoreLib</PackageProjectUrl>
     <AssemblyName>CoreLib</AssemblyName>

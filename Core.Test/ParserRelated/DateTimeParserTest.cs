@@ -21,4 +21,13 @@ public class DateTimeParserTest
         Assert.Equal(new DateTime(2020,06,17, 1,2,3, 123), parser.ParseOrDefault("2020-06-17 01:02:03.123456"));
         Assert.Equal(new DateTime(1976,7,10), parser.ParseOrFallback("", new DateTime(1976,7,10)));
     }
+
+    [Fact]
+    public void ParseOptionalDatetime()
+    {
+        var sut = new DateTimeParser();
+
+        var result = sut.ParseOrNull(null);
+        Assert.False(result.HasValue);
+    }
 }

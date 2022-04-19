@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Unicode;
 using Core.Enums;
 using Core.Extensions.TextRelated;
 using Core.Security.Cryptography.Security;

@@ -26,19 +26,19 @@ public static class AnyParserExtensions
         return concreteParser.ParseOrDefault(input);
     }
 
-    public static T[] ParseToArrayOrFallback<T>(this IAnyParser parser, string input, T[] fallback, string separator = ",")
+    public static T[] ParseToArrayOrFallback<T>(this IAnyParser parser, string input, T[] fallback, char separator = ',')
     {
         var concreteParser = parser.Create<T>();
         return concreteParser.ParseToArrayOrFallback(input, fallback, separator);
     }
 
-    public static T[] ParseToArrayOrEmpty<T>(this IAnyParser parser, string input, string separator = ",")
+    public static T[] ParseToArrayOrEmpty<T>(this IAnyParser parser, string input, char separator = ',')
     {
         var concreteParser = parser.Create<T>();
         return concreteParser.ParseToArrayOrEmpty(input, separator);
     }
 
-    public static T[] ParseToArray<T>(this IAnyParser parser, string input, string separator = ",")
+    public static T[] ParseToArray<T>(this IAnyParser parser, string input, char separator = ',')
     {
         var concreteParser = parser.Create<T>();
         return concreteParser.ParseToArray(input, separator);

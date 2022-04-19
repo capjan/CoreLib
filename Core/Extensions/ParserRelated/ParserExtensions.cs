@@ -30,7 +30,7 @@ public static class ParserExtensions
         }
     }
 
-    public static T? ParseOptional<T>(this IParser<T> parser, string input)
+    public static T? ParseOrNull<T>(this IParser<T> parser, string input) where T:struct
     {
         if (string.IsNullOrWhiteSpace(input))
         {
@@ -49,7 +49,7 @@ public static class ParserExtensions
         this IParser<T> parser,
         string input,
         T[] fallback,
-        string separator = ",")
+        char separator = ',')
     {
         try
         {
@@ -65,7 +65,7 @@ public static class ParserExtensions
     public static T[] ParseToArrayOrEmpty<T>(
         this IParser<T> parser,
         string input,
-        string separator = ",")
+        char separator = ',')
     {
         return parser.ParseToArrayOrFallback(input, Array.Empty<T>(), separator);
     }
@@ -87,16 +87,26 @@ public static class ParserExtensions
         }
     }
 
-    public static T[] ParseToArray<T>(this IParser<T> parser, string input, string separator = ",")
+    public static T[] ParseToArray<T>(this IParser<T> parser, string input, char separator = ',')
     {
+        
         return input
-            .Split(separator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Split(new []{separator}, StringSplitOptions.RemoveEmptyEntries)
+            .Select(v => v.Trim())
             .Select(parser.Parse)
             .ToArray();
     }
-
-    public static T ParseOrDefault<T>(this IParser<T> parser, string input) where T: struct
+    
+    
+    public static T? ParseOrDefault<T>(this IParser<T> parser, string input) 
     {
-        return parser.ParseOrFallback(input, default(T));
+        try
+        {
+            return parser.Parse(input);
+        }
+        catch
+        {
+            return default;
+        }
     }
 }

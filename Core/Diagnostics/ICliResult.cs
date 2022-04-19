@@ -5,12 +5,12 @@ public interface ICliResult
     /// <summary>
     /// Called CLI Process (The wrapped program)
     /// </summary>
-    string FileName { get; init; }
+    string FileName { get; set; }
 
     /// <summary>
     /// Used Arguments for the call
     /// </summary>
-    string Arguments { get; init; }
+    string Arguments { get; set; }
 
     /// <summary>
     /// Returns the concatenated FileName + Arguments
@@ -20,10 +20,10 @@ public interface ICliResult
     /// <summary>
     /// Exit Code
     /// </summary>
-    int ExitCode { get; init; }
+    int ExitCode { get; set; }
 
     /// <summary>
     /// Console Output (Merged stdout and stderr)
     /// </summary>
-    string ConsoleOutput { get; init; }
+    string ConsoleOutput { get; set; }
 }

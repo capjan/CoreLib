@@ -42,7 +42,7 @@ public class TextPosition : ITextPosition, IEquatable<TextPosition>
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(LineNumber, ColumnNumber);
+        return new {LineNumber, ColumnNumber}.GetHashCode();
     }
 
     public bool Equals(TextPosition? other)
