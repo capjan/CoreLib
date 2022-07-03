@@ -1,4 +1,4 @@
-name: .NET 5.0 / 6.0
+name: .NET 6.0
 
 on:
   pull_request:
@@ -11,17 +11,11 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
-    # Setup of multiple .NET versions at the same time seams to be broken
-    # The multiple versions approach shown at https://github.com/actions/setup-dotnet fails, so I decided to
-    # fall back to 2 separate installation runs.
+
     - name: Setup .NET 6
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-    - name: Setup .NET 5
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
     - name: .NET info
       run: dotnet --info
     - name: Restore
