@@ -27,7 +27,7 @@ public class DateTimeParserTest
     {
         var sut = new DateTimeParser();
 
-        var result = sut.ParseOrNull(null);
+        var result = sut.ParseOrNull(string.Empty);
         Assert.False(result.HasValue);
     }
 }
