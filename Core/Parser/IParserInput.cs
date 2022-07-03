@@ -30,12 +30,12 @@ public interface IParserInput : IDisposable
     bool TryReadChar(out char ch);
 
     /// <summary>
-    /// Counts of the current lookahead
+    /// Count of chars in the lookahead
     /// </summary>
-    int LookaheadCount { get; }
+    int LookaheadCount { get; set; }
 
     /// <summary>
-    /// Clears the current lookup
+    /// Clears the current Lookahead and resets the reading position to the last read text position
     /// </summary>
     void ClearLookahead();
 

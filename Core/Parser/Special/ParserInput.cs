@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Core.Extensions.TextRelated;
 using Core.Text;
 using Core.Text.Impl;
@@ -62,7 +61,21 @@ public class ParserInput : IParserInput
         return false;
     }
 
-    public int LookaheadCount { get; private set; }
+    private int _lookaheadCount;
+    public int LookaheadCount
+    {
+        get => _lookaheadCount;
+        set
+        {
+            if (value > _peekedChars.Count)
+                throw new InvalidOperationException(
+                    $"it's not allowed to set an greater lookahead ({value}) than the current count of peeked characters ({_peekedChars.Count})");
+            if (value < 0)
+                throw new InvalidOperationException(
+                    $"it's not allowed to set a negative number ({value}) for {nameof(LookaheadCount)}");
+            _lookaheadCount = value;
+        } 
+    }
 
     public void ClearLookahead()
     {
@@ -71,11 +84,11 @@ public class ParserInput : IParserInput
 
     public void ReadLookahead()
     {
-        if (_peekedChars.Count != 0)
+        if (_lookaheadCount > 0)
         {
-            var info = _peekedChars.Last();
+            var info = _peekedChars[_lookaheadCount - 1];
             UpdateOffsetAndPosition(info);
-            _peekedChars.Clear();
+            _peekedChars.RemoveRange(0, _lookaheadCount);
         }
         ClearLookahead();
     }
@@ -115,7 +128,7 @@ public class ParserInput : IParserInput
 
     public void Dispose()
     {
-        _input?.Dispose();
+        _input.Dispose();
     }
 
     private CharWithPositionInfo? GetNextCharFromInput()
