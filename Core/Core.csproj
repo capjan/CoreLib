@@ -9,7 +9,7 @@
     <Description>Intended to be used in every project to reuse as much code as possible for daily coding tasks.</Description>
     <Copyright>©2022 Jan Ruhlaender</Copyright>
     <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">false</GeneratePackageOnBuild>
-    <Version>9.1.1</Version>
+    <Version>9.2.0</Version>
     <LangVersion>10</LangVersion>
     <PackageProjectUrl>https://github.com/capjan/CoreLib</PackageProjectUrl>
     <AssemblyName>CoreLib</AssemblyName>
@@ -21,8 +21,10 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>Nullable</WarningsAsErrors>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
-
+  
+  
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>

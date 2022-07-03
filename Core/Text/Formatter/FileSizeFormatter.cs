@@ -11,6 +11,7 @@ public class FileSizeFormatter : IFileSizeFormatter
 {
     private readonly IFormattableTextFormatter<double> _numberFormatter = new GenericNumberFormatter<double>();
 
+    private const long NoDivider = 1L;
     private const long Kib = 1024L;
     private const long Mib = 1024 * Kib;
     private const long Gib = 1024 * Mib;
@@ -46,6 +47,7 @@ public class FileSizeFormatter : IFileSizeFormatter
         {
             switch (ForcedUnit.Value)
             {
+                case BinaryUnitPrefix.None: return ("", NoDivider);
                 case BinaryUnitPrefix.Kibi: return ("Ki", Kib);
                 case BinaryUnitPrefix.Mebi: return ("Mi", Mib);
                 case BinaryUnitPrefix.Gibi: return ("Gi", Gib);
@@ -59,6 +61,6 @@ public class FileSizeFormatter : IFileSizeFormatter
         if (value >= Gib) return ("Gi", Gib);
         if (value >= Mib) return ("Mi", Mib);
         if (value >= Kib) return ("Ki", Kib);
-        return ("", 1);
+        return ("", NoDivider);
     }
 }

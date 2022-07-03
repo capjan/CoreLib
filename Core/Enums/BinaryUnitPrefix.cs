@@ -6,6 +6,10 @@
 public enum BinaryUnitPrefix
 {
     /// <summary>
+    /// Disable Prefix at all that forces a byte formatting
+    /// </summary>
+    None,
+    /// <summary>
     /// 1024 Byte
     /// </summary>
     Kibi,
