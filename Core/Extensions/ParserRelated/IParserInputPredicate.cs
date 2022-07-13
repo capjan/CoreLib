@@ -396,7 +396,9 @@ public class InputParserPredicateBuilder
 
     public IParserInputPredicate Done()
     {
-        return _predicate;
+        var result = _predicate;
+        _predicate = Predicate.Empty;
+        return result;
     }
 
     private void AppendPredicate(IParserInputPredicate predicate)
