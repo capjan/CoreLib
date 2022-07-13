@@ -40,7 +40,7 @@ internal static class InputPredicateUtil
 /// <summary>
 /// Assertion Predicate that assert that the given predicate is a match WITHOUT writing it contents to the given writer.
 /// </summary>
-public class AssertionPredicate : IParserInputPredicate
+internal class AssertionPredicate : IParserInputPredicate
 {
     private readonly IParserInputPredicate _predicate;
     private readonly TextWriter _nullWriter = new StreamWriter(Stream.Null);
@@ -57,7 +57,7 @@ public class AssertionPredicate : IParserInputPredicate
     }
 }
 
-public class IsMatchCharacterRange : IParserInputPredicate
+internal class IsMatchCharacterRange : IParserInputPredicate
 {
     private readonly char _lowerCharacter;
     private readonly char _upperCharacter;
@@ -82,7 +82,7 @@ public class IsMatchCharacterRange : IParserInputPredicate
     }
 }
 
-public class IsMatchPredicate : IParserInputPredicate
+internal class IsMatchPredicate : IParserInputPredicate
 {
     private readonly SortedSet<char> _matchSet;
 
@@ -100,7 +100,82 @@ public class IsMatchPredicate : IParserInputPredicate
     }
 }
 
-public class RepeatPredicate : IParserInputPredicate
+internal class IsMatchingAnyStringPredicate : IParserInputPredicate
+{
+    private readonly IReadOnlyCollection<string> _values;
+    private readonly IsMatchStringPredicate _matchStringPredicate;
+
+    public IsMatchingAnyStringPredicate(IReadOnlyCollection<string> values, bool ignoreCase)
+    {
+        _values = values;
+        _matchStringPredicate = new IsMatchStringPredicate(string.Empty, ignoreCase);
+    }
+
+    public bool IsMatch(IParserInput input, TextWriter writer)
+    {
+        foreach (var value in _values)
+        {
+            _matchStringPredicate.Value = value;
+            if (_matchStringPredicate.IsMatch(input, writer))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
+internal class IsMatchStringPredicate : IParserInputPredicate
+{
+    public string Value;
+    private readonly bool _ignoreCase;
+
+    public IsMatchStringPredicate(string value, bool ignoreCase)
+    {
+        Value = value;
+        _ignoreCase = ignoreCase;
+    }
+
+    public bool IsMatch(IParserInput input, TextWriter writer)
+    {
+        var lookaheadCount = input.LookaheadCount;
+        var cachedStringBuilder = new StringBuilder();
+        foreach (var ch in Value)
+        {
+            if (!input.TryPeekChar(out var peedChar))
+            {
+                input.LookaheadCount = lookaheadCount;
+                return false;
+            }
+
+            if (_ignoreCase)
+            {
+                if (char.ToUpperInvariant(ch) != char.ToUpperInvariant(peedChar))
+                {
+                    input.LookaheadCount = lookaheadCount;
+                    return false;
+                }
+
+                cachedStringBuilder.Append(peedChar);
+                continue;
+            }
+
+            if (ch == peedChar)
+            {
+                cachedStringBuilder.Append(peedChar);
+                continue;
+            }
+            input.LookaheadCount = lookaheadCount;
+            return false;
+        }
+
+        writer.Write(cachedStringBuilder.ToString());
+        return true;
+    }
+}
+
+internal class RepeatPredicate : IParserInputPredicate
 {
     private readonly IParserInputPredicate _predicateToRepeat;
     private readonly Repetition _repetition;
@@ -165,7 +240,7 @@ public class RepeatPredicate : IParserInputPredicate
 
 
 
-public class PredicateConcatenation : IParserInputPredicate
+internal class PredicateConcatenation : IParserInputPredicate
 {
     private readonly List<IParserInputPredicate> _predicates = new();
 
@@ -198,7 +273,7 @@ public class PredicateConcatenation : IParserInputPredicate
     }
 }
 
-public class Predicate : IParserInputPredicate
+internal class Predicate : IParserInputPredicate
 {
     public static readonly IParserInputPredicate Empty = new Predicate(); 
     public bool IsMatch(IParserInput input, TextWriter writer)
@@ -227,6 +302,36 @@ public class InputParserPredicateBuilder
     {
         var isMatchPredicate = new IsMatchPredicate(character);
         AppendPredicate(isMatchPredicate);
+        return this;
+    }
+
+    public InputParserPredicateBuilder Equals(string value)
+    {
+        var matchPredicate = new IsMatchStringPredicate(value, false);
+        AppendPredicate(matchPredicate);
+        return this;
+    }
+    
+    public InputParserPredicateBuilder Equals(string value, bool ignoreCase)
+    {
+        var matchPredicate = new IsMatchStringPredicate(value, ignoreCase);
+        AppendPredicate(matchPredicate);
+        return this;
+    }
+    
+    public InputParserPredicateBuilder Equals(string value, Repetition repetition)
+    {
+        var matchPredicate = new IsMatchStringPredicate(value, false);
+        var repeatPredicate = new RepeatPredicate(matchPredicate, repetition);
+        AppendPredicate(repeatPredicate);
+        return this;
+    }
+    
+    public InputParserPredicateBuilder Equals(string value, bool ignoreCase, Repetition repetition)
+    {
+        var matchPredicate = new IsMatchStringPredicate(value, ignoreCase);
+        var repeatPredicate = new RepeatPredicate(matchPredicate, repetition);
+        AppendPredicate(repeatPredicate);
         return this;
     }
     
@@ -258,6 +363,34 @@ public class InputParserPredicateBuilder
         var isMatchPredicate = new IsMatchCharacterRange(lowerBound, upperBound);
         var repeatPredicate = new RepeatPredicate(isMatchPredicate, repetition);
         AppendPredicate(repeatPredicate);
+        return this;
+    }
+
+    public InputParserPredicateBuilder EqualsAny(params string[] values)
+    {
+        var matchPredicate = new IsMatchingAnyStringPredicate(values, false);
+        AppendPredicate(matchPredicate);
+        return this;
+    }
+    public InputParserPredicateBuilder EqualsAny(IReadOnlyCollection<string> values)
+    {
+        var matchPredicate = new IsMatchingAnyStringPredicate(values, false);
+        AppendPredicate(matchPredicate);
+        return this;
+    }
+    
+    public InputParserPredicateBuilder EqualsAny(IReadOnlyCollection<string> values, bool ignoreCase)
+    {
+        var matchPredicate = new IsMatchingAnyStringPredicate(values, ignoreCase);
+        AppendPredicate(matchPredicate);
+        return this;
+    }
+    
+    public InputParserPredicateBuilder EqualsAny(IReadOnlyCollection<string> values, bool ignoreCase, Repetition repetition)
+    {
+        var matchPredicate = new IsMatchingAnyStringPredicate(values, ignoreCase);
+        var repetitionPredicate = new RepeatPredicate(matchPredicate, repetition);
+        AppendPredicate(repetitionPredicate);
         return this;
     }
 

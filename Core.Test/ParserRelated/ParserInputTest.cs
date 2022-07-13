@@ -353,4 +353,60 @@ public class ParserInputTest
         
         Assert.True(input.TryReadChar(out var chLt) && chLt == '<');
     }
+
+    [Fact]
+    public void TestEqualsString()
+    {
+        var input = ParserInput.CreateFromString("abc123");
+
+        var predicate = new InputParserPredicateBuilder()
+            .Equals("abc", false)
+            .Done();
+        
+        Assert.True(input.TryPeekMatch(predicate, out var peekedString));
+        Assert.Equal("abc", peekedString);
+        Assert.Equal(0, input.Offset);
+        Assert.Equal(3, input.LookaheadCount);
+
+        var predicate2 = new InputParserPredicateBuilder()
+            .Equals("123")
+            .Done();
+        
+        Assert.True(input.TryPeekMatch(predicate2, out var peekedString2));
+        Assert.Equal("123", peekedString2);
+        Assert.Equal(0, input.Offset);
+        Assert.Equal(6, input.LookaheadCount);
+    }
+
+    [Fact]
+    public void TestEqualString2()
+    {
+        var input = ParserInput.CreateFromString("aBc123");
+
+        var predicate = new InputParserPredicateBuilder()
+            .Equals("abc", true)
+            .Equals("123")
+            .Done();
+        
+        Assert.True(input.TryPeekMatch(predicate, out var peekedString));
+        Assert.Equal("aBc123", peekedString);
+        Assert.Equal(0, input.Offset);
+        Assert.Equal(6, input.LookaheadCount);
+    }
+    
+    [Fact]
+    public void TestEqualAnyString()
+    {
+        var input = ParserInput.CreateFromString("if (a == b)");
+
+        var keywords = new [] {"new", "or", "if"};
+        var predicate = new InputParserPredicateBuilder()
+            .EqualsAny(keywords)
+            .Done();
+        
+        Assert.True(input.TryPeekMatch(predicate, out var peekedString));
+        Assert.Equal("if", peekedString);
+        Assert.Equal(0, input.Offset);
+        Assert.Equal(2, input.LookaheadCount);
+    }
 }
