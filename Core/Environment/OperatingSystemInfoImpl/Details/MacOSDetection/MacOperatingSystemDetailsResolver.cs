@@ -19,6 +19,8 @@ public class MacOperatingSystemDetailsResolver : IOperatingSystemDetailsResolver
     public string ResolveName()
     {
         var version = _swVersion.Value.ProductVersion;
+        if (version.StartsWith("13."))
+            return "macOS Ventura";
         if (version.StartsWith("12."))
             return "macOS Monterey";
         if (version.StartsWith("11."))
