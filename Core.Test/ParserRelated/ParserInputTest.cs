@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using Core.Extensions.ParserRelated;
+﻿using Core.Extensions.ParserRelated;
+using Core.Parser;
 using Core.Parser.Special;
 using Core.Text.Impl;
 using Xunit;
@@ -212,12 +212,12 @@ public class ParserInputTest
     [Fact]
     public void TestTryReadMatchCharacterRange()
     {
-        var predicate = new InputParserPredicateBuilder()
+        var predicate = ParserInput.Predicate()
             .Equals('<')
             .EqualsCharacterRange('a', 'z')
             .EqualsCharacterRange('0', '9')
             .Equals('>')
-            .Done();
+            .Predicate;
         
 
         var input = ParserInput.CreateFromString("<h1>");
@@ -234,9 +234,9 @@ public class ParserInputTest
         var input = ParserInput.CreateFromString("AAA_BBB");
         
         // Predicate that matches: A+
-        var predicate = new InputParserPredicateBuilder()
+        var predicate = ParserInput.Predicate()
             .Equals('A', Repetition.OneOrMore)
-            .Done();
+            .Predicate;
         
         Assert.True(input.TryPeekMatch(predicate, out var peeked));
         Assert.Equal("AAA", peeked);
@@ -263,11 +263,11 @@ public class ParserInputTest
         var input = ParserInput.CreateFromString("AAA_BBB");
         
         // Predicate that matches the RegEx: A+_B{3}
-        var predicate = new InputParserPredicateBuilder()
+        var predicate = ParserInput.Predicate()
             .Equals('A', Repetition.OneOrMore)
             .Equals('_')
             .Equals('B', Repetition.Exact(3))
-            .Done();
+            .Predicate;
         
         Assert.True(input.TryPeekMatch(predicate, out var peeked));
         Assert.Equal("AAA_BBB", peeked);
@@ -280,9 +280,9 @@ public class ParserInputTest
     {
         var input = ParserInput.CreateFromString("123_AAA_BBB");
 
-        var skipPredicate = new InputParserPredicateBuilder()
-            .Equals(new [] {'1', '2', '3', '_'}, Repetition.OneOrMore)
-            .Done();
+        var skipPredicate = ParserInput.Predicate()
+            .Equals(new[] {'1', '2', '3', '_'}, Repetition.OneOrMore)
+            .Predicate;
             
         Assert.True(input.TryPeekMatch(skipPredicate, out var prefix));
         Assert.Equal("123_", prefix);
@@ -294,11 +294,11 @@ public class ParserInputTest
         Assert.Equal(0, input.LookaheadCount);
         
         // Predicate that matches the RegEx: A+_B{3}
-        var predicate = new InputParserPredicateBuilder()
+        var predicate = ParserInput.Predicate()
             .Equals('A', Repetition.OneOrMore)
             .Equals('_')
             .Equals('B', Repetition.Exact(3))
-            .Done();
+            .Predicate;
         
         Assert.True(input.TryPeekMatch(predicate, out var peeked));
         Assert.Equal("AAA_BBB", peeked);
@@ -311,12 +311,12 @@ public class ParserInputTest
     {
         var input = ParserInput.CreateFromString("@<h1>Headline");
 
-        var predicate = new InputParserPredicateBuilder()
+        var predicate = ParserInput.Predicate()
             .Assert(block => block.Equals('<'))
             .EqualsCharacterRange('a', 'z')
             .EqualsCharacterRange('0', '9')
             .Assert(block => block.Equals('>'))
-            .Done();
+            .Predicate;
         
         Assert.True(input.TryReadChar(out var chAt) && chAt == '@');
         Assert.Equal(1, input.Offset);
@@ -335,19 +335,19 @@ public class ParserInputTest
     {
         var input = ParserInput.CreateFromString("@<H1>Headline");
 
-        var predicate = new InputParserPredicateBuilder()
+        var predicate = ParserInput.Predicate()
             .Assert(block => block.Equals('<'))
             .EqualsCharacterRange('a', 'z')
             .EqualsCharacterRange('0', '9')
             .Assert(block => block.Equals('>'))
-            .Done();
+            .Predicate;
         
         Assert.True(input.TryReadChar(out var chAt) && chAt == '@');
         Assert.Equal(1, input.Offset);
         Assert.Equal(0, input.LookaheadCount);
         
         // This Try Read must fail, because the H1 tag does not match because it is uppercase
-        Assert.False(input.TryReadMatch(predicate, out var matchingString));
+        Assert.False(input.TryReadMatch(predicate, out _));
         Assert.Equal(1, input.Offset);
         Assert.Equal(0, input.LookaheadCount);
         
@@ -359,18 +359,18 @@ public class ParserInputTest
     {
         var input = ParserInput.CreateFromString("abc123");
 
-        var predicate = new InputParserPredicateBuilder()
+        var predicate = ParserInput.Predicate()
             .Equals("abc", false)
-            .Done();
+            .Predicate;
         
         Assert.True(input.TryPeekMatch(predicate, out var peekedString));
         Assert.Equal("abc", peekedString);
         Assert.Equal(0, input.Offset);
         Assert.Equal(3, input.LookaheadCount);
 
-        var predicate2 = new InputParserPredicateBuilder()
+        var predicate2 = ParserInput.Predicate()
             .Equals("123")
-            .Done();
+            .Predicate;
         
         Assert.True(input.TryPeekMatch(predicate2, out var peekedString2));
         Assert.Equal("123", peekedString2);
@@ -383,10 +383,10 @@ public class ParserInputTest
     {
         var input = ParserInput.CreateFromString("aBc123");
 
-        var predicate = new InputParserPredicateBuilder()
+        var predicate = ParserInput.Predicate()
             .Equals("abc", true)
             .Equals("123")
-            .Done();
+            .Predicate;
         
         Assert.True(input.TryPeekMatch(predicate, out var peekedString));
         Assert.Equal("aBc123", peekedString);
@@ -400,13 +400,67 @@ public class ParserInputTest
         var input = ParserInput.CreateFromString("if (a == b)");
 
         var keywords = new [] {"new", "or", "if"};
-        var predicate = new InputParserPredicateBuilder()
+        var predicate = ParserInput.Predicate()
             .EqualsAny(keywords)
-            .Done();
+            .Predicate;
         
         Assert.True(input.TryPeekMatch(predicate, out var peekedString));
         Assert.Equal("if", peekedString);
         Assert.Equal(0, input.Offset);
         Assert.Equal(2, input.LookaheadCount);
+    }
+
+    [Fact]
+    public void TestLogicalOr()
+    {
+        // Regex: (John|Peter)
+        var predicate = ParserInput.Predicate()
+            .EqualsAny((option1, option2) =>
+            {
+                option1.Equals("John");
+                option2
+                    .Equals('P')
+                    .Equals('e')
+                    .Equals('t')
+                    .Equals('e')
+                    .Equals('r');
+            })
+            .Predicate;
+
+        var input1 = ParserInput.CreateFromString("John");
+        var input2 = ParserInput.CreateFromString("Peter");
+        var input3 = ParserInput.CreateFromString("Thomas");
+        
+        Assert.True(input1.TryReadMatch(predicate, out var john));
+        Assert.Equal("John", john);
+        
+        Assert.True(input2.TryPeekMatch(predicate, out var peter));
+        Assert.Equal("Peter", peter);
+        
+        Assert.False(input3.TryPeekMatch(predicate, out _));
+    }
+
+    [Fact]
+    public void EscapedStringTest()
+    {
+        // predicate for a string with possibility to escape " with \" to prevent closing the string
+        var predicate = ParserInput.Predicate()
+            .Equals('"')
+            .EqualsAny((option1, option2) =>
+            {
+                option1.Equals("\\\"");
+                option2.EqualsNot('"');
+            }, Repetition.ZeroOrMore)
+            .Equals('"')
+            .Predicate;
+
+        var input1 = ParserInput.CreateFromString("\"Hello\"");
+        Assert.True(input1.TryReadMatch(predicate, out var normalString));
+        Assert.Equal("\"Hello\"", normalString);
+        
+        var input2 = ParserInput.CreateFromString("\"Hello \\\"World\\\"\"");
+        Assert.True(input2.TryReadMatch(predicate, out var escapedString));
+        Assert.Equal("\"Hello \\\"World\\\"\"", escapedString);
+
     }
 }

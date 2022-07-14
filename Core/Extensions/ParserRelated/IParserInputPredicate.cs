@@ -6,17 +6,6 @@ using Core.Parser;
 
 namespace Core.Extensions.ParserRelated;
 
-public interface IParserInputPredicate
-{
-    /// <summary>
-    /// Executes the given predicate and returns true on success otherwise nothing happens.
-    /// </summary>
-    /// <param name="input"></param>
-    /// <param name="writer"></param>
-    /// <returns></returns>
-    bool IsMatch(IParserInput input, TextWriter writer);
-}
-
 internal static class InputPredicateUtil
 {
     public static bool TryPeekOnMatch(IParserInput input, TextWriter writer, Func<char, bool> matchPredicate)
@@ -32,10 +21,7 @@ internal static class InputPredicateUtil
         writer.Write(peekedCharacter);
         return true;
     }
-
 }
-
-
 
 /// <summary>
 /// Assertion Predicate that assert that the given predicate is a match WITHOUT writing it contents to the given writer.
@@ -45,7 +31,6 @@ internal class AssertionPredicate : IParserInputPredicate
     private readonly IParserInputPredicate _predicate;
     private readonly TextWriter _nullWriter = new StreamWriter(Stream.Null);
     
-
     public AssertionPredicate(IParserInputPredicate predicate)
     {
         _predicate = predicate;
@@ -54,6 +39,25 @@ internal class AssertionPredicate : IParserInputPredicate
     public bool IsMatch(IParserInput input, TextWriter writer)
     {
         return _predicate.IsMatch(input, _nullWriter);
+    }
+}
+
+internal class LogicalOrPredicate : IParserInputPredicate
+{
+    private readonly IParserInputPredicate[] _predicates;
+
+    public LogicalOrPredicate(params IParserInputPredicate[] predicates)
+    {
+        _predicates = predicates;
+    }
+
+    public bool IsMatch(IParserInput input, TextWriter writer)
+    {
+        foreach (var predicate in _predicates)
+            if (predicate.IsMatch(input, writer))
+                return true;
+
+        return false;
     }
 }
 
@@ -97,6 +101,24 @@ internal class IsMatchPredicate : IParserInputPredicate
             input, 
             writer, 
             matchPredicate: ch => _matchSet.Contains(ch));
+    }
+}
+
+internal class IsNoMatchPredicate : IParserInputPredicate
+{
+    private readonly SortedSet<char> _notMatchSet;
+    
+    public IsNoMatchPredicate(params char[] chars)
+    {
+        _notMatchSet = new SortedSet<char>(chars);
+    }
+    
+    public bool IsMatch(IParserInput input, TextWriter writer)
+    {
+        return InputPredicateUtil.TryPeekOnMatch(
+            input, 
+            writer, 
+            matchPredicate: ch => !_notMatchSet.Contains(ch));
     }
 }
 
@@ -238,8 +260,6 @@ internal class RepeatPredicate : IParserInputPredicate
     }
 }
 
-
-
 internal class PredicateConcatenation : IParserInputPredicate
 {
     private readonly List<IParserInputPredicate> _predicates = new();
@@ -284,42 +304,42 @@ internal class Predicate : IParserInputPredicate
     private Predicate() { }
 }
 
-public class InputParserPredicateBuilder
+public class InputPredicateBuilder : IPredicateBuilder
 {
-    private IParserInputPredicate _predicate = Predicate.Empty;
+    public IParserInputPredicate Predicate { get; private set; } = Core.Extensions.ParserRelated.Predicate.Empty;
 
-    public InputParserPredicateBuilder Assert(Action<InputParserPredicateBuilder> block)
+    public IPredicateBuilder Assert(Action<IPredicateBuilder> block)
     {
-        var subBuilder = new InputParserPredicateBuilder();
+        var subBuilder = new InputPredicateBuilder();
         block(subBuilder);
-        var blockPredicate = subBuilder._predicate;
+        var blockPredicate = subBuilder.Predicate;
         var assertionPredicate = new AssertionPredicate(blockPredicate);
         AppendPredicate(assertionPredicate);
         return this;
     }
     
-    public InputParserPredicateBuilder Equals(char character)
+    public IPredicateBuilder Equals(char character)
     {
         var isMatchPredicate = new IsMatchPredicate(character);
         AppendPredicate(isMatchPredicate);
         return this;
     }
 
-    public InputParserPredicateBuilder Equals(string value)
+    public IPredicateBuilder Equals(string value)
     {
         var matchPredicate = new IsMatchStringPredicate(value, false);
         AppendPredicate(matchPredicate);
         return this;
     }
     
-    public InputParserPredicateBuilder Equals(string value, bool ignoreCase)
+    public IPredicateBuilder Equals(string value, bool ignoreCase)
     {
         var matchPredicate = new IsMatchStringPredicate(value, ignoreCase);
         AppendPredicate(matchPredicate);
         return this;
     }
     
-    public InputParserPredicateBuilder Equals(string value, Repetition repetition)
+    public IPredicateBuilder Equals(string value, Repetition repetition)
     {
         var matchPredicate = new IsMatchStringPredicate(value, false);
         var repeatPredicate = new RepeatPredicate(matchPredicate, repetition);
@@ -327,7 +347,7 @@ public class InputParserPredicateBuilder
         return this;
     }
     
-    public InputParserPredicateBuilder Equals(string value, bool ignoreCase, Repetition repetition)
+    public IPredicateBuilder Equals(string value, bool ignoreCase, Repetition repetition)
     {
         var matchPredicate = new IsMatchStringPredicate(value, ignoreCase);
         var repeatPredicate = new RepeatPredicate(matchPredicate, repetition);
@@ -335,7 +355,7 @@ public class InputParserPredicateBuilder
         return this;
     }
     
-    public InputParserPredicateBuilder Equals(char character, Repetition repetition)
+    public IPredicateBuilder Equals(char character, Repetition repetition)
     {
         var isMatchPredicate = new IsMatchPredicate(character);
         var repeatPredicate = new RepeatPredicate(isMatchPredicate, repetition);
@@ -343,22 +363,45 @@ public class InputParserPredicateBuilder
         return this;
     }
 
-    public InputParserPredicateBuilder Equals(char[] characterSet, Repetition repetition)
+    public IPredicateBuilder Equals(char[] characterSet, Repetition repetition)
     {
         var isMatchPredicate = new IsMatchPredicate(characterSet);
         var repeatPredicate = new RepeatPredicate(isMatchPredicate, repetition);
         AppendPredicate(repeatPredicate);
         return this;
     }
-    
-    public InputParserPredicateBuilder EqualsCharacterRange(char lowerBound, char upperBound)
+
+    public IPredicateBuilder EqualsNot(char character)
+    {
+        var noMatchPredicate = new IsNoMatchPredicate(character);
+        AppendPredicate(noMatchPredicate);
+        return this;
+    }
+
+    public IPredicateBuilder EqualsNot(char character, Repetition repetition)
+    {
+        var noMatchPredicate = new IsNoMatchPredicate(character);
+        var repeatPredicate = new RepeatPredicate(noMatchPredicate, repetition);
+        AppendPredicate(repeatPredicate);
+        return this;
+    }
+
+    public IPredicateBuilder EqualsNot(char[] characterSet, Repetition repetition)
+    {
+        var noMatchPredicate = new IsNoMatchPredicate(characterSet);
+        var repeatPredicate = new RepeatPredicate(noMatchPredicate, repetition);
+        AppendPredicate(repeatPredicate);
+        return this;
+    }
+
+    public IPredicateBuilder EqualsCharacterRange(char lowerBound, char upperBound)
     {
         var isMatchPredicate = new IsMatchCharacterRange(lowerBound, upperBound);
         AppendPredicate(isMatchPredicate);
         return this;
     }
     
-    public InputParserPredicateBuilder EqualsCharacterRange(char lowerBound, char upperBound, Repetition repetition)
+    public IPredicateBuilder EqualsCharacterRange(char lowerBound, char upperBound, Repetition repetition)
     {
         var isMatchPredicate = new IsMatchCharacterRange(lowerBound, upperBound);
         var repeatPredicate = new RepeatPredicate(isMatchPredicate, repetition);
@@ -366,27 +409,27 @@ public class InputParserPredicateBuilder
         return this;
     }
 
-    public InputParserPredicateBuilder EqualsAny(params string[] values)
+    public IPredicateBuilder EqualsAny(params string[] values)
     {
         var matchPredicate = new IsMatchingAnyStringPredicate(values, false);
         AppendPredicate(matchPredicate);
         return this;
     }
-    public InputParserPredicateBuilder EqualsAny(IReadOnlyCollection<string> values)
+    public IPredicateBuilder EqualsAny(IReadOnlyCollection<string> values)
     {
         var matchPredicate = new IsMatchingAnyStringPredicate(values, false);
         AppendPredicate(matchPredicate);
         return this;
     }
     
-    public InputParserPredicateBuilder EqualsAny(IReadOnlyCollection<string> values, bool ignoreCase)
+    public IPredicateBuilder EqualsAny(IReadOnlyCollection<string> values, bool ignoreCase)
     {
         var matchPredicate = new IsMatchingAnyStringPredicate(values, ignoreCase);
         AppendPredicate(matchPredicate);
         return this;
     }
     
-    public InputParserPredicateBuilder EqualsAny(IReadOnlyCollection<string> values, bool ignoreCase, Repetition repetition)
+    public IPredicateBuilder EqualsAny(IReadOnlyCollection<string> values, bool ignoreCase, Repetition repetition)
     {
         var matchPredicate = new IsMatchingAnyStringPredicate(values, ignoreCase);
         var repetitionPredicate = new RepeatPredicate(matchPredicate, repetition);
@@ -394,81 +437,148 @@ public class InputParserPredicateBuilder
         return this;
     }
 
-    public IParserInputPredicate Done()
+    public IPredicateBuilder EqualsAny(
+        Action<IPredicateBuilder, IPredicateBuilder> logicalOrBuilder)
     {
-        var result = _predicate;
-        _predicate = Predicate.Empty;
-        return result;
+        var builder1 = new InputPredicateBuilder();
+        var builder2 = new InputPredicateBuilder();
+        logicalOrBuilder(builder1, builder2);
+        var predicate1 = builder1.Predicate;
+        var predicate2 = builder2.Predicate;
+        var logicalOrPredicate = new LogicalOrPredicate(predicate1, predicate2);
+        AppendPredicate(logicalOrPredicate);
+        return this;
+    }
+    
+    public IPredicateBuilder EqualsAny(
+        Action<IPredicateBuilder, IPredicateBuilder, IPredicateBuilder> logicalOrBuilder)
+    {
+        var builder1 = new InputPredicateBuilder();
+        var builder2 = new InputPredicateBuilder();
+        var builder3 = new InputPredicateBuilder();
+        logicalOrBuilder(builder1, builder2, builder3);
+        var predicate1 = builder1.Predicate;
+        var predicate2 = builder2.Predicate;
+        var predicate3 = builder3.Predicate;
+        var logicalOrPredicate = new LogicalOrPredicate(predicate1, predicate2, predicate3);
+        AppendPredicate(logicalOrPredicate);
+        return this;
+    }
+    
+    public IPredicateBuilder EqualsAny(
+        Action<IPredicateBuilder, IPredicateBuilder, IPredicateBuilder, IPredicateBuilder> logicalOrBuilder)
+    {
+        var builder1 = new InputPredicateBuilder();
+        var builder2 = new InputPredicateBuilder();
+        var builder3 = new InputPredicateBuilder();
+        var builder4 = new InputPredicateBuilder();
+        logicalOrBuilder(builder1, builder2, builder3, builder4);
+        var predicate1 = builder1.Predicate;
+        var predicate2 = builder2.Predicate;
+        var predicate3 = builder3.Predicate;
+        var predicate4 = builder4.Predicate;
+        var logicalOrPredicate = new LogicalOrPredicate(predicate1, predicate2, predicate3, predicate4);
+        AppendPredicate(logicalOrPredicate);
+        return this;
+    }
+    
+    public IPredicateBuilder EqualsAny(
+        Action<IPredicateBuilder, IPredicateBuilder, IPredicateBuilder, IPredicateBuilder, IPredicateBuilder> logicalOrBuilder)
+    {
+        var builder1 = new InputPredicateBuilder();
+        var builder2 = new InputPredicateBuilder();
+        var builder3 = new InputPredicateBuilder();
+        var builder4 = new InputPredicateBuilder();
+        var builder5 = new InputPredicateBuilder();
+        logicalOrBuilder(builder1, builder2, builder3, builder4, builder5);
+        var predicate1 = builder1.Predicate;
+        var predicate2 = builder2.Predicate;
+        var predicate3 = builder3.Predicate;
+        var predicate4 = builder4.Predicate;
+        var predicate5 = builder4.Predicate;
+        var logicalOrPredicate = new LogicalOrPredicate(predicate1, predicate2, predicate3, predicate4, predicate5);
+        AppendPredicate(logicalOrPredicate);
+        return this;
+    }
+
+    public IPredicateBuilder EqualsAny(Action<IPredicateBuilder, IPredicateBuilder> logicalOrBuilder, Repetition repetition)
+    {
+        var builder1 = new InputPredicateBuilder();
+        var builder2 = new InputPredicateBuilder();
+        logicalOrBuilder(builder1, builder2);
+        var predicate1 = builder1.Predicate;
+        var predicate2 = builder2.Predicate;
+        var logicalOrPredicate = new LogicalOrPredicate(predicate1, predicate2);
+        var repetitionPredicate = new RepeatPredicate(logicalOrPredicate, repetition);
+        AppendPredicate(repetitionPredicate);
+        return this;
+    }
+
+    public IPredicateBuilder EqualsAny(Action<IPredicateBuilder, IPredicateBuilder, IPredicateBuilder> logicalOrBuilder, Repetition repetition)
+    {
+        var builder1 = new InputPredicateBuilder();
+        var builder2 = new InputPredicateBuilder();
+        var builder3 = new InputPredicateBuilder();
+        logicalOrBuilder(builder1, builder2, builder3);
+        var predicate1 = builder1.Predicate;
+        var predicate2 = builder2.Predicate;
+        var predicate3 = builder3.Predicate;
+        var logicalOrPredicate = new LogicalOrPredicate(predicate1, predicate2, predicate3);
+        var repetitionPredicate = new RepeatPredicate(logicalOrPredicate, repetition);
+        AppendPredicate(repetitionPredicate);
+        return this;
+    }
+
+    public IPredicateBuilder EqualsAny(Action<IPredicateBuilder, IPredicateBuilder, IPredicateBuilder, IPredicateBuilder> logicalOrBuilder, Repetition repetition)
+    {
+        var builder1 = new InputPredicateBuilder();
+        var builder2 = new InputPredicateBuilder();
+        var builder3 = new InputPredicateBuilder();
+        var builder4 = new InputPredicateBuilder();
+        logicalOrBuilder(builder1, builder2, builder3, builder4);
+        var predicate1 = builder1.Predicate;
+        var predicate2 = builder2.Predicate;
+        var predicate3 = builder3.Predicate;
+        var predicate4 = builder4.Predicate;
+        var logicalOrPredicate = new LogicalOrPredicate(predicate1, predicate2, predicate3, predicate4);
+        var repetitionPredicate = new RepeatPredicate(logicalOrPredicate, repetition);
+        AppendPredicate(repetitionPredicate);
+        return this;
+    }
+
+    public IPredicateBuilder EqualsAny(Action<IPredicateBuilder, IPredicateBuilder, IPredicateBuilder, IPredicateBuilder, IPredicateBuilder> logicalOrBuilder, Repetition repetition)
+    {
+        var builder1 = new InputPredicateBuilder();
+        var builder2 = new InputPredicateBuilder();
+        var builder3 = new InputPredicateBuilder();
+        var builder4 = new InputPredicateBuilder();
+        var builder5 = new InputPredicateBuilder();
+        logicalOrBuilder(builder1, builder2, builder3, builder4, builder5);
+        var predicate1 = builder1.Predicate;
+        var predicate2 = builder2.Predicate;
+        var predicate3 = builder3.Predicate;
+        var predicate4 = builder4.Predicate;
+        var predicate5 = builder4.Predicate;
+        var logicalOrPredicate = new LogicalOrPredicate(predicate1, predicate2, predicate3, predicate4, predicate5);
+        var repetitionPredicate = new RepeatPredicate(logicalOrPredicate, repetition);
+        AppendPredicate(repetitionPredicate);
+        return this;
     }
 
     private void AppendPredicate(IParserInputPredicate predicate)
     {
-        if (_predicate is PredicateConcatenation list)
+        if (Predicate is PredicateConcatenation list)
         {
             list.Add(predicate);
         }
-        else if (_predicate == Predicate.Empty)
+        else if (Predicate == Core.Extensions.ParserRelated.Predicate.Empty)
         {
-            _predicate = predicate;
+            Predicate = predicate;
         }
         else
         {
-            var temp = new PredicateConcatenation(_predicate, predicate);
-            _predicate = temp;
+            var temp = new PredicateConcatenation(Predicate, predicate);
+            Predicate = temp;
         }
-    }
-}
-
-public struct Repetition
-{
-    public int Minimum { get; private set; }
-    public int Maximum { get; private set; }
-
-    public static Repetition ZeroOrMore = new Repetition
-    {
-        Minimum = 0,
-        Maximum = -1
-    };
-
-    public static Repetition ZeroOrOne = new Repetition
-    {
-        Minimum = 0,
-        Maximum = 1
-    };
-
-    public static Repetition OneOrMore = new Repetition
-    {
-        Minimum = 1,
-        Maximum = -1
-    };
-
-    public static Repetition Exact(int count)
-    {
-        return new Repetition
-        {
-            Minimum = count,
-            Maximum = count
-        };
-    }
-
-    public static Repetition Range(int minimum, int maximum)
-    {
-        return new Repetition
-        {
-            Minimum = minimum,
-            Maximum = maximum
-        };
-    }
-
-}
-
-public class Foo
-{
-
-    private Foo()
-    {
-        var builder = new InputParserPredicateBuilder();
-        builder
-            .Equals('1', Repetition.OneOrMore);
     }
 }

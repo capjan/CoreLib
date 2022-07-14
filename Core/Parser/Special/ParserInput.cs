@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Core.Extensions.ParserRelated;
 using Core.Extensions.TextRelated;
 using Core.Text;
 using Core.Text.Impl;
@@ -21,6 +22,12 @@ public class ParserInput : IParserInput
         var sr = new StringReader(value);
         return new ParserInput(sr);
     }
+
+    public static IPredicateBuilder Predicate()
+    {
+        return new InputPredicateBuilder();
+    }
+    
 
     /// <summary>
     /// Creates a new instance

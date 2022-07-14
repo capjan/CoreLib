@@ -2,14 +2,13 @@
 
 [Home](../README.md) / [Parser](./README.md)
 
-It is easier to write a parser by hand when reading from a text source is 
-already cleanly abstracted.
+The Parser Input provides an abstraction of a stream based text input with the possibility to write predicate based matches. 
 
-The interface **IParserInput** exists exactly for this purpose.
+That makes it much easier to write a parser by hand.
 
 ## Features
-* wraps a TextReader stream as input source, so it's a very flexible input.
-* multiple char lookahead. (implemented internally - streams don't need to be seekable)
+* wraps a TextReader stream as input source, so it's a very flexible input that welcomes large files.
+* multiple character lookahead. (implemented by internal cache - streams don't need to be seekable)
 * Provides offset (char index) and text position (line and column number)
 
 ## Interface
@@ -60,8 +59,6 @@ public interface IParserInput : IDisposable
 ## Example
 ```csharp
 const string source = "abcdef 12345";
-using (var input = ParserInput.CreateFromString(source))
-{
-    // use the input
-}
+using var input = ParserInput.CreateFromString(source);
+// use the input
 ```
