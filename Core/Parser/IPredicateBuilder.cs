@@ -12,6 +12,7 @@ public interface IPredicateBuilder
     // char / char sets
     IPredicateBuilder Equals(char character);
     IPredicateBuilder Equals(char character, Repetition repetition);
+    IPredicateBuilder Equals(char[] characterSet);
     IPredicateBuilder Equals(char[] characterSet, Repetition repetition);
     
     // string
@@ -23,6 +24,7 @@ public interface IPredicateBuilder
     // not char / not char set
     IPredicateBuilder EqualsNot(char character);
     IPredicateBuilder EqualsNot(char character, Repetition repetition);
+    IPredicateBuilder EqualsNot(char[] characterSet);
     IPredicateBuilder EqualsNot(char[] characterSet, Repetition repetition);
     IPredicateBuilder EqualsCharacterRange(char lowerBound, char upperBound);
     IPredicateBuilder EqualsCharacterRange(char lowerBound, char upperBound, Repetition repetition);

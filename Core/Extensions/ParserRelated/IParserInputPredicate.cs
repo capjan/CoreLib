@@ -363,6 +363,13 @@ public class InputPredicateBuilder : IPredicateBuilder
         return this;
     }
 
+    public IPredicateBuilder Equals(char[] characterSet)
+    {
+        var isMatchPredicate = new IsMatchPredicate(characterSet);
+        AppendPredicate(isMatchPredicate);
+        return this;
+    }
+
     public IPredicateBuilder Equals(char[] characterSet, Repetition repetition)
     {
         var isMatchPredicate = new IsMatchPredicate(characterSet);
@@ -383,6 +390,13 @@ public class InputPredicateBuilder : IPredicateBuilder
         var noMatchPredicate = new IsNoMatchPredicate(character);
         var repeatPredicate = new RepeatPredicate(noMatchPredicate, repetition);
         AppendPredicate(repeatPredicate);
+        return this;
+    }
+
+    public IPredicateBuilder EqualsNot(char[] characterSet)
+    {
+        var noMatchPredicate = new IsNoMatchPredicate(characterSet);
+        AppendPredicate(noMatchPredicate);
         return this;
     }
 
