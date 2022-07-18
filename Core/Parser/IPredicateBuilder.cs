@@ -33,6 +33,14 @@ public interface IPredicateBuilder
     IPredicateBuilder EqualsAny(IReadOnlyCollection<string> values, bool ignoreCase);
     IPredicateBuilder EqualsAny(IReadOnlyCollection<string> values, bool ignoreCase, Repetition repetition);
 
+    // Word Boundary
+    /// <summary>
+    /// Matches if the input stream is on a word boundary (last char is alphanumeric and the next is not or otherwise)
+    /// </summary>
+    /// <returns></returns>
+    IPredicateBuilder EqualsWordBoundary();
+
+    // logical or
     IPredicateBuilder EqualsAny(
         Action<IPredicateBuilder, IPredicateBuilder> logicalOrBuilder);
 

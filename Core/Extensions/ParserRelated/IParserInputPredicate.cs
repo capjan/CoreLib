@@ -451,6 +451,13 @@ public class InputPredicateBuilder : IPredicateBuilder
         return this;
     }
 
+    public IPredicateBuilder EqualsWordBoundary()
+    {
+        var matchPredicate = new IsMatchingWordBoundaryPredicate();
+        AppendPredicate(matchPredicate);
+        return this;
+    }
+
     public IPredicateBuilder EqualsAny(
         Action<IPredicateBuilder, IPredicateBuilder> logicalOrBuilder)
     {
@@ -594,5 +601,23 @@ public class InputPredicateBuilder : IPredicateBuilder
             var temp = new PredicateConcatenation(Predicate, predicate);
             Predicate = temp;
         }
+    }
+}
+
+public class IsMatchingWordBoundaryPredicate : IParserInputPredicate
+{
+    public bool IsMatch(IParserInput input, TextWriter writer)
+    {
+        if (input.TryPeekChar(out var nextChar))
+            input.LookaheadCount--; // remove the lookahead count, because this match is of zero length
+        else
+            nextChar = default;
+        
+        var isLastCharAlphanumeric = char.IsLetterOrDigit(input.LastCharacter);
+        var isNextCharAlphanumeric = char.IsLetterOrDigit(nextChar);
+
+        var differentCase1 = isLastCharAlphanumeric && !isNextCharAlphanumeric;
+        var differentCase2 = !isLastCharAlphanumeric && isNextCharAlphanumeric; 
+        return differentCase1 || differentCase2;
     }
 }
