@@ -1,4 +1,5 @@
-﻿using Core.Extensions.ParserRelated;
+﻿using System.IO;
+using Core.Extensions.ParserRelated;
 using Core.Parser;
 using Core.Parser.Special;
 using Core.Text.Impl;
@@ -57,6 +58,48 @@ public class ParserInputTest
         Assert.Equal(3, input.TextPosition.ColumnNumber);
         Assert.Equal(0, input.LookaheadCount);
         Assert.Equal(2, input.Offset);
+    }
+
+    [Fact]
+    public void LastPeekedCharacterTest()
+    {
+        var input = ParserInput.CreateFromString("ABCDEF");
+        Assert.Equal( default, input.LastCharacter);
+        Assert.Equal(0, input.Offset);
+        
+        Assert.True(input.TryPeekChar(out var chA));
+        Assert.Equal('A', chA);
+        Assert.Equal('A', input.LastCharacter);
+        Assert.Equal(0, input.Offset);
+        
+        Assert.True(input.TryPeekChar(out var chB));
+        Assert.Equal('B', chB);
+        Assert.Equal('B', input.LastCharacter);
+        Assert.Equal(0, input.Offset);
+
+        input.LookaheadCount = 0;
+        Assert.Equal(default, input.LastCharacter);
+        Assert.Equal(0, input.Offset);
+
+        input.LookaheadCount = 1;
+        Assert.Equal('A', input.LastCharacter);
+        Assert.Equal(0, input.Offset);
+        
+        input.LookaheadCount = 2;
+        Assert.Equal('B', input.LastCharacter);
+        Assert.Equal(0, input.Offset);
+        
+        Assert.True(input.TryReadChar(out var readChA));
+        Assert.Equal('A', readChA);
+        Assert.Equal('A', input.LastCharacter);
+        Assert.Equal(1, input.Offset);
+        Assert.Equal(0, input.LookaheadCount);
+        
+        Assert.True(input.TryReadChar(out var readChB));
+        Assert.Equal('B', readChB);
+        Assert.Equal('B', input.LastCharacter);
+        Assert.Equal(2, input.Offset);
+        Assert.Equal(0, input.LookaheadCount);
     }
 
     [Fact]
@@ -461,6 +504,66 @@ public class ParserInputTest
         var input2 = ParserInput.CreateFromString("\"Hello \\\"World\\\"\"");
         Assert.True(input2.TryReadMatch(predicate, out var escapedString));
         Assert.Equal("\"Hello \\\"World\\\"\"", escapedString);
+    }
 
+    [Fact]
+    public void TestWordBoundaryPredicate1()
+    {
+        var predicate = ParserInput.Predicate()
+            .EqualsWordBoundary()
+            .EqualsAny("var", "do", "for")
+            .EqualsWordBoundary()
+            .Predicate;
+
+        var input = ParserInput.CreateFromString("vardofor var do for");
+        Assert.False(input.TryPeekMatch(predicate, out _));
+
+        // skip 9 characters
+        Assert.Equal(9,input.ReadString(9, out _));
+        
+        // match var
+        Assert.True(input.TryReadMatch(predicate, out var varString));
+        Assert.Equal("var", varString);
+        Assert.True(input.TryReadChar(out _)); // skip whitespace
+        
+        // match do
+        Assert.True(input.TryPeekMatch(predicate, out var doString));
+        Assert.Equal("do", doString);
+        input.ReadLookahead();
+        
+        Assert.True(input.TryReadChar(out _)); // skip whitespace
+        
+        // Match ending for
+        Assert.True(input.TryReadMatch(predicate, out var forString));
+        Assert.Equal("for", forString);
+    }
+    
+    [Theory]
+    [InlineData("", false)]
+    [InlineData("(", false)]
+    [InlineData("A", true)]
+    [InlineData("1", true)]
+    [InlineData("ä", true)]
+    [InlineData("z", true)]
+    public void TestWordBoundaryPredicate2(string inputString, bool expectedMatch)
+    {
+        var predicate = ParserInput.Predicate()
+            .EqualsWordBoundary()
+            .Predicate;
+
+        var input = ParserInput.CreateFromString(inputString);
+        Assert.Equal(expectedMatch, input.TryPeekMatch(predicate, out _));
+        Assert.Equal(0, input.Offset);
+        // lookahead must be still zero, because the word boundary predicate is of zero length
+        Assert.Equal(0, input.LookaheadCount);
+    }
+
+    [Fact]
+    public void CtorTest()
+    {
+        var str = "Hello World";
+        var stringReader = new StringReader(str);
+        var input = new ParserInput(stringReader);
+        Assert.NotNull(input);
     }
 }
