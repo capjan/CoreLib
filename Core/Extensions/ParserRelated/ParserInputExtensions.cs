@@ -135,4 +135,25 @@ public static class ParserInputExtensions
     {
         return TryReadMatch(input, readCharacter => readCharacter == matchCharacter, out _);
     }
+
+    public static int ReadString(this IParserInput input, int charCount, out string value)
+    {
+        var sb = new StringBuilder();
+        var read = 0;
+        while (charCount != 0)
+        {
+            if (!input.TryReadChar(out var nextCh))
+            {
+                value = sb.ToString();
+                return read;
+            }
+
+            sb.Append(nextCh);
+            charCount--;
+            read++;
+        }
+
+        value = sb.ToString();
+        return read;
+    }
 }
