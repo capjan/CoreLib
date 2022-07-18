@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Enums;
 using Core.Text;
 
 namespace Core.Parser;
@@ -15,6 +16,12 @@ public interface IParserInput : IDisposable
     /// </summary>
     ITextPosition TextPosition { get; }
 
+    /// <summary>
+    /// Returns the last character that is peeked or (if the lookahead is 0) the last read character. Throws an Exception if called on offset 0 
+    /// </summary>
+    /// <remarks>This is required to implement the word boundary predicate</remarks>
+    char LastCharacter { get; }
+    
     /// <summary>
     /// Look ahead (in the future) what the next potentially read character is without reading it. A call to this function doesn't change any position information.
     /// </summary>
@@ -40,7 +47,7 @@ public interface IParserInput : IDisposable
     void ClearLookahead();
 
     /// <summary>
-    /// forces the input to read the complete lookahead
+    /// Forces the input to read the complete lookahead
     /// </summary>
     void ReadLookahead();
 }

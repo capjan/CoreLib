@@ -51,6 +51,7 @@ public class ParserInput : IParserInput
             var peekChar = _peekedChars[0];
             _peekedChars.RemoveAt(0);
             ch = peekChar.Value;
+            _lastReadChar = ch;
             UpdateOffsetAndPosition(peekChar);
             LookaheadCount = 0;
             return true;
@@ -60,6 +61,7 @@ public class ParserInput : IParserInput
         {
             var usedInfo = chInfo!;
             ch = usedInfo.Value;
+            _lastReadChar = ch;
             UpdateOffsetAndPosition(usedInfo);
             return true;
         }
@@ -108,6 +110,19 @@ public class ParserInput : IParserInput
 
     public int Offset { get; private set; }
     public ITextPosition TextPosition { get; private set; }
+
+    public char LastCharacter
+    {
+        get
+        {
+            if (Offset == 0 && _lookaheadCount == 0)
+                return default;
+            if (_lookaheadCount == 0)
+                return _lastReadChar;
+            return _peekedChars[_lookaheadCount - 1].Value;
+        }
+    }
+
 
     public bool TryPeekChar(out char ch)
     {
@@ -171,7 +186,8 @@ public class ParserInput : IParserInput
         return charInfo != null;
     }
 
-    private readonly List<CharWithPositionInfo>   _peekedChars = new List<CharWithPositionInfo>();
+    private readonly List<CharWithPositionInfo>   _peekedChars = new();
     private readonly TextReader    _input;
     private readonly char[] _autoSkipChars;
+    private char _lastReadChar;
 }
