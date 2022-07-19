@@ -86,11 +86,6 @@ public class ParserInput : IParserInput
         } 
     }
 
-    public void ClearLookahead()
-    {
-        LookaheadCount = 0;
-    }
-
     public void ReadLookahead()
     {
         if (_lookaheadCount > 0)
@@ -99,7 +94,8 @@ public class ParserInput : IParserInput
             UpdateOffsetAndPosition(info);
             _peekedChars.RemoveRange(0, _lookaheadCount);
         }
-        ClearLookahead();
+
+        LookaheadCount = 0;
     }
 
     private void UpdateOffsetAndPosition(CharWithPositionInfo info)

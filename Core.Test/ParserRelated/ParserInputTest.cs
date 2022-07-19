@@ -128,7 +128,7 @@ public class ParserInputTest
         Assert.Equal(2, input.LookaheadCount);
         Assert.Equal(0, input.Offset);
 
-        input.ClearLookahead();
+        input.LookaheadCount = 0; // clears the current lookahead
         Assert.Equal(0, input.LookaheadCount);
         Assert.Equal(pos1, input.TextPosition);
 

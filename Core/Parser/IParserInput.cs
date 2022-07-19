@@ -41,11 +41,6 @@ public interface IParserInput : IDisposable
     int LookaheadCount { get; set; }
 
     /// <summary>
-    /// Clears the current Lookahead and resets the reading position to the last read text position
-    /// </summary>
-    void ClearLookahead();
-
-    /// <summary>
     /// Forces the input to read the complete lookahead
     /// </summary>
     void ReadLookahead();
