@@ -210,13 +210,14 @@ internal class RepeatPredicate : IParserInputPredicate
 
     public bool IsMatch(IParserInput input, TextWriter writer)
     {
-        if (_repetition.Minimum == 0 && (_repetition.Maximum > 0 || _repetition.Maximum < 0))
+        var isMaxInfinite = _repetition.Maximum < 0;
+        if (_repetition.Minimum == 0 && isMaxInfinite)
             return RepeatZeroOrMoreTimes(input, writer);
-        if (_repetition.Minimum == 1 && (_repetition.Maximum > _repetition.Minimum || _repetition.Maximum < 0))
+        if (_repetition.Minimum == 1 && isMaxInfinite)
             return RepeatOneOrMoreTimes(input, writer);
-        if (_repetition.Minimum > 1 && (_repetition.Maximum >= _repetition.Minimum || _repetition.Maximum < 0))
+        if (_repetition.Minimum >= 0 && _repetition.Maximum >= _repetition.Minimum)
             return RepeatCustom(input, writer);
-        if (_repetition.Minimum == 0 && _repetition.Maximum <= _repetition.Minimum)
+        if (_repetition.Minimum <= 0 && _repetition.Maximum <= _repetition.Minimum)
             return true;
         return false;
     }
