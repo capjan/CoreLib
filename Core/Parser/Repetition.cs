@@ -1,3 +1,5 @@
+using System;
+
 namespace Core.Parser;
 
 public struct Repetition
@@ -25,6 +27,7 @@ public struct Repetition
 
     public static Repetition Exact(int count)
     {
+        if (count <= 0) throw new ArgumentException($"{nameof(count)} ({count}) must be > 0");
         return new Repetition
         {
             Minimum = count,
@@ -34,6 +37,10 @@ public struct Repetition
 
     public static Repetition Range(int minimum, int maximum)
     {
+        if (minimum < 0) throw new ArgumentException($"{nameof(minimum)} ({minimum}) must be >= 0");
+        if (minimum > maximum)
+            throw new ArgumentException($"maximum {maximum} must be greater that minimum ({minimum}) value",
+                nameof(maximum));
         return new Repetition
         {
             Minimum = minimum,
