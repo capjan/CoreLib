@@ -1,5 +1,4 @@
 ﻿using System;
-using Core.Enums;
 using Core.Text;
 
 namespace Core.Parser;
