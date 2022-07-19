@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Core.Extensions.ParserRelated;
 using Core.Parser;
 using Core.Parser.Special;
@@ -565,5 +566,168 @@ public class ParserInputTest
         var stringReader = new StringReader(str);
         var input = new ParserInput(stringReader);
         Assert.NotNull(input);
+    }
+
+    [Theory]
+    [InlineData("1", true)]
+    [InlineData("-1", true)]
+    [InlineData("--1", false)]
+    [InlineData("-", false)]
+    public void TestZeroOrOneQuantifier(string inputString, bool expectedIsMatch)
+    {
+        var zeroOrOne = ParserInput.Predicate()
+            .Equals('-', Repetition.ZeroOrOne)
+            .Equals('1')
+            .Predicate;
+
+        var input = ParserInput.CreateFromString(inputString);
+        Assert.Equal(expectedIsMatch, input.TryPeekMatch(zeroOrOne, out _));
+    }
+    
+    [Theory]
+    [InlineData("1", true)]
+    [InlineData("-1", true)]
+    [InlineData("--1", true)]
+    [InlineData("---1", true)]
+    [InlineData("-----------1", true)]
+    [InlineData("-", false)]
+    public void TestZeroOrMoreQuantifier(string inputString, bool expectedIsMatch)
+    {
+        var zeroOrOne = ParserInput.Predicate()
+            .Equals('-', Repetition.ZeroOrMore)
+            .Equals('1')
+            .Predicate;
+
+        var input = ParserInput.CreateFromString(inputString);
+        Assert.Equal(expectedIsMatch, input.TryPeekMatch(zeroOrOne, out _));
+    }
+    
+    [Theory]
+    [InlineData("1", false)]
+    [InlineData("-1", true)]
+    [InlineData("--1", true)]
+    [InlineData("---1", true)]
+    [InlineData("-----------1", true)]
+    [InlineData("-", false)]
+    public void TestOneOrMoreQuantifier(string inputString, bool expectedIsMatch)
+    {
+        var zeroOrOne = ParserInput.Predicate()
+            .Equals('-', Repetition.OneOrMore)
+            .Equals('1')
+            .Predicate;
+
+        var input = ParserInput.CreateFromString(inputString);
+        Assert.Equal(expectedIsMatch, input.TryPeekMatch(zeroOrOne, out _));
+    }
+    
+    [Theory]
+    [InlineData("-1", 1, true)]
+    [InlineData("--1", 1, false)]
+    [InlineData("1", 1, false)]
+    [InlineData("--1", 2, true)]
+    [InlineData("---1", 2, false)]
+    [InlineData("-1", 2, false)]
+    [InlineData("---1", 3, true)]
+    [InlineData("--1", 3, false)]
+    [InlineData("-1", 3, false)]
+    [InlineData("-----------1", 11, true)]
+    [InlineData("-", 1, false)]
+    public void TestExactQuantifier(string inputString, int quantity, bool expectedIsMatch)
+    {
+        var zeroOrOne = ParserInput.Predicate()
+            .Equals('-', Repetition.Exact(quantity))
+            .Equals('1')
+            .Predicate;
+
+        var input = ParserInput.CreateFromString(inputString);
+        Assert.Equal(expectedIsMatch, input.TryPeekMatch(zeroOrOne, out _));
+    }
+
+    [Fact]
+    public void TestExceptionOnExact0Repetition()
+    {
+        // Exact 0 makes no sense
+        Assert.Throws<ArgumentException>(() =>
+        {
+            Repetition.Exact(count: 0);
+        });
+    }
+    
+    [Fact]
+    public void TestExceptionOnNegativeExactRepetition()
+    {
+        // Exact with negative numbers must fail 
+        Assert.Throws<ArgumentException>(() =>
+        {
+            Repetition.Exact(count: -1);
+        });
+    }
+    
+    [Fact]
+    public void TestExceptionOnNegativeMinimumRangeRepetition()
+    {
+        // Range with negative minimum must fail 
+        Assert.Throws<ArgumentException>(() =>
+        {
+            Repetition.Range(minimum: -1, maximum: 5);
+        });
+    }
+    
+    [Fact]
+    public void TestExceptionOnMaximumLesserThanMinimumRangeRepetition()
+    {
+        // Range with maximum greater than minimum must fail 
+        Assert.Throws<ArgumentException>(() =>
+        {
+            Repetition.Range(minimum: 4, maximum: 3);
+        });
+    }
+    
+    [Theory]
+    [InlineData("1", 0, 1, true)]
+    [InlineData("-1", 0, 1, true)]
+    [InlineData("--1", 0, 1, false)]
+    [InlineData("-1", 1, 2, true)]
+    [InlineData("--1", 1, 2, true)]
+    [InlineData("1", 1, 2, false)]
+    [InlineData("---1", 1, 2, false)]
+    public void TestRangeQuantifier(string inputString, int minimumQuantity, int maximumQuantity, bool expectedIsMatch)
+    {
+        var zeroOrOne = ParserInput.Predicate()
+            .Equals('-', Repetition.Range(minimumQuantity, maximumQuantity))
+            .Equals('1')
+            .Predicate;
+
+        var input = ParserInput.CreateFromString(inputString);
+        Assert.Equal(expectedIsMatch, input.TryPeekMatch(zeroOrOne, out _));
+    }
+    
+    [Theory]
+    [InlineData("123", true, "123")]
+    [InlineData("+123", true, "+123")]
+    [InlineData("-123", true, "-123")]
+    [InlineData("123.567", true, "123.567")]
+    [InlineData("+123.567", true, "+123.567")]
+    [InlineData("-123.567", true, "-123.567")]
+    [InlineData("-123..567", true, "-123")]
+    [InlineData("+-123..567", false, "")]
+    public void OptionalSubPredicateTest(string inputString, bool expectedIsMatch, string expectedRead)
+    {
+        // matches: -1, -1,123, 
+        var floatPredicate = ParserInput.Predicate()
+            .Equals(new [] {'-', '+'}, Repetition.ZeroOrOne)
+            .EqualsWordBoundary()
+            .EqualsCharacterRange('0', '9', Repetition.OneOrMore)
+            .Equals(block => block
+                    .Equals('.')
+                    .EqualsCharacterRange('0', '9', Repetition.OneOrMore)
+                , Repetition.ZeroOrOne)
+            .EqualsWordBoundary()
+            .Predicate;
+
+        var input = ParserInput.CreateFromString(inputString);
+        
+        Assert.Equal(expectedIsMatch, input.TryReadMatch(floatPredicate, out var readMatch));
+        Assert.Equal(expectedRead, readMatch);
     }
 }
