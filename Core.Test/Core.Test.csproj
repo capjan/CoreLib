@@ -25,4 +25,9 @@
     <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Res\Samples\Test.md" />
+    <EmbeddedResource Include="Res\Samples\Test.md" />
+  </ItemGroup>
+
 </Project>
