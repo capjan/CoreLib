@@ -317,7 +317,26 @@ public class InputPredicateBuilder : IPredicateBuilder
         AppendPredicate(assertionPredicate);
         return this;
     }
-    
+
+    public IPredicateBuilder Equals(Action<IPredicateBuilder> block)
+    {
+        var subBuilder = new InputPredicateBuilder();
+        block(subBuilder);
+        var predicate = subBuilder.Predicate;
+        AppendPredicate(predicate);
+        return this;
+    }
+
+    public IPredicateBuilder Equals(Action<IPredicateBuilder> block, Repetition repetition)
+    {
+        var subBuilder = new InputPredicateBuilder();
+        block(subBuilder);
+        var matchPredicate = subBuilder.Predicate;
+        var repetitionPredicate = new RepeatPredicate(matchPredicate, repetition);
+        AppendPredicate(repetitionPredicate);
+        return this;
+    }
+
     public IPredicateBuilder Equals(char character)
     {
         var isMatchPredicate = new IsMatchPredicate(character);

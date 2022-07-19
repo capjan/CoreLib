@@ -9,6 +9,12 @@ public interface IPredicateBuilder
     IParserInputPredicate Predicate { get; }
     IPredicateBuilder Assert(Action<IPredicateBuilder> block);
     
+    // Equals sub predicate that gives us a possibility to use an optional repetition for a concatenated predicate 
+    IPredicateBuilder Equals(
+        Action<IPredicateBuilder> block);
+    IPredicateBuilder Equals(
+        Action<IPredicateBuilder> block, Repetition repetition);
+    
     // char / char sets
     IPredicateBuilder Equals(char character);
     IPredicateBuilder Equals(char character, Repetition repetition);
@@ -26,6 +32,7 @@ public interface IPredicateBuilder
     IPredicateBuilder EqualsNot(char character, Repetition repetition);
     IPredicateBuilder EqualsNot(char[] characterSet);
     IPredicateBuilder EqualsNot(char[] characterSet, Repetition repetition);
+
     IPredicateBuilder EqualsCharacterRange(char lowerBound, char upperBound);
     IPredicateBuilder EqualsCharacterRange(char lowerBound, char upperBound, Repetition repetition);
     IPredicateBuilder EqualsAny(params string[] values);
