@@ -27,6 +27,7 @@ internal class WindowsDetailsResolver : IOperatingSystemDetailsResolver
         var version = _lazyVersion.Value;
         switch (version.Major)
         {
+            case 11: return "Windows 11";
             case 10:
                 return "Windows 10";
             case 6:
