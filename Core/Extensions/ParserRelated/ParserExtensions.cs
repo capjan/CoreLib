@@ -36,7 +36,16 @@ public static class ParserExtensions
         {
             return default;
         }
-        return parser.Parse(input);
+
+        try
+        {
+            return parser.Parse(input);
+        }
+        catch
+        {
+            return default;
+        }
+
     }
 
     public static T Parse<T>(this IParser<T> parser, string input)
