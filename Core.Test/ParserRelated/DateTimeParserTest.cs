@@ -30,4 +30,24 @@ public class DateTimeParserTest
         var result = sut.ParseOrNull(string.Empty);
         Assert.False(result.HasValue);
     }
+
+    [Theory]
+    [InlineData("2022-10-01", true)]
+    [InlineData("2022-10-01 20:10:04", true)]
+    [InlineData("06/11/2022 14:05:23", true)]
+    [InlineData("2020-06-17T01:02:03.123Z", true)]
+    [InlineData("WTF", false)]
+    public void SuccessOrFailureTests(string input, bool expectedSuccess)
+    {
+        var sut = new DateTimeParser();
+        var parsedDateTime = sut.ParseOrNull(input);
+        if (expectedSuccess)
+        {
+            Assert.True(parsedDateTime.HasValue);
+        }
+        else
+        {
+            Assert.False(parsedDateTime.HasValue);
+        }
+    }
 }

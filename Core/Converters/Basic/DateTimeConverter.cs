@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using Core.Extensions.ConverterRelated;
 using Core.Extensions.ParserRelated;
@@ -23,7 +24,9 @@ public class DateTimeConverter: IConverter<string, DateTime>
         //if (string.IsNullOrWhiteSpace(input)) return fallback;
         var m = Regex.Match(input, RegexPattern);
         if (!m.Success)
-            throw new ArgumentException($"value of {nameof(input)} ({input}) can't be converted to DateTime");
+        {
+            return DateTime.Parse(input, CultureInfo.InvariantCulture);
+        }
 
         var year    = _intConverter.ConvertOrFallback(m.Groups["year"].Value, 0);
         var month   = _intConverter.ConvertOrFallback(m.Groups["month"].Value, 0);
