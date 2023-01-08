@@ -1,11 +1,36 @@
 ﻿using System;
 using System.Reflection;
+using System.Security.Cryptography;
 using Core.Extensions.ReflectionRelated;
 
 namespace Core.Reflection;
 
 public class AssemblyInfo : IAssemblyInfo
 {
+    /// <summary>
+    /// Returns the assembly information of the assembly that contains the given type
+    /// </summary>
+    /// <param name="typeValue">type that is located in the assembly of interest</param>
+    /// <returns>The assembly information</returns>
+    public static AssemblyInfo FromType(Type typeValue)
+    {
+        var assembly = typeValue.Assembly;
+        return new AssemblyInfo(assembly);
+    }
+
+    /// <summary>
+    /// Returns the assembly information for the entry assembly.
+    /// </summary>
+    /// <returns>The assembly information for the entry assembly</returns>
+    /// <exception cref="NullReferenceException">thrown when the resolving of the entry assembly failed</exception>
+    public static AssemblyInfo FromEntryAssembly()
+    {
+        var assembly = Assembly.GetEntryAssembly();
+        if (assembly is null)
+            throw new NullReferenceException("found null where an instance for the entry assembly is expected");
+        return new AssemblyInfo(assembly);
+    }
+    
     public AssemblyInfo(Assembly? assembly = default)
     {
         var usedAssembly = assembly ?? Assembly.GetEntryAssembly() ?? throw new InvalidOperationException("failed to initialize a valid assembly");

@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Core.Reflection;
+using Core.Text;
 using Xunit;
 
 namespace Core.Test.ReflectionRelated;
@@ -9,10 +10,10 @@ public class AssemblyInfoTest
     [Fact]
     public void BasicTest()
     {
-        var asmInfo = new AssemblyInfo(Assembly.GetExecutingAssembly());
-        Assert.Contains("Ruhlaender", asmInfo.Company);
-        Assert.Equal("Core.Test", asmInfo.Title);
-        Assert.NotNull(asmInfo.Copyright);
-        Assert.Contains("CoreLib", asmInfo.Product);
+        var info = AssemblyInfo.FromType(typeof(TextUtilities));
+        Assert.Contains("Ruhlaender", info.Company);
+        Assert.Equal("CoreLib", info.Title);
+        Assert.NotNull(info.Copyright);
+        Assert.Equal("CoreLib", info.Product);
     }
 }
