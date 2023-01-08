@@ -7,9 +7,9 @@
     <Authors>Jan Ruhlaender</Authors>
     <Product>CoreLib</Product>
     <Description>Intended to be used in every project to reuse as much code as possible for daily coding tasks.</Description>
-    <Copyright>©2022 Jan Ruhlaender</Copyright>
+    <Copyright>©2019-2023 Jan Ruhlaender</Copyright>
     <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">false</GeneratePackageOnBuild>
-    <Version>11.1.0</Version>
+    <Version>12.0.0</Version>
     <LangVersion>10</LangVersion>
     <PackageProjectUrl>https://github.com/capjan/CoreLib</PackageProjectUrl>
     <AssemblyName>CoreLib</AssemblyName>
