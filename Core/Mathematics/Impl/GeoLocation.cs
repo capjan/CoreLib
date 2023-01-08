@@ -5,6 +5,13 @@ namespace Core.Mathematics.Impl;
 
 public class GeoLocation : IGeoLocation
 {
+    /// <summary>
+    /// Geo Position of Null Island
+    /// </summary>
+    public static readonly IGeoLocation NullIsland = new GeoLocation(0, 0,
+        new GeoCoordinate(GeoCoordinateType.Latitude, false, 0, 0, 0),
+        new GeoCoordinate(GeoCoordinateType.Longitude, false, 0, 0, 0));
+    
     internal GeoLocation(
         double latitude, 
         double longitude,
