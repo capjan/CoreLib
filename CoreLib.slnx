@@ -1,0 +1,23 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="LICENSE" />
+    <File Path="readme.md" />
+  </Folder>
+  <Folder Name="/Solution Items/Docs/">
+    <File Path="Core/Doc/README.md" />
+  </Folder>
+  <Folder Name="/Solution Items/GitHub/">
+    <File Path=".github/dependabot.yml" />
+  </Folder>
+  <Folder Name="/Solution Items/GitHub/Workflows/">
+    <File Path=".github/workflows/dotnet.yml" />
+    <File Path=".github/workflows/nuget_deploy.yml" />
+  </Folder>
+  <Project Path="Core/Core.csproj" />
+  <Project Path="Core.Test/Core.Test.csproj" />
+  <Project Path="SandBox/SandBox.csproj" />
+</Solution>

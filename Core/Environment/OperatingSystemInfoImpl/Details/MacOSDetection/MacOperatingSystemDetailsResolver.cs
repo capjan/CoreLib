@@ -19,6 +19,12 @@ public class MacOperatingSystemDetailsResolver : IOperatingSystemDetailsResolver
     public string ResolveName()
     {
         var version = _swVersion.Value.ProductVersion;
+        if (version.StartsWith("26."))
+            return "macOS Tahoe";
+        if (version.StartsWith("15."))
+            return "macOS Sequoia";
+        if (version.StartsWith("14."))
+            return "macOS Sonoma";
         if (version.StartsWith("13."))
             return "macOS Ventura";
         if (version.StartsWith("12."))
@@ -55,6 +61,9 @@ public class MacOperatingSystemDetailsResolver : IOperatingSystemDetailsResolver
             return "Mac OS X Puma";
         if (version.StartsWith("10.0"))
             return "Mac OS X Cheetah";
-        return string.Empty;
+
+        // unknown (e.g. newer) release: fall back to the product name reported by sw_vers instead of an empty name
+        var productName = _swVersion.Value.ProductName;
+        return string.IsNullOrEmpty(productName) ? "macOS" : productName;
     }
 }

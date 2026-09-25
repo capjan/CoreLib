@@ -4,6 +4,7 @@ using Xunit;
 
 namespace Core.Test.NetRelated;
 
+[Trait("Category", "Network")]
 public class PublicIpResolverTest
 {
     [Fact]

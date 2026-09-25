@@ -1,26 +1,94 @@
-name: .NET 6.0
+name: Build and Test
 
 on:
   pull_request:
   push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
-  build-and-test:
-    runs-on: ubuntu-20.04
+  test:
+    name: test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v2
-
-    - name: Setup .NET 6
-      uses: actions/setup-dotnet@v1
+      uses: actions/checkout@v7
       with:
-        dotnet-version: 6.0.x
+        # MinVer derives the version from git tags, so the full history is required
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v6
+      with:
+        # net8.0 is needed at runtime for the tests, the SDK is pinned by global.json
+        dotnet-version: |
+          8.0.x
+          10.0.x
     - name: .NET info
       run: dotnet --info
     - name: Restore
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build -c Release --no-restore
+
+    # The tests run against net10.0 and net8.0 (see Core.Test.csproj)
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: >
+        dotnet test -c Release --no-build --verbosity normal
+        --filter "Category!=Network"
+        --collect "XPlat Code Coverage" --results-directory TestResults
+
+    # Tests that talk to external services must not break the build when such a service is down.
+    - name: Test (network, informational)
+      continue-on-error: true
+      run: dotnet test -c Release --no-build --verbosity normal --filter "Category=Network"
+
+    - name: Upload coverage
+      if: matrix.os == 'ubuntu-latest'
+      uses: actions/upload-artifact@v7
+      with:
+        name: coverage
+        path: TestResults/**/coverage.cobertura.xml
+        retention-days: 14
+
+  pack:
+    name: pack
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v7
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v6
+      with:
+        dotnet-version: 10.0.x
+
+    # Validates the package metadata on every change, not only at release time
+    - name: Create NuGet Package
+      run: dotnet pack Core/Core.csproj -c Release --output artifacts
+
+    - name: Upload package
+      uses: actions/upload-artifact@v7
+      with:
+        name: nuget-packages
+        path: artifacts/*
+        retention-days: 14

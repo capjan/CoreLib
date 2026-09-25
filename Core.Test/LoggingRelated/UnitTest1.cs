@@ -10,7 +10,7 @@ public class TestLog
     [Fact]
     public void BasicTest()
     {
-        using (var dumper = new DumpLogTarget {Connected = true})
+        using (var dumper = new DumpLogTarget(typeof(TestLog).FullName) {Connected = true})
         {
             var log = Logger.Create<TestLog>();
             Assert.Empty(dumper.EventLog);
@@ -31,7 +31,7 @@ public class TestLog
     [Fact]
     public void MaskTest()
     {
-        using (var dumper = new DumpLogTarget {Connected = true, LogMask = LogLevel.ProductionMask})
+        using (var dumper = new DumpLogTarget(typeof(TestLog).FullName) {Connected = true, LogMask = LogLevel.ProductionMask})
         {
             var log = Logger.Create<TestLog>();
             log.Trace("Hello Trace");

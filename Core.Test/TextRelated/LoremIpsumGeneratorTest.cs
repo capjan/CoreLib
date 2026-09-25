@@ -28,13 +28,17 @@ public class LoremIpsumGeneratorTest
         var random = new DefaultRandom(12345);
         var gen    = new LoremIpsumGenerator(random);
 
+        // UseFile swallows (and logs) exceptions thrown inside the callback, including failed assertions.
+        // Therefore the contents are only captured there and asserted afterwards.
+        var fileContents = string.Empty;
         var tmp = new DefaultTempUtil();
         tmp.UseFile(tempFile =>
         {
             using (var writer = new StreamWriter(tempFile))
                 gen.WriteText(10, writer);
-            var fileContents = File.ReadAllText(tempFile);
-            Assert.Equal("lorem ipsum dolor sit amet stet kasd gubergren tempor ipsum", fileContents);
+            fileContents = File.ReadAllText(tempFile);
         });
+
+        Assert.Equal("lorem ipsum dolor sit amet stet kasd gubergren tempor dolor", fileContents);
     }
 }
