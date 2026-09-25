@@ -4,6 +4,7 @@ using Xunit;
 
 namespace Core.Test.NetRelated;
 
+[Trait("Category", "Network")]
 public class DownloaderTest
 {
     [Fact]
@@ -14,7 +15,7 @@ public class DownloaderTest
         var downloader = new DefaultDownloader();
         if (!downloader.TryDownloadToString(url, out var result))
         {
-            Assert.True(false, $"download failed. url: {url}");
+            Assert.Fail($"download failed. url: {url}");
         }
         Assert.Contains("Example Domain", result);
     }

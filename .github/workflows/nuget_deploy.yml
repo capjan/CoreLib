@@ -5,23 +5,57 @@ on:
     types:
       - published
 
+permissions:
+  contents: read
+
 jobs:
   publish:
     name: build, test, pack & publish
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # required for NuGet trusted publishing (OIDC)
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Setup .NET 6
-        uses: actions/setup-dotnet@v1
+      - uses: actions/checkout@v7
         with:
-          dotnet-version: 6.0.x
+          # MinVer derives the package version from the release tag, so the full history is required
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
 
       - name: Build / Test
-        run: dotnet test -c Release --verbosity quiet
+        run: dotnet test -c Release --verbosity quiet --filter "Category!=Network"
 
       - name: Create NuGet Package
-        run: cd ./Core && dotnet pack -c Release
+        run: dotnet pack Core/Core.csproj -c Release --no-build --output artifacts
+
+      # Guards against a release tag that does not produce the version it announces
+      - name: Verify package version matches the release tag
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          expected="Cap.Core.${TAG#v}.nupkg"
+          if [ ! -f "artifacts/$expected" ]; then
+            echo "::error::Expected artifacts/$expected for release tag '$TAG', but found:"
+            ls artifacts
+            exit 1
+          fi
+
+      # Short-lived API key via trusted publishing. Requires a trusted publishing policy for this
+      # repository and workflow on nuget.org. Until it exists, the NUGET_API_KEY secret is used instead.
+      - name: NuGet login (trusted publishing)
+        id: login
+        continue-on-error: true
+        uses: NuGet/login@v1
+        with:
+          user: Capjan
 
       - name: Publishing to NuGet
-        run: dotnet nuget push ./Core/bin/Release/*.nupkg --api-key ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+        env:
+          NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY || secrets.NUGET_API_KEY }}
+        run: dotnet nuget push "artifacts/*.nupkg" --api-key "$NUGET_API_KEY" -s https://api.nuget.org/v3/index.json --skip-duplicate

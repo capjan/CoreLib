@@ -8,7 +8,7 @@ public class BoolConverter: IConverter<string, bool>
     public bool Convert(string input)
     {
         input = Regex.Replace(input, @"\s", "");
-        switch (input.ToLower())
+        switch (input.ToLowerInvariant())
         {
             // ReSharper disable StringLiteralTypo
             case "true": case "t": case "yes": case "y": case "ja": case "j": case "1": return true;

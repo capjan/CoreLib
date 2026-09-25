@@ -36,7 +36,7 @@ public class CompositeReadOnlyList<T> : IReadOnlyList<T>
 
     #region Helper Classes
 
-    private class CompositeReadOnlyListEnumerator : IEnumerator<T>
+    private sealed class CompositeReadOnlyListEnumerator : IEnumerator<T>
     {
         #region Fields
 

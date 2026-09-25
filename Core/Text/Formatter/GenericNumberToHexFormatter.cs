@@ -41,7 +41,7 @@ public class GenericNumberToHexFormatter<T> : IHexFormatter<T>
 
     private          bool                _upperCase = true;
     private          int?                _precision;
-    private readonly IFormattableTextFormatter<T> _formatter;
+    private readonly GenericNumberFormatter<T> _formatter;
 
     private void UpdateFormat()
     {   

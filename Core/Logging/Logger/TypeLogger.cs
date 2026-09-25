@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 // ReSharper disable ExplicitCallerInfoArgument
 namespace Core.Logging.Logger;
 
-internal class TypeLogger : ILogger 
+internal sealed class TypeLogger : ILogger 
 {
     public TypeLogger(string typeFullName)
     {

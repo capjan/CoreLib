@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Core.Extensions.CollectionRelated;
+using System.Globalization;
 
 namespace Core.Net.Impl;
 
@@ -13,7 +14,7 @@ public class DefaultUrlBuilder : IUrlBuilder
     private readonly List<KeyValuePair<string,string>> _nameValueCollection = new List<KeyValuePair<string,string>>();
     private readonly string _scheme;
     private readonly string _host;
-    private readonly IList<string> _segments;
+    private readonly List<string> _segments;
     private int? _port;
     private string? _username;
     private string? _password;
@@ -86,25 +87,25 @@ public class DefaultUrlBuilder : IUrlBuilder
             sb.Append(_urlEncoder.Encode(_username));
             if (_password != null)
             {
-                sb.Append($":{_urlEncoder.Encode(_password)}");
+                sb.Append(':').Append(_urlEncoder.Encode(_password));
             }
-            sb.Append("@");
+            sb.Append('@');
         }
 
         sb.Append(_host);
         if (_port != null)
-            sb.Append($":{_port}");
+            sb.Append(':').Append(_port.Value.ToString(CultureInfo.InvariantCulture));
 
         foreach (var segment in _segments)
         {
-            sb.Append("/");
+            sb.Append('/');
             sb.Append(segment);
         }
 
         if (_nameValueCollection.Count == 0)
             return sb.ToString();
 
-        sb.Append("?");
+        sb.Append('?');
         sb.Append(_nameValueCollection
             .Select(i => $"{_urlEncoder.Encode(i.Key)}={_urlEncoder.Encode(i.Value)}")
             .ToSeparatedString("&"));

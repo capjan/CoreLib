@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Globalization;
 
 namespace Core.Text.Formatter;
 
@@ -13,7 +14,7 @@ public class ByteToHexFormatter : IByteHexFormatter
         _lookup = new string[byte.MaxValue+1];
         for (int index = byte.MinValue; index <= byte.MaxValue; index++)
         {
-            _lookup[index] = index.ToString(format);
+            _lookup[index] = index.ToString(format, CultureInfo.InvariantCulture);
         }
     }
         

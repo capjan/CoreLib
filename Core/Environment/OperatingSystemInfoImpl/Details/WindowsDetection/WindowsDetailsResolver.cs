@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Core.Environment.OperatingSystemInfoImpl.Details.WindowsDetection;
 
-internal class WindowsDetailsResolver : IOperatingSystemDetailsResolver
+internal sealed class WindowsDetailsResolver : IOperatingSystemDetailsResolver
 {
 
     private readonly Lazy<Version> _lazyVersion;
@@ -19,7 +20,7 @@ internal class WindowsDetailsResolver : IOperatingSystemDetailsResolver
 
     public string ResolveBuildVersion()
     {
-        return _lazyVersion.Value.Build.ToString();
+        return _lazyVersion.Value.Build.ToString(CultureInfo.InvariantCulture);
     }
 
     public string ResolveName()

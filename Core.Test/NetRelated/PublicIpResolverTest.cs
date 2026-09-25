@@ -1,9 +1,11 @@
-﻿using Core.Net.Impl;
+﻿using System.Net;
+using Core.Net.Impl;
 using Core.Text;
 using Xunit;
 
 namespace Core.Test.NetRelated;
 
+[Trait("Category", "Network")]
 public class PublicIpResolverTest
 {
     [Fact]
@@ -21,11 +23,12 @@ public class PublicIpResolverTest
         Assert.NotNull(resolvedIp);
         Assert.Matches(RegExLib.IpV4Address, resolvedIp);
 
+        // The services may answer with an IPv4 or an IPv6 address, and hosts behind a NAT pool (e.g. CI runners)
+        // reach them via different addresses. Therefore only the format is checked, not that all services agree.
         foreach (var serviceUrl in DefaultPublicIpResolver.DefaultServiceUrls)
         {
             var ipViaService = resolver.ResolveViaWebService(serviceUrl);
-            Assert.Matches(RegExLib.IpV4Address, ipViaService);
-            Assert.Equal(resolvedIp, ipViaService);
+            Assert.True(IPAddress.TryParse(ipViaService, out _), $"{serviceUrl} did not answer with an ip address: '{ipViaService}'");
         }
     }
 

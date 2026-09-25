@@ -38,7 +38,7 @@ public class ColoredConsoleLogTarget : LogTarget
             case LogLevel.Warning: return ConsoleColor.Yellow;
             case LogLevel.Error: return ConsoleColor.Red;
             default:
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(level), level, "unknown log level");
         }
     }
 }

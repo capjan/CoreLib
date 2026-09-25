@@ -1,51 +1,34 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Title>CoreLib</Title>
-    <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net10.0;net8.0;netstandard2.0</TargetFrameworks>
     <PackageId>Cap.Core</PackageId>
-    <Authors>Jan Ruhlaender</Authors>
     <Product>CoreLib</Product>
     <Description>Intended to be used in every project to reuse as much code as possible for daily coding tasks.</Description>
-    <Copyright>©2019-2023 Jan Ruhlaender</Copyright>
-    <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">false</GeneratePackageOnBuild>
-    <Version>12.0.0</Version>
-    <LangVersion>10</LangVersion>
-    <PackageProjectUrl>https://github.com/capjan/CoreLib</PackageProjectUrl>
     <AssemblyName>CoreLib</AssemblyName>
-    <RepositoryUrl>https://github.com/capjan/CoreLib</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageProjectUrl>https://github.com/capjan/CoreLib</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Nullable>enable</Nullable>
     <WarningsAsErrors>Nullable</WarningsAsErrors>
-    <PackageReadmeFile>readme.md</PackageReadmeFile>
-  </PropertyGroup>
-  
-  
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-  </ItemGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <NoWarn>1701;1702;NU5125</NoWarn>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;</NoWarn>
+  <!-- The package version is derived from the latest git tag (e.g. v12.0.0). -->
+  <PropertyGroup>
+    <MinVerTagPrefix>v</MinVerTagPrefix>
+    <MinVerDefaultPreReleaseIdentifiers>preview.0</MinVerDefaultPreReleaseIdentifiers>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Security\Cryptography\" />
+    <PackageReference Include="MinVer" PrivateAssets="All" />
+    <PackageReference Include="Polyfill" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="..\readme.md" Pack="true" PackagePath="\" />
-    <None Include="..\LICENSE">
-      <Pack>True</Pack>
-    </None>
+    <None Include="..\LICENSE" Pack="true" PackagePath="\" />
     <None Remove="Doc\Diagnostics\**" />
   </ItemGroup>
 

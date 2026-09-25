@@ -48,13 +48,13 @@ public class OperatingSystemInfo : IOperatingSystemInfo
         if (!string.IsNullOrEmpty(Version))
         {
             if (sb.Length > 0) sb.Append(", ");
-            sb.Append($"Version {Version}");
+            sb.Append("Version ").Append(Version);
         }
 
         if (!string.IsNullOrEmpty(Build))
         {
             if (sb.Length > 0) sb.Append(", ");
-            sb.Append($"Build {Build}");
+            sb.Append("Build ").Append(Build);
         }
 
         return sb.ToString();

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Globalization;
 
 namespace Core.Text.Formatter;
 
@@ -14,7 +15,7 @@ public class CustomTimeSpanFormatter : ITextFormatter<TimeSpan>
 
     public void Write(TimeSpan value, TextWriter writer)
     {
-        var formattedValue = value.ToString(_format);
+        var formattedValue = value.ToString(_format, CultureInfo.CurrentCulture);
         writer.Write(formattedValue);
     }
 }

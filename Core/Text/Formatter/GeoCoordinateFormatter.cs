@@ -29,7 +29,7 @@ public class GeoCoordinateFormatter : IGeoCoordinateFormatter
                 writer.Write(ewValue);
                 break;
             default:
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(value), value.Type, "unknown coordinate type");
         }
     }
         

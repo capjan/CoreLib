@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Core.Text.Formatter;
+using System.Globalization;
 
 namespace Core.Extensions.TextRelated;
 
@@ -25,7 +26,6 @@ public static class ToHexStringExt
 
     public static string ToHexString(this int value, bool upperCase = true)
     {
-        var format = upperCase ? "{0:X}" : "{0:x}";
-        return string.Format(format, value);
+        return value.ToString(upperCase ? "X" : "x", CultureInfo.InvariantCulture);
     }
 }

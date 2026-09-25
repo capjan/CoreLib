@@ -1,20 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFrameworks>net10.0;net8.0</TargetFrameworks>
     <IsPackable>false</IsPackable>
-    <LangVersion>10</LangVersion>
     <Company>Jan Ruhlaender</Company>
-    <Authors>Jan Ruhlaender</Authors>
     <Product>CoreLib Unit Tests</Product>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Nullable>enable</Nullable>
-    <TargetFramework>net6.0</TargetFramework>
+    <!-- Test code follows different conventions (e.g. underscores in test names). -->
+    <AnalysisMode>Default</AnalysisMode>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
