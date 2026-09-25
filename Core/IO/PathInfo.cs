@@ -6,8 +6,10 @@ namespace Core.IO;
 
 public static class PathInfo
 {
+    private static readonly char[] BackslashSeparator = { '\\' };
+    private static readonly char[] SlashSeparator = { '/' };
 
-    private class PathInfoData : IPathInfo
+    private sealed class PathInfoData : IPathInfo
     {
         public PathInfoData(PathType type, bool isRooted, string drive, string[] parts)
         {
@@ -33,8 +35,8 @@ public static class PathInfo
             var drivePart = winRootedPathMatch.Groups["drive"];
             var partsGroup = winRootedPathMatch.Groups["path"];
             var pathInDrive = partsGroup.Success ? partsGroup.Value : "";
-            var isRooted = pathInDrive.StartsWith("\\");
-            var parts = pathInDrive.Split(new[] {'\\'}, StringSplitOptions.RemoveEmptyEntries);
+            var isRooted = pathInDrive.StartsWith('\\');
+            var parts = pathInDrive.Split(BackslashSeparator, StringSplitOptions.RemoveEmptyEntries);
             var driveLetter = drivePart.Success
                 ? drivePart.Value.Substring(0,1)
                 : "";
@@ -44,17 +46,17 @@ public static class PathInfo
         var winPath = Regex.Match(path, @"^(?<isRooted>\\)?[^\\/]+(\\[^\\/]+)*(?<trailing>\\)?$");
         if (winPath.Success)
         {
-            var parts = winPath.Value.Split(new[] {'\\'}, StringSplitOptions.RemoveEmptyEntries);
-            var isRooted = path.StartsWith("\\");
+            var parts = winPath.Value.Split(BackslashSeparator, StringSplitOptions.RemoveEmptyEntries);
+            var isRooted = path.StartsWith('\\');
             return new PathInfoData(PathType.Windows, isRooted, "", parts);
         }
             
         var nixPath = Regex.Match(path, @"^((?<isRooted>/)?([^/]+)?|\.)(/[^/]+)*(?<trailing>/)?$");
         if (nixPath.Success)
         {
-            var isRooted = path.StartsWith("/");
-            if (path.StartsWith("./")) path = path.Substring(1);
-            var parts = path.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
+            var isRooted = path.StartsWith('/');
+            if (path.StartsWith("./", StringComparison.Ordinal)) path = path.Substring(1);
+            var parts = path.Split(SlashSeparator, StringSplitOptions.RemoveEmptyEntries);
                
                 
             return new PathInfoData(PathType.UnixLike, isRooted, "", parts);

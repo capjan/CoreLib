@@ -26,10 +26,10 @@ internal static class InputPredicateUtil
 /// <summary>
 /// Assertion Predicate that assert that the given predicate is a match WITHOUT writing it contents to the given writer.
 /// </summary>
-internal class AssertionPredicate : IParserInputPredicate
+internal sealed class AssertionPredicate : IParserInputPredicate
 {
     private readonly IParserInputPredicate _predicate;
-    private readonly TextWriter _nullWriter = new StreamWriter(Stream.Null);
+    private readonly TextWriter _nullWriter = TextWriter.Null;
     
     public AssertionPredicate(IParserInputPredicate predicate)
     {
@@ -42,7 +42,7 @@ internal class AssertionPredicate : IParserInputPredicate
     }
 }
 
-internal class LogicalOrPredicate : IParserInputPredicate
+internal sealed class LogicalOrPredicate : IParserInputPredicate
 {
     private readonly IParserInputPredicate[] _predicates;
 
@@ -61,7 +61,7 @@ internal class LogicalOrPredicate : IParserInputPredicate
     }
 }
 
-internal class IsMatchCharacterRange : IParserInputPredicate
+internal sealed class IsMatchCharacterRange : IParserInputPredicate
 {
     private readonly char _lowerCharacter;
     private readonly char _upperCharacter;
@@ -86,7 +86,7 @@ internal class IsMatchCharacterRange : IParserInputPredicate
     }
 }
 
-internal class IsMatchPredicate : IParserInputPredicate
+internal sealed class IsMatchPredicate : IParserInputPredicate
 {
     private readonly SortedSet<char> _matchSet;
 
@@ -104,7 +104,7 @@ internal class IsMatchPredicate : IParserInputPredicate
     }
 }
 
-internal class IsNoMatchPredicate : IParserInputPredicate
+internal sealed class IsNoMatchPredicate : IParserInputPredicate
 {
     private readonly SortedSet<char> _notMatchSet;
     
@@ -122,7 +122,7 @@ internal class IsNoMatchPredicate : IParserInputPredicate
     }
 }
 
-internal class IsMatchingAnyStringPredicate : IParserInputPredicate
+internal sealed class IsMatchingAnyStringPredicate : IParserInputPredicate
 {
     private readonly IReadOnlyCollection<string> _values;
     private readonly IsMatchStringPredicate _matchStringPredicate;
@@ -148,7 +148,7 @@ internal class IsMatchingAnyStringPredicate : IParserInputPredicate
     }
 }
 
-internal class IsMatchStringPredicate : IParserInputPredicate
+internal sealed class IsMatchStringPredicate : IParserInputPredicate
 {
     public string Value;
     private readonly bool _ignoreCase;
@@ -197,7 +197,7 @@ internal class IsMatchStringPredicate : IParserInputPredicate
     }
 }
 
-internal class RepeatPredicate : IParserInputPredicate
+internal sealed class RepeatPredicate : IParserInputPredicate
 {
     private readonly IParserInputPredicate _predicateToRepeat;
     private readonly Repetition _repetition;
@@ -261,7 +261,7 @@ internal class RepeatPredicate : IParserInputPredicate
     }
 }
 
-internal class PredicateConcatenation : IParserInputPredicate
+internal sealed class PredicateConcatenation : IParserInputPredicate
 {
     private readonly List<IParserInputPredicate> _predicates = new();
 
@@ -294,7 +294,7 @@ internal class PredicateConcatenation : IParserInputPredicate
     }
 }
 
-internal class Predicate : IParserInputPredicate
+internal sealed class Predicate : IParserInputPredicate
 {
     public static readonly IParserInputPredicate Empty = new Predicate(); 
     public bool IsMatch(IParserInput input, TextWriter writer)

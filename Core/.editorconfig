@@ -1,0 +1,27 @@
+# Analyzer rules for the library (see also ../Directory.Build.props).
+#
+# The rules below are downgraded to "suggestion" (visible in the IDE, but not a build warning) because
+# their findings can only be fixed by changing the public API, which is a breaking change.
+# They are revisited together with the breaking changes planned for 13.0 (modernization phase 4).
+# Every other CA rule is a build error.
+
+[*.cs]
+# naming: public identifiers that collide with keywords / type names of other .NET languages
+dotnet_diagnostic.CA1711.severity = suggestion   # LogEventArgs
+dotnet_diagnostic.CA1716.severity = suggestion   # ILogger.Error, IRandom.Next
+dotnet_diagnostic.CA1720.severity = suggestion   # KnownDataTypes.Int / Double
+dotnet_diagnostic.CA1725.severity = suggestion   # GeoCoordinateMath parameter names
+
+# design: public fields and members
+dotnet_diagnostic.CA1000.severity = suggestion   # static member on generic type (TypeChecker)
+dotnet_diagnostic.CA1051.severity = suggestion   # visible instance field (MultiAttemptAction/Func.Invoker)
+dotnet_diagnostic.CA1822.severity = suggestion   # UnameWrapper: making public members static breaks callers
+dotnet_diagnostic.CA2211.severity = suggestion   # public static fields (SharedHttpClient, Empty, Start, ...)
+
+# behavior of public members
+dotnet_diagnostic.CA2201.severity = suggestion   # AssemblyInfo throws NullReferenceException
+
+# not applicable
+dotnet_diagnostic.CA1014.severity = none         # the library is not CLS-compliance audited
+dotnet_diagnostic.CA1307.severity = none         # string.Replace(string,string) and IndexOf(char) are ordinal by default
+dotnet_diagnostic.CA1510.severity = none         # ArgumentNullException.ThrowIfNull does not exist on netstandard2.0

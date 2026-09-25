@@ -6,6 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- polyfills for APIs missing on netstandard2.0 (source generator, no runtime dependency) -->
+    <PackageVersion Include="Polyfill" Version="11.4.0" />
+
     <!-- versioning -->
     <PackageVersion Include="MinVer" Version="8.0.0" />
 

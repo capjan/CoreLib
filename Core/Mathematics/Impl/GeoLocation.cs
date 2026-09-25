@@ -25,7 +25,7 @@ public class GeoLocation : IGeoLocation
         if (latitudeDMS == null)
             throw new ArgumentNullException(nameof(latitudeDMS));
         if (longitudeDMS == null)
-            throw new ArgumentException(nameof(longitudeDMS));
+            throw new ArgumentNullException(nameof(longitudeDMS));
         if (latitudeDMS.Type != GeoCoordinateType.Latitude)
             throw new ArgumentException($"{nameof(latitudeDMS)} type must be {nameof(GeoCoordinateType.Latitude)}. Value: {latitudeDMS.Type}");
         if (longitudeDMS.Type != GeoCoordinateType.Longitude)

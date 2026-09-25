@@ -10,7 +10,7 @@ namespace Core.Parser.Special;
 
 public class ParserInput : IParserInput
 {
-    private class CharWithPositionInfo
+    private sealed class CharWithPositionInfo
     {
         public int OffsetAfterRead;
         public ITextPosition PositionAfterRead = Text.Impl.TextPosition.Start;
@@ -147,6 +147,7 @@ public class ParserInput : IParserInput
     public void Dispose()
     {
         _input.Dispose();
+        GC.SuppressFinalize(this);
     }
 
     private CharWithPositionInfo? GetNextCharFromInput()

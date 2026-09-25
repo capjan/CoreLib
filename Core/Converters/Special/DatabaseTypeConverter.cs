@@ -13,7 +13,7 @@ public class DatabaseTypeConverter: IConverter<string, DatabaseType>
             case "sqlite": return DatabaseType.SQLite;
             case "sqlserver": case "sql-server": case "mssql": case "mssqlserver": return DatabaseType.SQLServer;
             case "mysql": return DatabaseType.MySQL;
-            default: throw new ArgumentException();
+            default: throw new ArgumentException($"unknown database type \"{input}\"", nameof(input));
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace Core.Converters.Basic;
 
@@ -15,6 +16,6 @@ public class IntegerConverter: IConverter<string, int>
         var usedValue = m.Groups["number"].Value;
         usedValue = Regex.Replace(usedValue, @"\s", ""); // removing all whitespaces
 
-        return int.Parse(usedValue);
+        return int.Parse(usedValue, NumberStyles.Integer, CultureInfo.InvariantCulture);
     }
 }

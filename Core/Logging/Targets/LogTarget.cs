@@ -14,6 +14,7 @@ public abstract class LogTarget : IDisposable
         if (_isDisposed) return;
         OnDispose();
         _isDisposed = true;
+        GC.SuppressFinalize(this);
     }
 
     public bool Connected

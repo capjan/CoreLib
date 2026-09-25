@@ -1,8 +1,9 @@
+using System;
 using Core.Diagnostics.Impl;
 
 namespace Core.Environment.OperatingSystemInfoImpl.Details.LinuxDetection;
 
-internal class LinuxLinuxStandardBaseInfo
+internal sealed class LinuxLinuxStandardBaseInfo
 {
     /// <summary>
     /// Id of the running linux distribution. e.g. Ubuntu
@@ -30,10 +31,10 @@ internal class LinuxLinuxStandardBaseInfo
         var detectedCodeName = "";
         cli.ReadLines(line =>
         {
-            if (line.StartsWith("Distributor ID:\t")) detectedId = line.Substring(16);
-            if (line.StartsWith("Description:\t")) detectedDescription = line.Substring(13);
-            if (line.StartsWith("Release:\t")) detectedRelease = line.Substring(9);
-            if (line.StartsWith("Codename:\t")) detectedCodeName = line.Substring(10);
+            if (line.StartsWith("Distributor ID:\t", StringComparison.Ordinal)) detectedId = line.Substring(16);
+            if (line.StartsWith("Description:\t", StringComparison.Ordinal)) detectedDescription = line.Substring(13);
+            if (line.StartsWith("Release:\t", StringComparison.Ordinal)) detectedRelease = line.Substring(9);
+            if (line.StartsWith("Codename:\t", StringComparison.Ordinal)) detectedCodeName = line.Substring(10);
         });
         Id = detectedId;
         Description = detectedDescription;

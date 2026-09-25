@@ -41,7 +41,7 @@ public static class PathInfoExt
         var sb = new StringBuilder();
         var dirChar = dirSeparatorChar ?? info.GetDirectorySeparatorChar();
             
-        if (info.Type == PathType.Windows && info.Drive != null) sb.Append($"{info.Drive}:");
+        if (info.Type == PathType.Windows && info.Drive != null) sb.Append(info.Drive).Append(':');
         if (info.IsRooted) sb.Append(dirChar);
             
         return sb.ToString();

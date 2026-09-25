@@ -1,6 +1,6 @@
 ﻿namespace Core.Environment.OperatingSystemInfoImpl.Details.NullDetection;
 
-internal class NullOperatingSystemDetailsResolver: IOperatingSystemDetailsResolver
+internal sealed class NullOperatingSystemDetailsResolver: IOperatingSystemDetailsResolver
 {
     public string ResolveVersion()
     {

@@ -18,7 +18,7 @@ public class TimeLocalization : ITimeLocalization
 
     private readonly IReadOnlyDictionary<TimePart, ITimePartLocalization> _dictionary;
 
-    private class TimePartDictionary : Dictionary<TimePart, ITimePartLocalization>
+    private sealed class TimePartDictionary : Dictionary<TimePart, ITimePartLocalization>
     {
         public TimePartDictionary Add(TimePart part, string singular, string plural, string abbreviation)
         {
@@ -30,7 +30,7 @@ public class TimeLocalization : ITimeLocalization
     public static ITimeLocalization Create(string twoLetterLanguage)
     {
         TimePartDictionary dict;
-        switch (twoLetterLanguage.ToLower())
+        switch (twoLetterLanguage.ToLowerInvariant())
         {
             case "de":
                 dict = new TimePartDictionary()

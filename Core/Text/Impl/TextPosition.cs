@@ -5,7 +5,7 @@ namespace Core.Text.Impl;
 
 public class TextPosition : ITextPosition, IEquatable<TextPosition>
 {
-    private class EmptyTextPosition : ITextPosition
+    private sealed class EmptyTextPosition : ITextPosition
     {
         public bool Equals(ITextPosition? other)
         {

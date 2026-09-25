@@ -17,12 +17,12 @@
   </PropertyGroup>
 
   <!--
-    Compiler warnings fail the build. The CA* analyzer findings stay warnings until they are worked
-    off (see modernization plan, phase 3); then CodeAnalysisTreatWarningsAsErrors becomes true.
+    All warnings fail the build, including the CA* analyzer findings.
+    Rules that can only be fixed by breaking the public API are downgraded in Core/.editorconfig.
   -->
   <PropertyGroup>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
+    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
   </PropertyGroup>
 
   <!-- Deterministic, reproducible builds on CI. Source Link is part of the SDK since .NET 8. -->

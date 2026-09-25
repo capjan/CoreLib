@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="MinVer" PrivateAssets="All" />
+    <PackageReference Include="Polyfill" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>

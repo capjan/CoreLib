@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -13,6 +14,8 @@ namespace Core.Extensions.SecurityRelated;
 public static class HashAlgorithmExt
 {
 
+    [SuppressMessage("Security", "CA5351:Do Not Use Broken Cryptographic Algorithms", Justification = "MD5 is offered for non-security checksums and backwards compatibility. Deprecation is planned for 13.0 (modernization phase 4).")]
+    [SuppressMessage("Security", "CA5350:Do Not Use Weak Cryptographic Algorithms", Justification = "SHA1 is offered for non-security checksums and backwards compatibility. Deprecation is planned for 13.0 (modernization phase 4).")]
     public static HashAlgorithm CreateAlgorithm(this HashType hashType)
     {
         switch (hashType)
@@ -67,11 +70,13 @@ public static class HashAlgorithmExt
         return value.CalcChecksum<CRC32HashProvider>().ToHexString();
     }
 
+    [SuppressMessage("Security", "CA5351:Do Not Use Broken Cryptographic Algorithms", Justification = "MD5 is offered for non-security checksums and backwards compatibility. Deprecation is planned for 13.0 (modernization phase 4).")]
     public static string CalcMD5(this string value)
     {
         return MD5.Create().ComputeChecksum(value);
     }
 
+    [SuppressMessage("Security", "CA5350:Do Not Use Weak Cryptographic Algorithms", Justification = "SHA1 is offered for non-security checksums and backwards compatibility. Deprecation is planned for 13.0 (modernization phase 4).")]
     public static string CalcSHA1(this string value)
     {
         return SHA1.Create().ComputeChecksum(value);

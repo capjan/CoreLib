@@ -28,7 +28,7 @@ public class HttpHeader : IHttpHeader
     public HttpHeader(string contentType, long contentLength) : this( new Dictionary<string, string>()
     {
         { ContentTypeKey, contentType },
-        { ContentLengthKey, contentLength.ToString("D") }
+        { ContentLengthKey, contentLength.ToString("D", CultureInfo.InvariantCulture) }
     })
     { }
 
@@ -43,19 +43,19 @@ public class HttpHeader : IHttpHeader
             Connection = connectionValue;
 
         if (headerDict.TryGetValue(ContentLengthKey, out var lengthValue))
-            ContentLength = long.Parse(lengthValue);
+            ContentLength = long.Parse(lengthValue, NumberStyles.Integer, CultureInfo.InvariantCulture);
 
         if (headerDict.TryGetValue(ContentTypeKey, out var contentTypeValue))
             ContentType = contentTypeValue;
 
         if (headerDict.TryGetValue(DateKey, out var dateValue))
-            CreatedAtUtc = DateTime.Parse(dateValue, null, DateTimeStyles.AdjustToUniversal);
+            CreatedAtUtc = DateTime.Parse(dateValue, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
 
         if (headerDict.TryGetValue(ETagKey, out var eTagValue))
             EntityTag = eTagValue;
 
         if (headerDict.TryGetValue(LastModifiedKey, out var lastModifiedValue))
-            LastModifiedUtc = DateTime.Parse(lastModifiedValue, null, DateTimeStyles.AdjustToUniversal);
+            LastModifiedUtc = DateTime.Parse(lastModifiedValue, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
 
         if (headerDict.TryGetValue(LocationKey, out var locationValue))
             Location = locationValue;

@@ -9,7 +9,7 @@ namespace Core.Text.Formatter;
 /// </summary>
 public class FileSizeFormatter : IFileSizeFormatter
 {
-    private readonly IFormattableTextFormatter<double> _numberFormatter = new GenericNumberFormatter<double>();
+    private readonly GenericNumberFormatter<double> _numberFormatter = new GenericNumberFormatter<double>();
 
     private const long NoDivider = 1L;
     private const long Kib = 1024L;
@@ -28,7 +28,7 @@ public class FileSizeFormatter : IFileSizeFormatter
         set => _numberFormatter.FormatProvider = value;
     }
 
-    public BinaryUnitPrefix? ForcedUnit { get; set; } = null;
+    public BinaryUnitPrefix? ForcedUnit { get; set; }
     public string Delimiter { get; set; } = " ";
 
     public void Write(long value, TextWriter writer)
