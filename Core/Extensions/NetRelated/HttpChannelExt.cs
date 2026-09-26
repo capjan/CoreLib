@@ -16,29 +16,45 @@ namespace Core.Extensions.NetRelated;
 public static class HttpChannelExt
 {
 
-    public static Lazy<HttpClient> SharedHttpClient = new Lazy<HttpClient>(() => new HttpClient());
+    public static Lazy<HttpClient> SharedHttpClient = new Lazy<HttpClient>(() => DefaultHttpClient.Shared.Value);
 
+    /// <summary>
+    /// Downloads the content of the url as text.
+    /// </summary>
+    /// <param name="encoding">
+    /// The encoding of the text. If it is given, it is used, unless the content starts with a byte order mark: that decides then.
+    /// If it is not given, the charset the server announces is used. Without one the text is UTF-8, or the encoding
+    /// a byte order mark stands for. A byte order mark is not looked at when the server announces a charset
+    /// (as <see cref="HttpContent.ReadAsStringAsync()"/> does).
+    /// </param>
+    /// <exception cref="HttpRequestException">The server did not answer with a success status code.</exception>
     public static string DownloadToString(this IHttpChannel channel, string url, Encoding? encoding = default, AuthenticationHeaderValue? authenticationHeaderValue = null)
     {
-        encoding = encoding ?? Encoding.UTF8;
-        var request = channel.CreateRequest(url);
+        using var request = channel.CreateRequest(url);
         if (authenticationHeaderValue != null)
             request.Headers.Authorization = authenticationHeaderValue;
-        var result = SharedHttpClient.Value.SendAsync(request).Result;
-        var contentAsString = result.Content.ReadAsStringAsync().Result;
-        return contentAsString;
+
+        using var result = SharedHttpClient.Value.SendAsync(request).GetAwaiter().GetResult();
+        result.EnsureSuccessStatusCode();
+
+        if (encoding == null)
+            return result.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+        using var stream = result.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
+        using var reader = new StreamReader(stream, encoding, detectEncodingFromByteOrderMarks: true);
+        return reader.ReadToEnd();
     }
 
     public static IHttpHeader DownloadHeader(this IHttpChannel channel, string url, AuthenticationHeaderValue? authenticationHeaderValue = null)
     {
-        var request = channel.CreateRequest(url);
+        using var request = channel.CreateRequest(url);
 
         if (authenticationHeaderValue != null)
             request.Headers.Authorization = authenticationHeaderValue;
 
         request.Method = HttpMethod.Head;
 
-        using var result = SharedHttpClient.Value.SendAsync(request).Result;
+        using var result = SharedHttpClient.Value.SendAsync(request).GetAwaiter().GetResult();
 
         // Header names are case-insensitive. Content-Length, Content-Type, Last-Modified etc. are content headers,
         // all others response headers, so both collections are needed. A header can have several values.
