@@ -38,10 +38,21 @@ public static class HttpChannelExt
 
         request.Method = HttpMethod.Head;
 
-        var result = SharedHttpClient.Value.SendAsync(request).Result;
+        using var result = SharedHttpClient.Value.SendAsync(request).Result;
 
-        var dict = result.Headers.ToDictionary(key => key.Key, v => v.Value.ToString() ?? "");
+        // Header names are case-insensitive. Content-Length, Content-Type, Last-Modified etc. are content headers,
+        // all others response headers, so both collections are needed. A header can have several values.
+        var dict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        AddHeaders(dict, result.Headers);
+        if (result.Content != null)
+            AddHeaders(dict, result.Content.Headers);
         return new HttpHeader(dict);
+    }
+
+    private static void AddHeaders(Dictionary<string, string> target, IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
+    {
+        foreach (var header in headers)
+            target[header.Key] = string.Join(", ", header.Value);
     }
 
     public static bool TryDownloadHeader(this IHttpChannel channel, string url, out IHttpHeader header)
