@@ -22,8 +22,10 @@ public static class HttpChannelExt
     /// Downloads the content of the url as text.
     /// </summary>
     /// <param name="encoding">
-    /// The encoding of the text. If it is not given, the charset the server announces is used (UTF-8 if there is none).
-    /// A byte order mark in the content takes precedence over both.
+    /// The encoding of the text. If it is given, it is used, unless the content starts with a byte order mark: that decides then.
+    /// If it is not given, the charset the server announces is used. Without one the text is UTF-8, or the encoding
+    /// a byte order mark stands for. A byte order mark is not looked at when the server announces a charset
+    /// (as <see cref="HttpContent.ReadAsStringAsync()"/> does).
     /// </param>
     /// <exception cref="HttpRequestException">The server did not answer with a success status code.</exception>
     public static string DownloadToString(this IHttpChannel channel, string url, Encoding? encoding = default, AuthenticationHeaderValue? authenticationHeaderValue = null)
@@ -45,7 +47,7 @@ public static class HttpChannelExt
 
     public static IHttpHeader DownloadHeader(this IHttpChannel channel, string url, AuthenticationHeaderValue? authenticationHeaderValue = null)
     {
-        var request = channel.CreateRequest(url);
+        using var request = channel.CreateRequest(url);
 
         if (authenticationHeaderValue != null)
             request.Headers.Authorization = authenticationHeaderValue;

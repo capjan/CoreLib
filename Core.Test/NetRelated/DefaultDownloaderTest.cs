@@ -95,4 +95,34 @@ public class DefaultDownloaderTest
     {
         Assert.Throws<ArgumentNullException>(() => new DownloaderWithCredentials(null!));
     }
+
+    [Fact]
+    public void HonorsTheTimeoutOfTheGivenClient()
+    {
+        using var client = new HttpClient(new HangingHandler()) { Timeout = TimeSpan.FromMilliseconds(100) };
+
+        Assert.ThrowsAny<OperationCanceledException>(() => new DefaultDownloader(client).DownloadToString("https://example.com/slow"));
+    }
+
+    [Fact]
+    public void AnAlreadyDisposedClientFailsWhenItIsUsed()
+    {
+        var client = new HttpClient(new StubHandler(_ => Text("body")));
+        client.Dispose();
+
+        // the downloader does not own the client, so it does not check it: using it is the caller's job
+        Assert.Throws<ObjectDisposedException>(() => new DefaultDownloader(client).DownloadToString("https://example.com/"));
+    }
+
+    /// <summary>
+    /// Never answers, so only the timeout of the client ends the request.
+    /// </summary>
+    private sealed class HangingHandler : HttpMessageHandler
+    {
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
+        {
+            await Task.Delay(System.Threading.Timeout.InfiniteTimeSpan, cancellationToken);
+            return new HttpResponseMessage();
+        }
+    }
 }

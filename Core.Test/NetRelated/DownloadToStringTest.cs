@@ -103,6 +103,17 @@ public class DownloadToStringTest
     }
 
     [Fact]
+    public void AByteOrderMarkWinsOverTheExplicitEncoding()
+    {
+        // the caller says Latin-1, but the content is UTF-8 with a byte order mark: the mark tells the truth
+        var body = Concat(new byte[] { 0xEF, 0xBB, 0xBF }, Encoding.UTF8.GetBytes(Text));
+        var handler = Serve(body, "text/plain");
+
+        SharedHttpClientSwap.Use(handler, () =>
+            Assert.Equal(Text, new DefaultHttpChannel().DownloadToString(Url, Latin1)));
+    }
+
+    [Fact]
     public void HttpChannelDownloaderUsesTheCharsetOfTheServerByDefault()
     {
         var handler = Serve(Latin1.GetBytes(Text), "text/plain; charset=iso-8859-1");

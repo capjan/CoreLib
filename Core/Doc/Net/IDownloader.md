@@ -9,7 +9,7 @@ public interface IDownloader
     string DownloadToString(string url);
 
     // via extension methods
-    bool   TryDownloadToString(string url, out string result, string fallback = default)
+    bool   TryDownloadToString(string url, out string result, string fallback = "")
 }
 ```
 
@@ -45,5 +45,8 @@ if (!downloader.TryDownloadToString("https://www.example.com", out var result))
 * `HttpChannelExt.SharedHttpClient`, which the `IHttpChannel` extension methods use, is the same kind of client and does not store cookies either.
   Assign your own client to it if you need a session.
 * `HttpChannelDownloader` decodes the text with the charset the server announces (UTF-8 if there is none).
-  Pass an `Encoding` to the constructor to force a specific encoding. A byte order mark in the content takes precedence.
+  Pass an `Encoding` to the constructor to force a specific encoding. A byte order mark in the content still wins over
+  that encoding. If the server announces a charset, a byte order mark is not looked at (as in `HttpContent.ReadAsStringAsync`).
+* On `netstandard2.0` (e.g. .NET Framework) the shared clients cannot recycle their connections: a long-lived client keeps using
+  the address it resolved first until the connection breaks. Hosts that need to follow DNS changes there should pass their own client.
 
