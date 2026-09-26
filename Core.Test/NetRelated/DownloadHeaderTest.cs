@@ -42,44 +42,12 @@ public class DownloadHeaderTest
         return response;
     }
 
-    private sealed class StubHandler : HttpMessageHandler
-    {
-        private readonly Func<HttpRequestMessage, HttpResponseMessage> _respond;
-
-        public StubHandler(Func<HttpRequestMessage, HttpResponseMessage> respond)
-        {
-            _respond = respond;
-        }
-
-        public HttpRequestMessage? LastRequest { get; private set; }
-
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            LastRequest = request;
-            return Task.FromResult(_respond(request));
-        }
-    }
-
-    private static void WithFakeServer(StubHandler handler, Action action)
-    {
-        var original = HttpChannelExt.SharedHttpClient;
-        HttpChannelExt.SharedHttpClient = new Lazy<HttpClient>(() => new HttpClient(handler));
-        try
-        {
-            action();
-        }
-        finally
-        {
-            HttpChannelExt.SharedHttpClient = original;
-        }
-    }
-
     [Fact]
     public void ReadsTheValuesOfTheResponseHeaders()
     {
         var handler = new StubHandler(_ => CreateHeadResponse());
 
-        WithFakeServer(handler, () =>
+        SharedHttpClientSwap.Use(handler, () =>
         {
             var header = new DefaultHttpChannel().DownloadHeader("https://example.com/file");
 
@@ -96,7 +64,7 @@ public class DownloadHeaderTest
     {
         var handler = new StubHandler(_ => CreateHeadResponse());
 
-        WithFakeServer(handler, () =>
+        SharedHttpClientSwap.Use(handler, () =>
         {
             var header = new DefaultHttpChannel().DownloadHeader("https://example.com/file");
 
@@ -111,7 +79,7 @@ public class DownloadHeaderTest
     {
         var handler = new StubHandler(_ => CreateHeadResponse());
 
-        WithFakeServer(handler, () =>
+        SharedHttpClientSwap.Use(handler, () =>
         {
             var header = new DefaultHttpChannel().DownloadHeader("https://example.com/file");
 
@@ -124,7 +92,7 @@ public class DownloadHeaderTest
     {
         var handler = new StubHandler(_ => CreateHeadResponse());
 
-        WithFakeServer(handler, () =>
+        SharedHttpClientSwap.Use(handler, () =>
         {
             var header = new DefaultHttpChannel().DownloadHeader("https://example.com/file");
 
@@ -141,7 +109,7 @@ public class DownloadHeaderTest
         var handler = new StubHandler(_ => CreateHeadResponse());
         var authorization = new AuthenticationHeaderValue("Bearer", "token");
 
-        WithFakeServer(handler, () =>
+        SharedHttpClientSwap.Use(handler, () =>
         {
             new DefaultHttpChannel().DownloadHeader("https://example.com/file", authorization);
 
@@ -163,7 +131,7 @@ public class DownloadHeaderTest
             return response;
         });
 
-        WithFakeServer(handler, () =>
+        SharedHttpClientSwap.Use(handler, () =>
         {
             var header = new DefaultHttpChannel().DownloadHeader("https://example.com/file");
 

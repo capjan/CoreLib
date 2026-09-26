@@ -16,17 +16,31 @@ namespace Core.Extensions.NetRelated;
 public static class HttpChannelExt
 {
 
-    public static Lazy<HttpClient> SharedHttpClient = new Lazy<HttpClient>(() => new HttpClient());
+    public static Lazy<HttpClient> SharedHttpClient = new Lazy<HttpClient>(() => DefaultHttpClient.Create());
 
+    /// <summary>
+    /// Downloads the content of the url as text.
+    /// </summary>
+    /// <param name="encoding">
+    /// The encoding of the text. If it is not given, the charset the server announces is used (UTF-8 if there is none).
+    /// A byte order mark in the content takes precedence over both.
+    /// </param>
+    /// <exception cref="HttpRequestException">The server did not answer with a success status code.</exception>
     public static string DownloadToString(this IHttpChannel channel, string url, Encoding? encoding = default, AuthenticationHeaderValue? authenticationHeaderValue = null)
     {
-        encoding = encoding ?? Encoding.UTF8;
-        var request = channel.CreateRequest(url);
+        using var request = channel.CreateRequest(url);
         if (authenticationHeaderValue != null)
             request.Headers.Authorization = authenticationHeaderValue;
-        var result = SharedHttpClient.Value.SendAsync(request).Result;
-        var contentAsString = result.Content.ReadAsStringAsync().Result;
-        return contentAsString;
+
+        using var result = SharedHttpClient.Value.SendAsync(request).Result;
+        result.EnsureSuccessStatusCode();
+
+        if (encoding == null)
+            return result.Content.ReadAsStringAsync().Result;
+
+        using var stream = result.Content.ReadAsStreamAsync().Result;
+        using var reader = new StreamReader(stream, encoding, detectEncodingFromByteOrderMarks: true);
+        return reader.ReadToEnd();
     }
 
     public static IHttpHeader DownloadHeader(this IHttpChannel channel, string url, AuthenticationHeaderValue? authenticationHeaderValue = null)
