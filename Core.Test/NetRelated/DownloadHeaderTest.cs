@@ -149,4 +149,32 @@ public class DownloadHeaderTest
             Assert.Equal(authorization, handler.LastRequest.Headers.Authorization);
         });
     }
+
+    [Fact]
+    public void KeepsSeveralSetCookieHeadersApart()
+    {
+        // a comma is part of a valid cookie (Expires), so the cookies must not be joined with a comma
+        const string first = "a=1; Path=/; Expires=Wed, 21 Oct 2015 07:28:00 GMT";
+        const string second = "b=2; Path=/";
+        var handler = new StubHandler(_ =>
+        {
+            var response = CreateHeadResponse();
+            response.Headers.TryAddWithoutValidation("Set-Cookie", new[] { first, second });
+            return response;
+        });
+
+        WithFakeServer(handler, () =>
+        {
+            var header = new DefaultHttpChannel().DownloadHeader("https://example.com/file");
+
+            var httpHeader = Assert.IsType<HttpHeader>(header);
+            var expected = first + HttpHeader.SetCookieSeparator + second;
+            Assert.Equal(expected, header.SetCookie);
+            Assert.Equal(expected, httpHeader.RawDictionary["Set-Cookie"]);
+            Assert.Equal(new[] { first, second }, httpHeader.SetCookies);
+
+            // every other header with several values is still joined with a comma
+            Assert.Equal("first, second", httpHeader.RawDictionary["X-Multi"]);
+        });
+    }
 }

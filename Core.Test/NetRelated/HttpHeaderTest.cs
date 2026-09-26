@@ -49,4 +49,34 @@ public class HttpHeaderTest
         Assert.Equal(new DateTime(1994, 11, 15, 8, 12, 31, DateTimeKind.Utc), header.CreatedAtUtc);
         Assert.Equal(new DateTime(2015, 10, 21, 7, 28, 0, DateTimeKind.Utc), header.LastModifiedUtc);
     }
+
+    [Fact]
+    public void SetCookiesIsEmptyWithoutTheHeader()
+    {
+        var header = new HttpHeader(new Dictionary<string, string>());
+
+        Assert.Null(header.SetCookie);
+        Assert.Empty(header.SetCookies);
+    }
+
+    [Fact]
+    public void SetCookiesWithOneCookie()
+    {
+        var header = new HttpHeader(new Dictionary<string, string> { { "set-cookie", "a=1; Path=/" } });
+
+        Assert.Equal("a=1; Path=/", header.SetCookie);
+        Assert.Equal(new[] { "a=1; Path=/" }, header.SetCookies);
+    }
+
+    [Fact]
+    public void SetCookiesSplitsAtTheSeparatorAndNotAtCommas()
+    {
+        const string first = "a=1; Expires=Wed, 21 Oct 2015 07:28:00 GMT";
+        const string second = "b=2";
+        var raw = new Dictionary<string, string> { { HttpHeader.SetCookieKey, first + HttpHeader.SetCookieSeparator + second } };
+
+        var header = new HttpHeader(raw);
+
+        Assert.Equal(new[] { first, second }, header.SetCookies);
+    }
 }

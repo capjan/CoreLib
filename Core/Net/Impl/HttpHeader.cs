@@ -21,6 +21,14 @@ public class HttpHeader : IHttpHeader
     public const string StatusKey = "Status";
 
     /// <summary>
+    /// Separates several Set-Cookie values in <see cref="SetCookie"/> and in <see cref="RawDictionary"/>.
+    /// Other headers with several values are joined with a comma, but Set-Cookie must not be (RFC 6265, section 3;
+    /// RFC 9110, section 5.3): a comma can be part of a cookie, e.g. in <c>Expires=Wed, 21 Oct 2015 07:28:00 GMT</c>.
+    /// A line feed can never be part of a header value, so it keeps the cookies apart without loss.
+    /// </summary>
+    public const string SetCookieSeparator = "\n";
+
+    /// <summary>
     /// Initializes the minimal information. Used for http responses from servers that doesn't support http headers
     /// </summary>
     /// <param name="contentType"></param>
@@ -69,7 +77,10 @@ public class HttpHeader : IHttpHeader
             Server = serverValue;
 
         if (headers.TryGetValue(SetCookieKey, out var setCookieValue))
+        {
             SetCookie = setCookieValue;
+            SetCookies = setCookieValue.Split(SetCookieSeparatorChars, StringSplitOptions.RemoveEmptyEntries);
+        }
 
         if (headers.TryGetValue(StatusKey, out var statusValue))
             Status = statusValue;
@@ -89,7 +100,17 @@ public class HttpHeader : IHttpHeader
 
     public string? Server { get; }
 
+    /// <summary>
+    /// All Set-Cookie values, joined with <see cref="SetCookieSeparator"/>.
+    /// </summary>
     public string? SetCookie { get; }
+
+    /// <summary>
+    /// The Set-Cookie values, one entry per cookie. Empty if the header is not present.
+    /// </summary>
+    public IReadOnlyList<string> SetCookies { get; } = Array.Empty<string>();
+
+    private static readonly char[] SetCookieSeparatorChars = SetCookieSeparator.ToCharArray();
 
     public string? EntityTag { get; }
 

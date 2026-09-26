@@ -52,7 +52,13 @@ public static class HttpChannelExt
     private static void AddHeaders(Dictionary<string, string> target, IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
     {
         foreach (var header in headers)
-            target[header.Key] = string.Join(", ", header.Value);
+        {
+            // several values are joined with a comma; Set-Cookie is the exception, see HttpHeader.SetCookieSeparator
+            var separator = string.Equals(header.Key, HttpHeader.SetCookieKey, StringComparison.OrdinalIgnoreCase)
+                ? HttpHeader.SetCookieSeparator
+                : ", ";
+            target[header.Key] = string.Join(separator, header.Value);
+        }
     }
 
     public static bool TryDownloadHeader(this IHttpChannel channel, string url, out IHttpHeader header)
