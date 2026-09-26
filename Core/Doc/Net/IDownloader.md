@@ -1,6 +1,6 @@
 ﻿# IDownloader
 
-This interface makes the inplementation to download a file exchangeable.
+This interface makes the implementation to download a file exchangeable.
 
 ## Interface
 ```csharp
@@ -30,16 +30,20 @@ if (!downloader.TryDownloadToString("https://www.example.com", out var result))
 ## Behavior
 
 * A download **fails** if the server answers with an error status code (e.g. 404 or 500) or the server can't be reached.
-  `DownloadToString()` throws an exception, `TryDownloadToString()` returns `false` and `result` is the fallback.
+  `DownloadToString()` throws the exception itself (an `HttpRequestException`, not wrapped in an `AggregateException`),
+  `TryDownloadToString()` returns `false` and `result` is the fallback.
   The content of an error page is never returned as a result.
-* `DefaultDownloader` uses one `HttpClient` for all downloads of the application. Pass your own client to
-  configure it (proxy, timeout, ...). It is not disposed by the downloader:
+* `DefaultDownloader` uses one `HttpClient` for all downloads of the application. That client does **not** store cookies,
+  so downloads of different users or jobs never see each other's session. Pass your own client to configure it
+  (proxy, timeout, cookies, ...). It is not disposed by the downloader:
 
   ```csharp
   var downloader = new DefaultDownloader(myHttpClient);
   ```
 
-* `DownloaderWithCredentials` creates its client with the first download and reuses it afterwards.
+* `DownloaderWithCredentials` creates its client with the first download and reuses it afterwards. It does not store cookies either.
+* `HttpChannelExt.SharedHttpClient`, which the `IHttpChannel` extension methods use, is the same kind of client and does not store cookies either.
+  Assign your own client to it if you need a session.
 * `HttpChannelDownloader` decodes the text with the charset the server announces (UTF-8 if there is none).
   Pass an `Encoding` to the constructor to force a specific encoding. A byte order mark in the content takes precedence.
 

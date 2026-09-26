@@ -16,7 +16,7 @@ namespace Core.Extensions.NetRelated;
 public static class HttpChannelExt
 {
 
-    public static Lazy<HttpClient> SharedHttpClient = new Lazy<HttpClient>(() => DefaultHttpClient.Create());
+    public static Lazy<HttpClient> SharedHttpClient = new Lazy<HttpClient>(() => DefaultHttpClient.Shared.Value);
 
     /// <summary>
     /// Downloads the content of the url as text.
@@ -32,13 +32,13 @@ public static class HttpChannelExt
         if (authenticationHeaderValue != null)
             request.Headers.Authorization = authenticationHeaderValue;
 
-        using var result = SharedHttpClient.Value.SendAsync(request).Result;
+        using var result = SharedHttpClient.Value.SendAsync(request).GetAwaiter().GetResult();
         result.EnsureSuccessStatusCode();
 
         if (encoding == null)
-            return result.Content.ReadAsStringAsync().Result;
+            return result.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
-        using var stream = result.Content.ReadAsStreamAsync().Result;
+        using var stream = result.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
         using var reader = new StreamReader(stream, encoding, detectEncodingFromByteOrderMarks: true);
         return reader.ReadToEnd();
     }
@@ -52,7 +52,7 @@ public static class HttpChannelExt
 
         request.Method = HttpMethod.Head;
 
-        using var result = SharedHttpClient.Value.SendAsync(request).Result;
+        using var result = SharedHttpClient.Value.SendAsync(request).GetAwaiter().GetResult();
 
         // Header names are case-insensitive. Content-Length, Content-Type, Last-Modified etc. are content headers,
         // all others response headers, so both collections are needed. A header can have several values.

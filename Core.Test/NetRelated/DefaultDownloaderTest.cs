@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Extensions.NetRelated;
@@ -51,60 +50,49 @@ public class DefaultDownloaderTest
     }
 
     [Fact]
-    public async Task DownloaderWithCredentialsSendsTheCredentialsAndCanBeUsedRepeatedly()
+    public void DownloaderWithCredentialsSendsTheCredentialsAndCanBeUsedRepeatedly()
     {
-        var port = GetFreePort();
-        var url = $"http://127.0.0.1:{port}/secret";
         var seen = new List<string>();
 
-        using var listener = new HttpListener { AuthenticationSchemes = AuthenticationSchemes.Basic };
-        listener.Prefixes.Add($"http://127.0.0.1:{port}/");
-        listener.Start();
-
-        // the listener answers the first request without credentials with a 401 itself
-        var server = Task.Run(async () =>
+        // the listener answers a request without credentials with a 401 itself
+        using var server = new LocalHttpServer(context =>
         {
-            for (var i = 0; i < 2; i++)
-            {
-                var context = await listener.GetContextAsync();
-                var identity = (HttpListenerBasicIdentity)context.User!.Identity!;
-                lock (seen)
-                    seen.Add($"{identity.Name}:{identity.Password}");
+            var identity = (HttpListenerBasicIdentity)context.User!.Identity!;
+            lock (seen)
+                seen.Add($"{identity.Name}:{identity.Password}");
+            LocalHttpServer.WriteText(context, "secret");
+        }, AuthenticationSchemes.Basic);
 
-                var body = Encoding.UTF8.GetBytes("secret");
-                context.Response.ContentLength64 = body.Length;
-                await context.Response.OutputStream.WriteAsync(body, 0, body.Length);
-                context.Response.Close();
-            }
-        });
+        var downloader = new DownloaderWithCredentials(new NetworkCredential("user", "pass"));
 
-        try
-        {
-            var downloader = new DownloaderWithCredentials(new NetworkCredential("user", "pass"));
+        Assert.Equal("secret", downloader.DownloadToString(server.Url("/secret")));
+        Assert.Equal("secret", downloader.DownloadToString(server.Url("/secret")));
 
-            Assert.Equal("secret", downloader.DownloadToString(url));
-            Assert.Equal("secret", downloader.DownloadToString(url));
-
-            await server.WaitAsync(TimeSpan.FromSeconds(10)); // fails with a TimeoutException if a request never arrives
+        lock (seen)
             Assert.Equal(new[] { "user:pass", "user:pass" }, seen);
-        }
-        finally
-        {
-            listener.Stop();
-        }
     }
 
-    private static int GetFreePort()
+    [Fact]
+    public void ThrowsTheHttpRequestExceptionItselfForAnErrorStatus()
     {
-        var tcp = new TcpListener(IPAddress.Loopback, 0);
-        tcp.Start();
-        try
-        {
-            return ((IPEndPoint)tcp.LocalEndpoint).Port;
-        }
-        finally
-        {
-            tcp.Stop();
-        }
+        using var client = new HttpClient(new StubHandler(_ => Text("error page", HttpStatusCode.NotFound)));
+
+        // not wrapped in an AggregateException
+        Assert.Throws<HttpRequestException>(() => new DefaultDownloader(client).DownloadToString("https://example.com/missing"));
+    }
+
+    [Fact]
+    public void ThrowsTheHttpRequestExceptionItselfIfTheServerCannotBeReached()
+    {
+        using var client = new HttpClient(new StubHandler(_ => throw new HttpRequestException("no route to host")));
+
+        var exception = Assert.Throws<HttpRequestException>(() => new DefaultDownloader(client).DownloadToString("https://example.com/"));
+        Assert.Equal("no route to host", exception.Message);
+    }
+
+    [Fact]
+    public void TheCredentialsAreRequired()
+    {
+        Assert.Throws<ArgumentNullException>(() => new DownloaderWithCredentials(null!));
     }
 }
