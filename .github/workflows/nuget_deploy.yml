@@ -46,16 +46,16 @@ jobs:
             exit 1
           fi
 
-      # Short-lived API key via trusted publishing. Requires a trusted publishing policy for this
-      # repository and workflow on nuget.org. Until it exists, the NUGET_API_KEY secret is used instead.
+      # Short-lived API key via trusted publishing. This needs the trusted publishing policy for this
+      # repository and this workflow file on nuget.org. If the login fails, the job fails here,
+      # before anything is pushed.
       - name: NuGet login (trusted publishing)
         id: login
-        continue-on-error: true
         uses: NuGet/login@v1
         with:
           user: Capjan
 
       - name: Publishing to NuGet
         env:
-          NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY || secrets.NUGET_API_KEY }}
+          NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
         run: dotnet nuget push "artifacts/*.nupkg" --api-key "$NUGET_API_KEY" -s https://api.nuget.org/v3/index.json --skip-duplicate
