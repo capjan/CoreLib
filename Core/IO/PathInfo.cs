@@ -35,7 +35,7 @@ public static class PathInfo
             var drivePart = winRootedPathMatch.Groups["drive"];
             var partsGroup = winRootedPathMatch.Groups["path"];
             var pathInDrive = partsGroup.Success ? partsGroup.Value : "";
-            var isRooted = pathInDrive.StartsWith('\\');
+            var isRooted = IsRooted(pathInDrive, '\\');
             var parts = pathInDrive.Split(BackslashSeparator, StringSplitOptions.RemoveEmptyEntries);
             var driveLetter = drivePart.Success
                 ? drivePart.Value.Substring(0,1)
@@ -47,14 +47,14 @@ public static class PathInfo
         if (winPath.Success)
         {
             var parts = winPath.Value.Split(BackslashSeparator, StringSplitOptions.RemoveEmptyEntries);
-            var isRooted = path.StartsWith('\\');
+            var isRooted = IsRooted(path, '\\');
             return new PathInfoData(PathType.Windows, isRooted, "", parts);
         }
             
         var nixPath = Regex.Match(path, @"^((?<isRooted>/)?([^/]+)?|\.)(/[^/]+)*(?<trailing>/)?$");
         if (nixPath.Success)
         {
-            var isRooted = path.StartsWith('/');
+            var isRooted = IsRooted(path, '/');
             if (path.StartsWith("./", StringComparison.Ordinal)) path = path.Substring(1);
             var parts = path.Split(SlashSeparator, StringSplitOptions.RemoveEmptyEntries);
                
@@ -64,5 +64,14 @@ public static class PathInfo
 
         throw new ArgumentException("unexpected format of path", nameof(path));
 
+    }
+
+    private static bool IsRooted(string path, char separator)
+    {
+#if NETSTANDARD2_0
+        return path.StartsWith(separator.ToString(), StringComparison.Ordinal);
+#else
+        return path.StartsWith(separator);
+#endif
     }
 }
