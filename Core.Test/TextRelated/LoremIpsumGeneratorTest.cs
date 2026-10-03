@@ -28,7 +28,7 @@ public class LoremIpsumGeneratorTest
         var random = new DefaultRandom(12345);
         var gen    = new LoremIpsumGenerator(random);
 
-        // UseFile swallows (and logs) exceptions thrown inside the callback, including failed assertions.
+        // UseFile propagates exceptions thrown inside the callback, including failed assertions.
         // Therefore the contents are only captured there and asserted afterwards.
         var fileContents = string.Empty;
         var tmp = new DefaultTempUtil();

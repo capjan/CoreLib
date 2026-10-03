@@ -7,8 +7,7 @@
 
 [*.cs]
 # naming: public identifiers that collide with keywords / type names of other .NET languages
-dotnet_diagnostic.CA1711.severity = suggestion   # LogEventArgs
-dotnet_diagnostic.CA1716.severity = suggestion   # ILogger.Error, IRandom.Next
+dotnet_diagnostic.CA1716.severity = suggestion   # IRandom.Next
 dotnet_diagnostic.CA1720.severity = suggestion   # KnownDataTypes.Int / Double
 dotnet_diagnostic.CA1725.severity = suggestion   # GeoCoordinateMath parameter names
 

@@ -17,8 +17,9 @@ public class DefaultFileUtil : IFileUtil
         if (File.Exists(filePath) && !IsWritable(filePath))
             throw new NotSupportedException("it's not possible to touch a not writable file.");
             
-        using (var fs = File.Create(filePath))
-            fs.Close();
+        using (var fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
+        {
+        }
 
         File.SetLastWriteTime(filePath, DateTime.Now);
     }

@@ -10,9 +10,12 @@
 * [Environment](./Environment.md) - contains information objects of the App/API environement
 * [Generic](./Generic.md) - Contains utility classes for generic type implementations
 * [IO](./IO.md) - File System Input/Output
-* [Logging](./Logging.md) - Logging
 * [Mathematics](./Mathematics.md) - Mathematics
 * [Net](./Net.md) - Internet and Web
 * [Parser](./Parser/README.md) - Common Parser
 * [Reflection](./Reflection.md) - Reflection utility classes
 * [Text](./Text.md) - Formatting and generating Text
+
+## Migration
+
+* [Version 13.0](./Migrations/13.0.md) - Breaking changes, including the removal of CoreLib's logging implementation

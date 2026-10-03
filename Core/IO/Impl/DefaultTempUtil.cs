@@ -1,18 +1,18 @@
 ﻿using System;
 using System.IO;
-using Core.Logging.Logger;
 
 namespace Core.IO.Impl;
 
 public class DefaultTempUtil : ITempUtil
 {
-    private readonly ILogger _log = Logger.Create<DefaultTempUtil>();
-
     private readonly string _rootPath;
     private readonly IPathNameGenerator _dirNameGen;
     private readonly IPathNameGenerator _pathNameGen;
     private readonly IFileUtil _fileUtil;
     private readonly IDirectoryUtil _directoryUtil;
+    private readonly bool _useBuiltInDirectoryTempCreation;
+    private readonly bool _useBuiltInFileTempCreation;
+    private readonly bool _createFileAtomically;
 
     /// <inheritdoc cref="ITempUtil.GetTempDirectory"/>
     public string GetTempDirectory()
@@ -28,16 +28,22 @@ public class DefaultTempUtil : ITempUtil
         IDirectoryUtil? directoryUtil = null)
     {
         _rootPath = defaultRootPath ?? Path.GetTempPath();
+        _useBuiltInDirectoryTempCreation = defaultRootPath == null && dirNameGen == null && directoryUtil == null;
+        _useBuiltInFileTempCreation = defaultRootPath == null && fileNameGen == null && fileUtil == null;
+        _createFileAtomically = fileUtil == null;
         _directoryUtil = directoryUtil ?? new DefaultDirectoryUtil();
         _dirNameGen = dirNameGen ?? new DefaultPathNameGenerator();;
         _pathNameGen = fileNameGen ?? new DefaultPathNameGenerator();
         _fileUtil = fileUtil ?? new DefaultFileUtil();
-        _directoryUtil = directoryUtil ?? new DefaultDirectoryUtil();
     }
 
     public string CreateDir(string? parentDirectory = default)
     {
         parentDirectory = parentDirectory ?? _rootPath;
+#if NET7_0_OR_GREATER
+        if (_useBuiltInDirectoryTempCreation && parentDirectory == _rootPath)
+            return Directory.CreateTempSubdirectory().FullName;
+#endif
         var result = _dirNameGen.Generate(parentDirectory);
         _directoryUtil.EnsureExistence(result);
         return result;
@@ -46,6 +52,26 @@ public class DefaultTempUtil : ITempUtil
     public string CreateFile(string? parentDirectory = default)
     {
         parentDirectory = parentDirectory ?? _rootPath;
+
+        if (_useBuiltInFileTempCreation && parentDirectory == _rootPath)
+            return Path.GetTempFileName();
+
+        if (_createFileAtomically)
+        {
+            while (true)
+            {
+                var path = _pathNameGen.Generate(parentDirectory);
+                try
+                {
+                    using var file = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+                    return path;
+                }
+                catch (IOException) when (File.Exists(path) || Directory.Exists(path))
+                {
+                }
+            }
+        }
+
         var tempFileName = _pathNameGen.Generate(parentDirectory);
         _fileUtil.Touch(tempFileName);
         return tempFileName;
@@ -63,13 +89,9 @@ public class DefaultTempUtil : ITempUtil
         {
             action(tempDirPath);
         }
-        catch (Exception e)
-        {
-            _log.Error("unexpected exception while using a temp directory", e);
-        }
         finally
         {
-            Directory.Delete(tempDirPath);
+            Directory.Delete(tempDirPath, recursive: true);
         }    
     }
 
@@ -84,10 +106,6 @@ public class DefaultTempUtil : ITempUtil
         try
         {
             action(tempFileName);
-        }
-        catch (Exception e)
-        {
-            _log.Error("unexpected exception while using a temp file", e);
         }
         finally
         {

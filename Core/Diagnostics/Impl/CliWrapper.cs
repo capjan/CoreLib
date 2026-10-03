@@ -1,4 +1,6 @@
+using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Core.Diagnostics.Impl;
 
@@ -34,9 +36,21 @@ public class CliWrapper : ICliWrapper
             psi.WorkingDirectory = _workingDirectory;
         }
 
-        using var p = Process.Start(psi)!;
-        p.WaitForExit(_globalTimeoutInMilliseconds);
-        var mergedOutput = p.StandardOutput.ReadToEnd() + p.StandardError.ReadToEnd();
+        using var p = Process.Start(psi)
+            ?? throw new InvalidOperationException($"Failed to start process '{_fileName}'.");
+
+        var stdOutTask = p.StandardOutput.ReadToEndAsync();
+        var stdErrTask = p.StandardError.ReadToEndAsync();
+        if (!p.WaitForExit(_globalTimeoutInMilliseconds))
+        {
+            p.Kill();
+            p.WaitForExit();
+            Task.WhenAll(stdOutTask, stdErrTask).GetAwaiter().GetResult();
+            throw new TimeoutException($"Process '{_fileName}' exceeded the timeout of {_globalTimeoutInMilliseconds} milliseconds.");
+        }
+
+        var output = Task.WhenAll(stdOutTask, stdErrTask).GetAwaiter().GetResult();
+        var mergedOutput = output[0] + output[1];
         return new CliResult
         {
             FileName = psi.FileName,

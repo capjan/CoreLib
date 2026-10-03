@@ -26,6 +26,6 @@ public static class GeoCircleRelated
     public static IGeoLocation Right(this IGeoCircle circle, IGeoFactory? factory = default)
     {
         var usedFactory = factory ?? new GeoFactory();
-        return usedFactory.CreateLocation(circle.Latitude, circle.MaxLatitude);
+        return usedFactory.CreateLocation(circle.Latitude, circle.MaxLongitude);
     }
 }

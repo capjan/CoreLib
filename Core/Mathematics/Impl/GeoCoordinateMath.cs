@@ -50,7 +50,7 @@ public class GeoCoordinateMath : IGeoCoordinateMath
     /// <returns></returns>
     public IGeoLocation CalcOffsetLocation(IGeoLocation origin, double dx, double dy)
     {
-        var result = CalculateOffset(origin.Latitude, origin.Latitude, dx, dy);
+        var result = CalculateOffset(origin.Latitude, origin.Longitude, dy, dx);
         return new GeoFactory().CreateLocation(result.latitude, result.longitude);
     }
 

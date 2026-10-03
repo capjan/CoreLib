@@ -7,6 +7,8 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Core.ControlFlow;
 using Core.Net;
 using Core.Net.Impl;
@@ -45,6 +47,38 @@ public static class HttpChannelExt
         return reader.ReadToEnd();
     }
 
+    public static async Task<string> DownloadToStringAsync(
+        this IHttpChannel channel,
+        string url,
+        Encoding? encoding = default,
+        AuthenticationHeaderValue? authenticationHeaderValue = null,
+        CancellationToken cancellationToken = default)
+    {
+        using var request = channel.CreateRequest(url);
+        if (authenticationHeaderValue != null)
+            request.Headers.Authorization = authenticationHeaderValue;
+
+        using var result = await SharedHttpClient.Value.SendAsync(request, cancellationToken).ConfigureAwait(false);
+        result.EnsureSuccessStatusCode();
+
+        if (encoding == null)
+#if NETSTANDARD2_0
+            return await result.Content.ReadAsStringAsync().ConfigureAwait(false);
+#else
+            return await result.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+#endif
+
+#if NETSTANDARD2_0
+        using var stream = await result.Content.ReadAsStreamAsync().ConfigureAwait(false);
+        using var reader = new StreamReader(stream, encoding, detectEncodingFromByteOrderMarks: true);
+        return await reader.ReadToEndAsync().ConfigureAwait(false);
+#else
+        using var stream = await result.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
+        using var reader = new StreamReader(stream, encoding, detectEncodingFromByteOrderMarks: true);
+        return await reader.ReadToEndAsync(cancellationToken).ConfigureAwait(false);
+#endif
+    }
+
     public static IHttpHeader DownloadHeader(this IHttpChannel channel, string url, AuthenticationHeaderValue? authenticationHeaderValue = null)
     {
         using var request = channel.CreateRequest(url);
@@ -58,6 +92,25 @@ public static class HttpChannelExt
 
         // Header names are case-insensitive. Content-Length, Content-Type, Last-Modified etc. are content headers,
         // all others response headers, so both collections are needed. A header can have several values.
+        var dict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        AddHeaders(dict, result.Headers);
+        if (result.Content != null)
+            AddHeaders(dict, result.Content.Headers);
+        return new HttpHeader(dict);
+    }
+
+    public static async Task<IHttpHeader> DownloadHeaderAsync(
+        this IHttpChannel channel,
+        string url,
+        AuthenticationHeaderValue? authenticationHeaderValue = null,
+        CancellationToken cancellationToken = default)
+    {
+        using var request = channel.CreateRequest(url);
+        if (authenticationHeaderValue != null)
+            request.Headers.Authorization = authenticationHeaderValue;
+        request.Method = HttpMethod.Head;
+
+        using var result = await SharedHttpClient.Value.SendAsync(request, cancellationToken).ConfigureAwait(false);
         var dict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         AddHeaders(dict, result.Headers);
         if (result.Content != null)

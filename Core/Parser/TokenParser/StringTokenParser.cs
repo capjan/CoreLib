@@ -30,9 +30,10 @@ public class StringTokenParser
         _builder.Clear();
 
         if (!input.TryReadChar(out var quotation))
-                
-            if (quotation != _quotation)
-                throw new ArgumentException($"strings must start with the quotation char '{quotation}' 0x{quotation.ToHexString()}", nameof(input));
+            throw new ParserException("end of input before string");
+
+        if (quotation != _quotation)
+            throw new ParserException($"strings must start with the quotation char '{quotation}' 0x{quotation.ToHexString()}");
         var done = false;
 
         while (!done)

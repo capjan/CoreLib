@@ -7,6 +7,7 @@
 Prefer the **UseDir()** and **UseFile()** methods to create and use temporary
 files/folders as intended. This methods take care to ensure that the lifetime 
 of the temporary files/folders ends after the call.
+Any exception thrown by the callback is propagated after cleanup. Temporary directories are removed recursively.
 
 Use **CreateDir()** and **CreateFile()** only if your temporary files/folders must 
 life longer. If this happens: Think about changing your design, because is the time 
@@ -66,6 +67,5 @@ You can also implement you completly unique nameing by implementing IPathNameGen
 **parentDirectory** defaults to the result of Path.GetTempPath() 
 
 e.g. `C:\Users\[username]\AppData\Local\Temp\` in Windows 10
-
 
 

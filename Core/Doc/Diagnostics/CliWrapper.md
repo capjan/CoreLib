@@ -33,3 +33,5 @@ Example:
 var ls = new CliWrapper("ls");
 var result = ls.Execute("-al");
 ```
+
+The default timeout is 20 seconds. If the process exceeds the configured timeout, it is terminated and `Execute` throws `TimeoutException`.

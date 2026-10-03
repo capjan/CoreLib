@@ -30,10 +30,12 @@ public class CliRunner : ICliRunner
         {
             if (p == null) throw new InvalidOperationException($"CliRunner failed to create process for \"{_psi.FileName}\"");
 
+            var stdOutTask = p.StandardOutput.ReadToEndAsync();
+            var stdErrTask = p.StandardError.ReadToEndAsync();
             p.WaitForExit();
 
-            var stdOut = p.StandardOutput.ReadToEnd();
-            var stdErr = p.StandardError.ReadToEnd();
+            var stdOut = stdOutTask.GetAwaiter().GetResult();
+            var stdErr = stdErrTask.GetAwaiter().GetResult();
 
             return stdOut + stdErr;
         }

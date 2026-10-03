@@ -2,11 +2,13 @@
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Core.Extensions.NetRelated;
 
 namespace Core.Net.Impl;
 
-public class DefaultDownloader : IDownloader
+public class DefaultDownloader : IDownloader, IAsyncDownloader
 {
     // One client for all downloaders: a client per download exhausts sockets and is slow.
     // It does not keep cookies: every download stands for its own user or job and must not see the session of another.
@@ -34,9 +36,14 @@ public class DefaultDownloader : IDownloader
     {
         return (_client ?? SharedClient.Value).GetStringAsync(url).GetAwaiter().GetResult();
     }
+
+    public Task<string> DownloadToStringAsync(string url, CancellationToken cancellationToken = default)
+    {
+        return (_client ?? SharedClient.Value).DownloadToStringAsync(url, cancellationToken);
+    }
 }
 
-public class DownloaderWithCredentials : IDownloader
+public class DownloaderWithCredentials : IDownloader, IAsyncDownloader
 {
     private readonly Lazy<HttpClient> _client;
 
@@ -54,10 +61,15 @@ public class DownloaderWithCredentials : IDownloader
     {
         return _client.Value.GetStringAsync(url).GetAwaiter().GetResult();
     }
+
+    public Task<string> DownloadToStringAsync(string url, CancellationToken cancellationToken = default)
+    {
+        return _client.Value.DownloadToStringAsync(url, cancellationToken);
+    }
 }
 
 // other implementations
-public class HttpChannelDownloader : IDownloader
+public class HttpChannelDownloader : IDownloader, IAsyncDownloader
 {
     public HttpChannelDownloader(
         IHttpChannel? httpChannel = default, 
@@ -70,6 +82,11 @@ public class HttpChannelDownloader : IDownloader
     public string DownloadToString(string url)
     {
         return _httpChannel.DownloadToString(url, _encoding);
+    }
+
+    public Task<string> DownloadToStringAsync(string url, CancellationToken cancellationToken = default)
+    {
+        return _httpChannel.DownloadToStringAsync(url, _encoding, cancellationToken: cancellationToken);
     }
 
     private readonly Encoding?    _encoding;
